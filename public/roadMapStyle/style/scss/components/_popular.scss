@@ -1,0 +1,29 @@
+.popular {
+    padding: 4rem 0;
+    text-align: center;
+    background-color: #f5f8f8;
+    background-image: url(./../../../assets/images/popularBG.png);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    &__paragraph {
+        font-size: 1.125rem;
+        line-height: 1.75;
+        max-width: 62.5rem;
+        margin: 2.5rem auto;
+        font-family: $font-secondary;
+    }
+    &__tabs {
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 4rem;
+        > * {
+            text-transform: capitalize;
+        }
+    }
+    .view-more {
+        margin-top: 3rem;
+        gap: 4rem;
+    }
+}

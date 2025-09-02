@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selfcare Home - Medical Simulation Center</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" type="text/css"
+          href="{{ asset('externalStyle/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('externalStyle/fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('externalStyle/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('externalStyle/fonts/flaticon/font/flaticon.css') }}">
+    <link rel="stylesheet" type="text/css" type="text/css"
+          href="{{ asset('externalStyle/vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('externalStyle/css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('externalStyle/css/style.css') }}">
+
+    {% block style %}
+    {% endblock %}
+</head>
+
+<body>
+{% block header %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top bg-white">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <picture>
+                        <source srcset="../../../images/logo.png" media="(min-width: 768px)">
+                        <source srcset="../../../images/logo.png" media="(max-width: 768px)">
+                        <img src="../../../images/logo.png" alt="Selfcare MSC"/>
+                    </picture>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="material-icons"> menu </span>
+                </button>
+                <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{{ path('homepage') }}">Home</a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{{ path('theme_show_all') }}">Categories</a>#}
+{#                        </li>#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('theme_show_all',{type:2}) }}">Student Training</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('theme_show_all',{type:1}) }}">Professional Training</a>
+                        </li>
+                        {# <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Sign in</a>
+        </li> #}
+                        {% if  not(is_granted('IS_AUTHENTICATED_FULLY')) %}
+                            <li class="nav-item sign-up">
+                                <a class="nav-link" href="{{ path('app_register') }}">Sign up</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="uncollapse ms-4">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('workshop_cart') }}"><span class="material-icons">shopping_cart</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ path('my_profile') }}">
+                                <span class="material-icons">account_circle</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section class="buy-progress">
+        <div class="container">
+            <div class="buy-progress-container">
+                <div class="buy-progress__icon buy-progress__cart active">
+                    <span class="material-icons"> shopping_cart </span>
+                </div>
+                <div class="buy-progress-list active active-old">
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                </div>
+                <div class="buy-progress__icon buy-progress__confirm active">
+                    <span class="material-icons"> done </span>
+                </div>
+                <div class="buy-progress-list active">
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                </div>
+                <div class="buy-progress__icon buy-progress__pay">
+                    <span class="material-icons"> credit_card </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="wrapp-page">
+            <div class="d-flex flex-row-reverse  moneyBloc text-right mt-5 mb-5" disabled>
+                <ul>
+                    <li><a href="#">
+                            <span style="font-size: 50px;" id="enrAmount"><strong>{{ total }}</strong></span>
+                            <span style="color: red;text-shadow: whitesmoke;"><sub>TND</sub></span>
+                        </a></li>
+                </ul>
+            </div>
+            <div class="demarche-tab mb-3 ">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active show dark-primary-color" href="#home">Payment details</a>
+                    </li>
+
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active show"><br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <span class="title dark-primary-color">Name</span>
+                                {% for workshopCart in workshopCarts %}
+                                    <div class="wrap-input100 bg1 "><p>{{ workshopCart.workshop.name }}</p></div>
+                                {% endfor %}
+
+                            </div>
+                            <div class="col-md-4">
+                                <span class="title dark-primary-color">Price</span>
+                                {% for workshopCart in workshopCarts %}
+                                    <div class="wrap-input100 bg1 "><p> {{ workshopCart.workshop.price }} TND</p></div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <p class="intro">
+                Payment of the registration <b> fee </b> is required to confirm registration
+            </p>
+            <div class="icon_important mt-5 mb-5"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>Payment
+                Mode <span class="required">* </span>:
+            </div>
+
+            <div class="d-flex flex-row-reverse  moneyBloc text-right mt-5 mb-5">
+                <ul>
+                    <li><a href="{{ path('cart_payment') }}" id="clickPaiementEnLigne">
+                            <figure><img src="{{ asset('externalStyle/images/Paiement-par-Carte-Bancaire.png') }}">
+                            </figure>
+                            <span>Payment by credit card</span></a></li>
+                    <li><a href="#modedepaiment" id="clickVirement">
+                            <figure><img src="{{ asset('externalStyle/images/virement-bancaire-logo.png') }}"></figure>
+                            <span>Bank transfer</span></a></li>
+                    <li><a href="#modedepaiment" id="clickMoneyGram">
+                            <figure><img src="{{ asset('externalStyle/images/MoneyGram-Logo.png') }}"></figure>
+                            <span>Money Gram</span></a></li>
+                    <li><a href="#modedepaiment" id="clickWestern">
+                            <figure><img src="{{ asset('externalStyle/images/western.png') }}"></figure>
+                            <span>Western Union</span></a></li>
+
+                </ul>
+            </div>
+
+            <div class="demarche-tab" id="demarche">
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active show dark-primary-color" data-bs-toggle="tab"  href="#home">Banking information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dark-primary-color" data-bs-toggle="tab"  href="#tab2">Information from partner
+                            banks</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="title dark-primary-color">Banque</span>
+                                <div class="wrap-input100 bg1 "><p>STB</p></div>
+                                <div class="wrap-input100 bg1 "><p>BRK</p></div>
+                                <div class="wrap-input100 bg1 "><p>ATTIJARI</p></div>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="title dark-primary-color">RIB</span>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="title dark-primary-color">IBAN</span>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+                                <div class="wrap-input100 bg1 "><p>TN59 10006035187105</p></div>
+
+                            </div>
+                            <div class="col-md-2">
+                                <span class="title dark-primary-color">Devise</span>
+                                <div class="wrap-input100 bg1 "><p>TND</p></div>
+                                <div class="wrap-input100 bg1 "><p>TND</p></div>
+                                <div class="wrap-input100 bg1 "><p>TND</p></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="container tab-pane fade"><br>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="title dark-primary-color">Bank</span>
+                                <div class="wrap-input100 bg1 "><p>BRK</p></div>
+                                <div class="wrap-input100 bg1 "><p>ATTIJARI</p></div>
+                                <div class="wrap-input100 bg1 "><p>STB</p></div>
+                            </div>
+                            <div class="col-md-10">
+                                <span class="title dark-primary-color">Informations</span>
+                                <div class="wrap-input100 bg1 "><p>Al Baraka Bank Tunisie</p></div>
+                                <div class="wrap-input100 bg1 "><p>Attijari bank Tunisie</p></div>
+                                <div class="wrap-input100 bg1 "><p>Société Tunisienne de Banque</p></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_start(form) }}
+            <div class="wrapp-page">
+
+                <h3 class="title-form-red dark-primary-color">Payment Mode</h3>
+                <!-- form-->
+                <div class="wrap-contact100">
+                    {# <form class="contact100-form validate-form " action="{{ path('bank_transfer_payment') }}" method="post"> #}
+                    <div class="wrap-input100 input100-select">
+                        <div>
+                            <select class="js-select2 select2-hidden-accessible dark-primary-color" name="paymentBank"
+                                    id="paymentBank"
+                                    required="" tabindex="-1" aria-hidden="true">
+                                <option value="" selected="" disabled="" hidden="">Select the bank to which you made
+                                    the payment *
+                                </option>
+                                webkit-scrollbar-track
+                                <option value="ATTIJARI">ATTIJARI</option>
+                                <option value="BRK-002">BRK</option>
+                                <option value="STB-KHB001">STB</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+                    <div class="wrap-div-100 d-flex justify-content-center ">
+                        <div class="upload-title"><p>Proof of payment <span class="required">*</span></p>
+                        </div>
+                        <div class="wrap-input100  upload">
+                            <p>
+
+                                <label for="filep">
+                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                    choose a file
+                                </label>
+                                {{ form_row(form.file, { 'attr':{'class':'custom-file-input'} }) }}
+
+                                {# <input type="file" name="file" id="filep" style="display:none;" required> #}
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="wrap-div-100 mt-5 mb-3">
+                        <div class="custom-checkbox position-relative">
+                            <input type="checkbox" class="" required="">
+                            {# <label class="" > #}
+                            I confirm that I have read that my "Registration" is provisional until the validation of
+                            my
+                            file by an educational committee (*) You must tick this field before going to the next step
+                            {# </label> #}
+
+                        </div>
+                    </div>
+                    <div class="right-btn   mt-3 mb-5 ">
+                        <button class="btn d-block ms-auto form-btn sign-btn"><span>Submit</span>
+                        </button>
+                    </div>
+
+                    {# </form> #}
+                </div>
+
+
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <picture>
+                        <source srcset="../../../images/logo-medical-center.png" media="(min-width: 768px)">
+                        <source srcset="../../../images/logo-medical-center.png" media="(max-width: 768px)">
+                        <img src="../../../images/logo-medical-center.png" alt="image"/>
+                    </picture>
+                </a>
+            </div>
+            <hr>
+            <ul class="social-media">
+                <li><a href="#"><img src="../../../images/icons/instagram.png" alt="instagram icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/facebook.png" alt="facebook icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/youtube-play.png" alt="youtube icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/linkedin.png" alt="linkedin icon"></a></li>
+            </ul>
+        </div>
+    </footer>
+{% endblock %}
+
+
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+{# type="text/javascript" #}
+
+<script src="{{ asset('externalStyle/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('externalStyle/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('externalStyle/js/jquery.sticky.js') }}"></script>
+<script src="{{ asset('externalStyle/vendor/datepicker/moment.min.js') }}"></script>
+<script src="{{ asset('externalStyle/vendor/datepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('externalStyle/vendor/select2/select2.min.js') }}"></script>
+
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+
+
+        $(".js-select2").each(function () {
+            $(this).on('select2:close', function (e) {
+                if ($(this).val() == "Please chooses") {
+                    $('.js-show-service').slideUp();
+                } else {
+                    $('.js-show-service').slideUp();
+                    $('.js-show-service').slideDown();
+                }
+            });
+        });
+    })
+</script>
+
+
+<script src="{{ asset('externalStyle/js/main.js') }}"></script>
+
+{% block javascript %}
+
+{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+
+// breakpoints for responsive
+$breakpoints: (
+    'sm': 36rem,
+    'md': 48rem,
+    'lg': 62rem,
+    'xl': 75rem,
+    '2xl': 87.5rem,
+);
+$sizes: 'sm', 'md', 'lg', 'xl', '2xl';
+
+// container
+$containerFull: 100%;
+$containerWidths: (
+    'sm': 100%,
+    'md': 46rem,
+    'lg': 60rem,
+    'xl': 72rem,
+    '2xl': 84rem,
+);
+
+// colors
+$color-primary: #8D1E32;
+$color-primaryLight: #AC273E;
+
+
+
+//fonts 
+$font-primary: 'League Spartan', sans-serif;
+$font-secondary: 'Mulish', sans-serif;
+$font-awesome: "Font Awesome 6 Free";
+
+// border radius
+
+$borderRadius: 0.375rem

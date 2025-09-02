@@ -1,0 +1,22 @@
+.bankInfo {
+    .row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        & > *:not(.w-auto) {
+            min-width: 19.5rem;
+        }
+    }
+    &__title {
+        font-size: 1.25rem;
+        font-family: $font-primary;
+        font-weight: 700;
+        color: $color-primaryLight;
+    }
+    .form__input {
+        background-color: #DFDFDF;
+    }
+    .form__label {
+        color: #181818;
+        font-weight: 600;
+    }
+}

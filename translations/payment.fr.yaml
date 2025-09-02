@@ -1,0 +1,38 @@
+cart:
+  title: Panier
+  home: Accueil
+  Courses: Formations
+  Price: Prix
+  edit: Modifier
+  Free: Gratuit
+  add_mor_courses: Ajouter d'autres formations
+  cart_totals: Total du panier
+  subtotal: Sous-total
+  Total: Total
+
+  policy:
+    text: "Conformément à la loi, Honoris applique les taxes sur les transactions dans certaines juridictions fiscales. En validant votre achat, vous acceptez"
+    link:  ces Conditions Générales d’Utilisation.
+  payment_with: "Paiement avec"
+  add_to_my_learning: "Ajouter à mes cours"
+  proceed_to_checkout: "Passer à la caisse"
+  payment_methods:
+    credit_card: "Carte bancaire"
+    bank_transfer: "Virement bancaire"
+  recommanded_for_you: Recommandé pour vous
+
+payment:
+  bank_transfer_payment: "Paiement par virement bancaire"
+  get_bank_details: "Obtenez les coordonnées bancaires de la banque sélectionnée"
+  transfer_money: "Effectuez le virement depuis votre banque"
+  scan_receipt: "Scannez le reçu du virement"
+  attach_receipt: "Joignez le reçu du virement à l’étape de paiement"
+  banking_information: "Informations bancaires"
+  currency: Devise
+  proof_of_payment: "Preuve de paiement"
+  cancel: "Annuler"
+
+
+
+your_shopping_cart: "Votre panier"
+view_cart: "Voir le panier"

@@ -1,0 +1,41 @@
+.contact {
+    background-image: url(/assets/images/contact.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    margin-top: 16rem;
+    &__form {
+        background-color: #fff;
+        box-shadow: 0 -10px 30px #9898984D;
+        margin-top: -11rem;
+        z-index: 1;
+        border-radius: 1rem 1rem 0 0;
+        padding: 1.5rem;
+        @include breakpoint('sm') {
+            padding: 3.5rem;
+        }
+    }
+    &__list {
+        list-style: none;
+        padding: 0;
+    }
+    &__item {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-primary;
+        font-size: 1.5rem;
+        width: 4.3125rem;
+        height: 4.3125rem;
+        flex-shrink: 0;
+        border-radius: 0.625rem;
+        background-color: #F3F3F3;
+        
+    }
+}

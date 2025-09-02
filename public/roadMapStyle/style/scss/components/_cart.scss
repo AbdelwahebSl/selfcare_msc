@@ -1,0 +1,110 @@
+.cart {
+    &__summary {
+        max-width: 28.75rem;
+        margin-left: auto;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        gap: 1.5rem;
+        margin-right: calc(-.5 * 1.5rem);
+    }
+
+    &__buttons {
+        gap: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin-bottom: 3rem;
+        margin-right: calc(-.5 * 1.5rem);
+    }
+
+    &__total {
+        box-shadow: 0 3px 10px #00000029;
+        margin-bottom: 2rem;
+
+        * {
+            margin-bottom: 0;
+        }
+
+        &Block {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+
+            &:first-of-type {
+                border-bottom: 1px solid #707070;
+            }
+        }
+
+        &Price {
+            font-size: 1.375rem;
+
+            @include breakpoint('sm') {
+                font-size: 1.5rem;
+            }
+
+            span {
+                vertical-align: top;
+                font-size: 0.875rem;
+            }
+        }
+    }
+
+    &__accept {
+        font-size: 1.125rem;
+        line-height: 1.5;
+        font-weight: 500;
+        font-family: $font-primary;
+        margin-bottom: 3rem;
+
+        a {
+            color: $color-primaryLight;
+            font-weight: 700;
+        }
+    }
+
+    &__payement {
+
+        &Input {
+            background-color: #F9F9F9;
+            border-radius: 0.5rem;
+            height: 100%;
+            input {
+                display: none;
+                &:checked ~ label .cart__payementRadioIcon {
+                    background-color: $color-primary;
+                }
+            }
+
+            label {
+                display: flex;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+                align-items: center;
+                cursor: pointer;
+                height: 100%;
+            }
+        }
+
+        &Label {
+            margin: 0;
+            font-size: 1.125rem;
+            font-family: $font-primary;
+            font-weight: 400;
+        }
+
+        &RadioIcon {
+            display: block;
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+            background-color: #fff;
+            box-shadow: 0 0 0 5px #fff,
+                        0 0 0 6px #989898;
+        }
+        &Icon {
+            width: 2.5rem;
+        }
+    }
+}

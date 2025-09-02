@@ -1,0 +1,66 @@
+.hero {
+    padding-top: 2.75rem;
+    @include breakpoint('md') {
+        padding-top: 4.75rem;
+    }
+    &__title {
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 1.05;
+        @include breakpoint('md') {
+            font-size: 3rem;
+        }
+        @include breakpoint('xl') {
+            font-size: 4.125rem;
+        }
+        @include breakpoint('2xl') {
+            font-size: 4.5rem;
+        }
+    }
+    &__paragraph {
+        font-size: 1.125rem;
+        max-width: 40rem;
+        color: #313131;
+        font-family: $font-secondary;
+        margin-bottom: 2rem;
+    }
+    &__search {
+        position: relative;
+        &Submit, &Icon {
+            position: absolute;
+            top: 50%;
+        }
+        &Input {
+            width: 100%;
+            border: none;
+            border-radius: $borderRadius;
+            background-color: #F3F3F399;
+            padding: 1.5rem 7.5rem 1.5rem 3.25rem;
+            font-size: 1.1875rem;
+            @include breakpoint('sm') {
+                padding: 1.5rem 9.5rem 1.5rem 3.25rem
+            }
+        }
+        &Submit {
+            background-color: $color-primary;
+            border-radius: $borderRadius;
+            right: 1.5rem;
+            padding: 0.5rem 1.5rem;
+            color: #fff;
+            border: none;
+            transform: translateY(-50%);
+            @include breakpoint('sm') {
+                padding: 0.75rem 2.5rem;
+            }
+        }
+        &Icon {
+            left: 1.125rem;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #989898;
+        }
+    }
+    .row {
+        align-items: center;
+    }
+}

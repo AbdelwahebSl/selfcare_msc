@@ -1,0 +1,621 @@
+{% extends "base.html.twig" %}
+ {% block title %}My Learning {% endblock %}
+ {% block style %}
+
+
+     <style>
+
+
+         .card {
+             background: white;
+             border-radius: 1rem;
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+             overflow: hidden;
+         }
+
+         .card-header {
+             background: #8D1E32;
+             padding: 1.5rem;
+             color: white;
+         }
+
+         .card-header h1 {
+             margin: 0;
+             font-size: 1.8rem;
+             text-align: center;
+         }
+
+         .card-body {
+             padding: 2rem;
+         }
+
+         .question-container {
+             background: white;
+             border-radius: 0.5rem;
+             padding: 1.5rem;
+             margin-bottom: 2rem;
+             border: 1px solid #e0e0e0;
+             transition: transform 0.2s;
+         }
+
+         .question-container:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+         }
+
+         h5 {
+             color: #8D1E32;
+             font-size: 1.1rem;
+             margin-bottom: 1.5rem;
+             font-weight: 600;
+             line-height: 1.4;
+         }
+
+         .form-check {
+             margin: 1rem 0;
+             padding-left: 2rem;
+             position: relative;
+         }
+
+         .form-check-input {
+             position: absolute;
+             margin-top: 0.3rem;
+             margin-left: -1.5rem;
+         }
+
+         .form-check-label {
+             padding-left: 0.5rem;
+             cursor: pointer;
+             transition: color 0.2s;
+         }
+
+         .form-check-label:hover {
+             color: #8D1E32;
+         }
+
+         .correct-answer {
+             background-color: #f0f9f0;
+             border-left: 4px solid #28a745;
+             padding: 1rem;
+             margin-top: 1rem;
+             border-radius: 0.25rem;
+             font-weight: 500;
+             /*display: block;*/
+         }
+
+         .btn-container {
+             position: sticky;
+             bottom: 1rem;
+             padding: 1rem;
+             background: rgba(255, 255, 255, 0.9);
+             backdrop-filter: blur(10px);
+             border-radius: 0.5rem;
+             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+             margin-top: 2rem;
+         }
+
+         /*.btn {*/
+         /*    padding: 0.75rem 1.5rem;*/
+         /*    border-radius: 0.5rem;*/
+         /*    font-weight: 500;*/
+         /*    transition: all 0.2s;*/
+         /*    min-width: 120px;*/
+         /*}*/
+
+         .btn-primary {
+             background-color: #8D1E32;
+             border: none;
+             color: white;
+         }
+
+         .btn-primary:hover {
+             background-color: #7a1a2b;
+             transform: translateY(-1px);
+         }
+
+         .btn-outline-secondary {
+             border: 1px solid #6c757d;
+             background: white;
+         }
+
+         .btn-outline-secondary:hover {
+             background-color: #f8f9fa;
+         }
+
+         .alert-primary {
+             background-color: #f8f9fa;
+             border-left: 4px solid #8D1E32;
+             padding: 1rem;
+             margin: 1rem 0;
+             border-radius: 0.25rem;
+         }
+
+         #score {
+             font-weight: 600;
+             color: #8D1E32;
+         }
+
+         @media (max-width: 768px) {
+             .container {
+                 margin: 1rem auto;
+             }
+
+             .card-body {
+                 padding: 1rem;
+             }
+
+             .question-container {
+                 padding: 1rem;
+             }
+
+             .btn {
+                 width: 100%;
+                 margin: 0.5rem 0;
+             }
+         }
+     </style>
+ {% endblock %}
+ {% block content %}
+
+
+     <!-- Sample content to show styling -->
+     <div class="container   my-5 " style="margin-top: 50px; margin-bottom: 50px;">
+         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;margin-top: 80px  ;">
+             <div id="dynamicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                 <div class="toast-header">
+                     <span id="toastIcon" class="rounded me-2" style="width: 20px; height: 20px;"></span>
+                     <strong id="toastTitle" class="me-auto"></strong>
+                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                 </div>
+                 <div id="toastBody" class="toast-body"></div>
+             </div>
+         </div>
+         <div class="card">
+             <div class="card-header">
+                 <h1>Peripheral intravenous catheter placement</h1>
+             </div>
+             <div class="card-body">
+
+                 <div id="score-display" class="alert alert-primary d-none" role="alert">
+                     Résultat : <span id="score">0</span> : sur   10
+                 </div>
+                 <form id="quiz-form" method="post">
+                     <!-- Question 1 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 1: What are the hand hygiene and glove-use recommendations before inserting a
+                             peripheral intravenous catheter?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox"   name="q1" value="A" id="q1a">
+                             <label class="form-check-label" for="q1a">A. Perform hygienic hand treatment using
+                                 antiseptic soap or alcohol-based hand rub.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox"   name="q1" value="B" id="q1b">
+                             <label class="form-check-label" for="q1b">B. Disinfect hands only if they appear visibly
+                                 soiled and use non-sterile gloves for all manipulations.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox"   name="q1" value="C" id="q1c">
+                             <label class="form-check-label" for="q1c">C. Wear gloves to prevent blood exposure and
+                                 sterile gloves if palpating the site after skin antisepsis.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox"   name="q1" value="D" id="q1d">
+                             <label class="form-check-label" for="q1d">D. Wash hands with plain soap only, without
+                                 alcohol-based hand rub, and use sterile gloves in all cases.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> A, C
+                         </div>
+                     </div>
+
+                     <!-- Question 2 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 2: What are the preferred sites for a peripheral intravenous catheter insertion in
+                             adult patients?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required required name="q2" value="A" id="q2a">
+                             <label class="form-check-label" for="q2a">A. Lower extremities (e.g., foot veins)</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required required name="q2" value="B" id="q2b">
+                             <label class="form-check-label" for="q2b">B. Scalp veins</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required required name="q2" value="C" id="q2c">
+                             <label class="form-check-label" for="q2c">C. Upper extremities (e.g., cephalic, basilic,
+                                 and median cubital veins)</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required required name="q2" value="D" id="q2d">
+                             <label class="form-check-label" for="q2d">D. Central veins</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> C
+                         </div>
+                     </div>
+
+                     <!-- Continue for the remaining questions -->
+                     <!-- Question 3 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 3: Which of the following conditions are considered absolute contraindications for
+                             inserting a peripheral intravenous catheter?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q3" value="A" id="q3a">
+                             <label class="form-check-label" for="q3a">A. Infections or cellulitis at the intended
+                                 insertion site</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q3" value="B" id="q3b">
+                             <label class="form-check-label" for="q3b">B. Previous lymph node dissection or mastectomy
+                                 on the same side</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q3" value="C" id="q3c">
+                             <label class="form-check-label" for="q3c">C. Presence of a functioning dialysis fistula in
+                                 the same limb</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q3" value="D" id="q3d">
+                             <label class="form-check-label" for="q3d">D. Phlebitis in the chosen vein</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> A, B, C, D
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 4: Which of the following are relative contraindications to catheter placement ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q4" value="A" id="q4a"  >
+                             <label class="form-check-label" for="q4a">A. Fragile veins in elderly patients</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q4" value="B" id="q4b"  >
+                             <label class="form-check-label" for="q4b">B. Veins in the same limb as a recent surgical
+                                 procedure</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q4" value="C" id="q4c"  >
+                             <label class="form-check-label" for="q4c">C. Use of veins in a paralyzed limb</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q4" value="D" id="q4d"  >
+                             <label class="form-check-label" for="q4d">D. Veins in close proximity to an area of recent
+                                 trauma</label>
+                         </div>
+                         <div class="correct-answer">
+                             Correct answer: A, B,D
+                         </div>
+                     </div>
+                     <!-- Question 5 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 5: What steps are required before puncturing a vein for peripheral intravenous
+                             catheter placement?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q5" value="A" id="q5a">
+                             <label class="form-check-label" for="q5a">A. Broad disinfection with an antiseptic.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q5" value="B" id="q5b">
+                             <label class="form-check-label" for="q5b">B. Stabilization of the vein with the
+                                 thumb.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q5" value="C" id="q5c">
+                             <label class="form-check-label" for="q5c">C. Measurement of blood pressure.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q5" value="D" id="q5d">
+                             <label class="form-check-label" for="q5d">D. Placement of a tourniquet 10 cm above the
+                                 chosen puncture site.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> A, B, D
+                         </div>
+                     </div>
+
+                     <!-- Question 6 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 6: What is the correct needle angle during peripheral intravenous catheter
+                             insertion?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required   name="q6" value="A" id="q6a">
+                             <label class="form-check-label" for="q6a">A. Hold the needle at a 45-degree angle.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required   name="q6" value="B" id="q6b">
+                             <label class="form-check-label" for="q6b">B. Hold the needle almost parallel to the skin,
+                                 bevel up, following the vein’s trajectory.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required   name="q6" value="C" id="q6c">
+                             <label class="form-check-label" for="q6c">C. Hold the needle perpendicular to the skin for
+                                 deeper vein access.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required   name="q6" value="D" id="q6d">
+                             <label class="form-check-label" for="q6d">D. Insert the needle at any angle comfortable for
+                                 the operator.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> B
+                         </div>
+                     </div>
+
+                     <!-- Question 7 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 7: What are the criteria for successful peripheral intravenous catheter
+                             placement?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q7" value="A" id="q7a">
+                             <label class="form-check-label" for="q7a">A. Blood return (flashback).</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q7" value="B" id="q7b">
+                             <label class="form-check-label" for="q7b">B. Absence of swelling at the insertion
+                                 site.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q7" value="C" id="q7c">
+                             <label class="form-check-label" for="q7c">C. No pain or discomfort for the patient.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" name="q7" value="D" id="q7d">
+                             <label class="form-check-label" for="q7d">D. No visible bleeding from the puncture
+                                 site.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Correct answer:</strong> A, B, C
+                         </div>
+                     </div>
+
+
+                     <div class="question-container">
+                         <h5>Question 8: What should be done if there is rapid local swelling indicating extravasation
+                             of blood during peripheral intravenous catheter insertion?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="A" id="q8a">
+                             <label class="form-check-label" for="q8a">A. Immediately stop the procedure, remove the
+                                 tourniquet and needle, apply pressure to the puncture site, and select a different site
+                                 for subsequent attempts.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="B" id="q8b">
+                             <label class="form-check-label" for="q8b">B. Continue the procedure while loosening the
+                                 tourniquet to reduce swelling.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="C" id="q8c">
+                             <label class="form-check-label" for="q8c">C. Leave the needle in place, apply a cold
+                                 compress, and retry at the same site after a few minutes.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="D" id="q8d">
+                             <label class="form-check-label" for="q8d">D. Ignore the swelling and proceed if the patient
+                                 reports no pain.</label>
+                         </div>
+                         <div class="correct-answer">
+                             Correct answer: A
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 9: What immediate action should be taken if a patient experiences vasovagal
+                             response during peripheral intravenous catheter insertion?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="A" id="q9a">
+                             <label class="form-check-label" for="q9a">A. Continue the procedure quickly to minimize
+                                 stress.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="B" id="q9b">
+                             <label class="form-check-label" for="q9b">B. Stop the procedure, lay the patient in a
+                                 supine position or leg elevation , and monitor vital signs.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="C" id="q9c">
+                             <label class="form-check-label" for="q9c">C. Administer intravenous fluids
+                                 immediately.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="D" id="q9d">
+                             <label class="form-check-label" for="q9d">D. Remove the catheter and apply a tourniquet
+                                 above the insertion site.</label>
+                         </div>
+                         <div class="correct-answer">
+                             Correct answer: B
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 10: When should a peripheral intravenous catheter placed under suboptimal
+                             conditions in the emergency room be replaced?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="A" id="q10a">
+                             <label class="form-check-label" for="q10a">A. As soon as possible.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="B" id="q10b">
+                             <label class="form-check-label" for="q10b">B. After 24 hours.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="C" id="q10c">
+                             <label class="form-check-label" for="q10c">C. After 48 hours.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="D" id="q10d">
+                             <label class="form-check-label" for="q10d">D. After 96 hours.</label>
+                         </div>
+
+                         <div class="correct-answer">
+                             Correct answer: A 
+                         </div>
+                     </div>
+
+
+                     <div class=" text-end">
+                         <button class="btn btn-primary" type="submit">Terminer le quiz</button>
+                         <button class="btn btn-outline-secondary" type="button" onclick="resetQuiz()">Réinitialiser
+                         </button>
+                     </div>
+                     <div class=" text-start">
+                         <div class="formbold-form-btn-wrapper">
+
+
+                             <div class="row">
+
+                                 <div class="col">
+                                     <a class="" href="{{ path('workshop_show_content',{'id':workshop.id}) }}"
+                                        style="background-color:#FFFFFF;  color:  #69313a; font-size: 20px">
+                                         <i class="fas fa-angle-left "></i>
+                                         Retour
+                                     </a>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </form>
+
+
+             </div>
+         </div>
+     </div>
+
+
+
+
+     {#    {{ render(path('selfcare_contact_component')) }} #}
+ {% endblock %}
+
+{% block javaScript %}
+    <script>
+        document.querySelectorAll('.correct-answer').forEach(element => {
+            element.style.display = 'none';
+        });
+
+        document.getElementById('quiz-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Correct answers
+            const correctAnswers = {
+                q1: ['A', 'C'],
+                q2: ['C'],
+                q3: ['A', 'B', 'C', 'D'],
+                q4: ['A','B', 'D'],
+                q5: ['A', 'B', 'D'],
+                q6: ['B'],
+                q7: ['A', 'B', 'C'],
+                q8: ['A'],
+                q9: ['B'],
+                q10: ['A']
+            };
+
+            let score = 0;
+
+            // Calculate score for checkbox questions
+            ['q1', 'q3', 'q4', 'q5', 'q7'].forEach(question => {
+                const selected = Array.from(document.querySelectorAll(`input[name="${question}"]:checked`))
+                    .map(input => input.value);
+
+                if (arrayEquals(selected.sort(), correctAnswers[question].sort())) {
+                    score++;
+                }
+
+                // Highlight correct answers in green and wrong answers in red
+                document.querySelectorAll(`input[name="${question}"]`).forEach(input => {
+
+                });
+            });
+
+            // Calculate score for radio questions
+            ['q2', 'q6', 'q8', 'q9', 'q10',].forEach(question => {
+                const selected = document.querySelector(`input[name="${question}"]:checked`)?.value;
+                if (selected && correctAnswers[question].includes(selected)) {
+                    score++;
+                }
+
+                // Highlight correct answers in green and wrong answers in red
+                const input = document.querySelector(`input[name="${question}"]:checked`);
+                if (input) {
+                    const parent = input.parentElement;
+
+                }
+            });
+
+            // Display score
+            const scoreDisplay = document.getElementById('score-display');
+            const scoreElement = document.getElementById('score');
+            if (scoreDisplay && scoreElement) {
+                scoreDisplay.classList.remove('d-none');
+                scoreElement.textContent = score;
+
+                // Show correct answers
+                document.querySelectorAll('.correct-answer').forEach(element => {
+                    element.style.display = 'block';
+                });
+
+                // Show toast with the score
+                var color = 'bg-danger';
+                if (score < 5) color = 'bg-danger';
+                if (score >= 5 && score < 7) color = 'bg-warning';
+                if (score >= 7) color = 'bg-success';
+
+                showToast('Your score: ' + score, 'Score', color);
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll to the top
+            });
+            var id = {{ id_workshopCart }};
+            $.ajax({
+                method: "GET",
+                //async: false,
+                url: "{{ path('app_api_update_wrk_shop_crt_add') }}",
+                data: {id: id, type: 2},
+                contentType: "application/json",
+                success: function (r) {
+                    console.log(r);
+                }
+            });
+        });
+
+        function arrayEquals(a, b) {
+            return Array.isArray(a) && Array.isArray(b) &&
+                a.length === b.length &&
+                a.every((val, index) => val === b[index]);
+        }
+
+        function resetQuiz() {
+            const quizForm = document.getElementById('quiz-form');
+            const scoreDisplay = document.getElementById('score-display');
+            if (quizForm) quizForm.reset();
+            if (scoreDisplay) scoreDisplay.classList.add('d-none');
+            document.querySelectorAll('.correct-answer').forEach(element => {
+                element.style.display = 'none';
+            });
+            document.querySelectorAll('.form-check').forEach(element => {
+                element.classList.remove('bg-success', 'bg-danger');
+            });
+        }
+
+        function showToast(message, title, colorClass) {
+            // Update dynamic content
+            const toastTitle = document.getElementById('toastTitle');
+            const toastBody = document.getElementById('toastBody');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastTitle.textContent = title; // Toast title
+            toastBody.textContent = message; // Toast body
+            toastIcon.className = colorClass + ' rounded me-2'; // Icon color
+
+            // Show toast
+            const toastElement = document.getElementById('dynamicToast');
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        }
+
+    </script>
+
+{% endblock %}

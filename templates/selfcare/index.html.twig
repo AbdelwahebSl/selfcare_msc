@@ -1,0 +1,352 @@
+{% extends "base.html.twig" %}
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-7 hero__content">
+                    <h1 class="hero__title">MEDICAL SIMULATION CENTER</h1>
+                    <p class="hero__paragraph">
+                        Founded on November 10, 2018 The Honoris’ cutting edge
+                        purpose-built Medical Simulation Centre is located in the heart of
+                        Tunis, and developed in coordination with international experts,
+                        using advanced technologies to create an impressive 2500 m2 site.
+                    </p>
+
+
+                    <form action="{{ path('search') }}" method="post" class="w-100 hero__search">
+                        <input
+                                type="search"
+                                name="_search"
+                                id="searchHero"
+                                class="hero__searchInput"
+                                placeholder="Tap your text here"
+                        />
+                        <label for="search" class="hero__searchIcon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </label>
+                        <button type="submit" class="hero__searchSubmit">Search</button>
+                    </form>
+                </div>
+                <div class="col-12 col-lg-5 hero__image">
+                    <img src="{{ asset('roadMapStyle/assets/images/hero.png') }}" alt=""/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="infos">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-3 col-md-6 col-12">
+                    <div class="infos__card infos-first">
+                        <h2 class="infos__title">LEARNING PROCESS</h2>
+                        <p class="infos__paragraph">
+                            Varied and innovative technical and educational resources
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6 col-12">
+                    <div class="infos__card">
+                        <div class="infos__cardIcon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="infos__cardText">
+                            <h3 class="infos__cardTitle">Find Course</h3>
+                            <p class="infos__paragraph">
+                                provide cutting edge ongoing professional development for
+                                various healthcare professionals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6 col-12">
+                    <div class="infos__card">
+                        <div class="infos__cardIcon">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <div class="infos__cardText">
+                            <h3 class="infos__cardTitle">Watch video</h3>
+                            <p class="infos__paragraph">
+                                offer a continuous professional development in the domain of
+                                health that focuses on the know-how relating to healthcare
+                                givers
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6 col-12">
+                    <div class="infos__card">
+                        <div class="infos__cardIcon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div class="infos__cardText">
+                            <h3 class="infos__cardTitle">Online assignement</h3>
+                            <p class="infos__paragraph">
+                                All the African doctors, irrespective of specialty, in the
+                                private or public sector, have an opportunity to pursue their
+                                continuing medical education using medical simulation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 about__images">
+                    <div class="row">
+                        <div class="col-5 px-3">
+                            <img src="{{ asset('roadMapStyle/assets/images/about1.jpg') }}" alt="">
+                        </div>
+                        <div class="col-7 px-3">
+                            <img src="{{ asset('roadMapStyle/assets/images/about2.jpg') }}" alt="">
+                        </div>
+                        <div class="col-10 mx-auto px-3">
+                            <img src="{{ asset('roadMapStyle/assets/images/about3.jpg') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 about__content">
+                    <h3 class="tag">About us</h3>
+                    <h2 class="title">Get more close with your courses.</h2>
+                    <p class="about__paragraph">
+                        The Medical Simulation Center has training spaces equipped with
+                        technology for transmitting and sharing simulation sessions, as
+                        well as high-fidelity equipment: mannequins and simulators
+                        allowing training in emergency procedures and gestures. Both
+                        professionals and students can acquire and update their skills as
+                        well as good practices in the disciplines taught.
+                    </p>
+                    <ul class="about__list">
+                        <li class="about__listItem">
+                            Improving daily practice and management of risks
+                        </li>
+                        <li class="about__listItem">
+                            Enhancing quality of care and patient’s safety
+                        </li>
+                        <li class="about__listItem">
+                            Be a reference center for medical simulation
+                        </li>
+                        <li class="about__listItem">
+                            Assessment of learners in terms of knowledge, skills and
+                            attitudes acquired
+                        </li>
+                        <li class="about__listItem">Develop research projects</li>
+                        <li class="about__listItem">
+                            Development of new simulation techniques
+                        </li>
+                    </ul>
+                    <a href="#" class="button--contained button--contained--withArrow">
+                        Start learning now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="popular">
+        <div class="container">
+            <h3 class="tag">POPULAR COURSE</h3>
+            <h2 class="title">Explore Most Popular Course</h2>
+            <p class="popular__paragraph">
+                Both professionals and students can acquire and update their skills as
+                well as good practices in the disciplines taught. All the medical and
+                nursing fields students have an opportunity to pursue their education
+                using medical simulation.
+            </p>
+            <div class="row popular__tabs">
+                <a href="#" class="button--outlined active">all courses</a>
+                {% for theme in themes %}
+                    <a href="{{ path('theme_show_all') }}" class="button--outlined">{{ theme.name }}</a>
+
+                {% endfor %}
+{#                                <a href="#" class="button--outlined">Dystocie des épaules</a> #}
+{#                                <a href="#" class="button--outlined" #}
+{#                                >Intubation trachéale difficile</a #}
+{#                                > #}
+{#                                <a href="#" class="button--outlined" #}
+{#                                >Le siège l’accouchement normal</a #}
+{#                                > #}
+{#                                <a href="#" class="button--outlined">Induction à séquence lente</a> #}
+            </div>
+
+            <div class="row">
+                {% for workshop in workshops %}
+                    <div class="col-12 col-md-6 col-xl-4 px-2 mb-5">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ 'images/workshops/'~ workshop.imageName }}" alt=""/>
+                            </div>
+                            <div class="card-body py-4">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and workshop.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                    <p class="card__free">Free for Honoris students</p>
+                                    {% endif %}
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        {% if workshop.rate %}
+                                            ( {{ workshop.rate|number_format(1) }} )
+                                        {% else %}
+                                            ( 0 )
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ workshop.name }}
+                                </h3>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {#                                4 Days #}
+                                    {{ workshop.workshopDuration }} {{ workshop.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ workshop.objectiveCount }} Objectives
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ workshop.purchasedCount }} students
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <a
+                    href="{{ path('theme_show_all') }}"
+                    class="button--contained button--contained--withArrow view-more"
+            >View All Courses</a
+            >
+        </div>
+    </section>
+
+    <section class="testimonial">
+        <div class="container">
+            <h3 class="tag">Testimonials</h3>
+            <h2 class="title mb-1">What our happy student says</h2>
+            <div class="testimonial-slider">
+                {% for item in reviews %}
+                    <div class="testimonial__card">
+                        <div class="testimonial__cardWrapper">
+              <span class="testimonial__quote"
+              ><i class="fa-solid fa-quote-left"></i
+                  ></span>
+                            <div class="testimonial__cardBody">
+                                <div class="categoriesDetails__commentStars">
+                                    {% if item.rate=="1" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="2" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="3" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="4" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="5" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% endif %}
+                                </div>
+                                <p class="testimonial__paragraph">
+                                    {{ item.comment }}
+                                </p>
+                            </div>
+                            <div class="testimonial__cardFooter">
+                                <div class="testimonial__image">
+
+                                    <img src="{{ asset('roadMapStyle/assets/images/testimonial.png') }}" alt=""/>
+
+
+                                </div>
+                                <div class="testimonial__user">
+                                    <h2 class="testimonial__userName">{{ item.user.fullName }}</h2>
+                                    <p class="testimonial__userPosition">
+                                        {% if item.user.isStudent %}
+                                            Student
+                                        {% else %}
+                                            Professional
+                                        {% endif %}
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{#    {{ render(path('selfcare_contact_component')) }}#}
+{% endblock %}
+
+{% block javaScript %}
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".testimonial-slider").slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3,
+                        },
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                ],
+            });
+        });
+    </script>
+{% endblock %}
+
+

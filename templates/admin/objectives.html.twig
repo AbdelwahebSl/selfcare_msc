@@ -1,0 +1,44 @@
+{% extends 'admin/admin_base.html.twig' %}
+{% block body %}
+    <h3 class="section-title">
+        Objectives list
+    </h3>
+    <p class="text-right">
+        <button type="button" class="tn btn-secondary btn-lg active d-flex justify-content-center
+                            align-content-between" onclick="location.href='{{ path('create_workshop_objective') }}';">
+            <span>New Objective</span> <i class="material-icons mr-1">add_circle</i>
+        </button>
+    </p>
+
+
+    <div class="table-responsive">
+        <table class="table" id="myTable">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Description</th>
+                <th scope="col">Workshop</th>
+                <th scope="col">Order</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objective in objectives %}
+                <tr>
+                    <th scope="row" class="dark-primary-color">{{ objective.name }}</th>
+                    <td>{{ objective.description }}</td>
+                    <td>{{ objective.workshop }}</td>
+                    <td>{{ objective.objectiveOrder }}</td>
+                    <td>{{ objective.objectiveStatus }}</td>
+                    <td>
+                        <a class="nav-link " href="{{ path('edit_workshop_objective',{'id':objective.id}) }}">
+                            <span class="material-icons">mode_edit</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

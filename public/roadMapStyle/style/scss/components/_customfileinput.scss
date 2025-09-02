@@ -1,0 +1,23 @@
+.customfileinput {
+    input {
+        display: none;
+    }
+    &__label {
+        display: flex;
+        border: 2px dashed #808080;
+        padding: 0.825rem 2.5rem;
+        gap: 2rem;
+        border-radius: $borderRadius;
+        align-items: center;
+        span {
+            font-size: 1.125rem;
+            color: #707071;
+            font-weight: 500;
+            font-family: $font-primary;
+        }
+        img {
+            width: 26px;
+            height: 26px;
+        }
+    }
+}

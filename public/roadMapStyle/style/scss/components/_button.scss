@@ -1,0 +1,80 @@
+.button {
+    &--contained {
+        background-color: $color-primary;
+        color: #fff;
+        display: inline-flex;
+        justify-content: space-between;
+        gap: 2rem;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-radius: $borderRadius;
+        font-size: 1.125rem;
+        line-height: 1;
+        border: none;
+        box-shadow: none;
+        &--reverse {
+            background-color: #F5F5F5;
+            color: $color-primary;
+        }
+        &--withArrow {
+            &.arrow--reverse {
+                &:after {
+                    content: none;
+                }
+                &:before {
+                    
+                content: "\f060";
+                font-family: $font-awesome;
+                font-size: 1.5rem;
+                font-weight: 700;
+                }
+            }
+            &:after {
+                content: "\f061";
+                font-family: $font-awesome;
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+        &.text-center {
+            justify-content: center;
+            text-align: center;
+        }
+        &:hover {
+            color: #fff;
+            background-color: $color-primaryLight;
+        }
+    }
+    &--outlined {
+        border: 1px solid #9B9B9B;
+        border-radius: $borderRadius;
+        padding: 0.75rem;
+        font-size: 1.125rem;
+        font-weight: 500;
+        width: auto;
+        color: inherit;
+        transition: all 0.3s ease;
+
+        &--withArrow {
+        display: inline-flex;
+        align-items: center;
+            &:after {
+                content: "\f061";
+                font-family: $font-awesome;
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+        &:hover, &.active {
+            background-color: $color-primary;
+            color: #fff;
+            border-color: $color-primary;
+        }
+    }
+    &--text {
+        color: $color-primaryLight;
+        font-size: 1.125rem;
+        font-family: $font-primary;
+        font-weight: 500;
+    }
+}

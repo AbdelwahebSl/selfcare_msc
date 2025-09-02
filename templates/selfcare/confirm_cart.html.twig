@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selfcare Home - Medical Simulation Center</title>
+
+{% block style %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../../css/style.css" rel="stylesheet"/>
+{% endblock %}
+</head>
+
+<body>
+{% block header %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <picture>
+                        <source srcset="../../../images/logo.png" media="(min-width: 768px)">
+                        <source srcset="../../../images/logo.png" media="(max-width: 768px)">
+                        <img src="../../../images/logo.png" alt="Selfcare MSC"/>
+                    </picture>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="material-icons"> menu </span>
+                </button>
+                <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{{ path('homepage') }}">Home</a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{{ path('theme_show_all') }}">Categories</a>#}
+{#                        </li>#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('theme_show_all',{type:2}) }}">Student Training</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('theme_show_all',{type:1}) }}">Professional Training</a>
+                        </li>
+                        {# <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Sign in</a>
+                    </li> #}
+                        {% if  not(is_granted('IS_AUTHENTICATED_FULLY'))  %}
+                        <li class="nav-item sign-up">
+                            <a class="nav-link" href="{{ path('app_register') }}">Sign up</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="uncollapse ms-4">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('workshop_cart') }}"><span class="material-icons">shopping_cart</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ path('my_profile') }}">
+                                <span class="material-icons">account_circle</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    </header>
+{% endblock %}
+
+{% block paymentBlock %}
+    <section class="buy-progress">
+        <div class="container">
+            <div class="buy-progress-container">
+                <div class="buy-progress__icon buy-progress__cart active">
+                    <span class="material-icons"> shopping_cart </span>
+                </div>
+                <div class="buy-progress-list active active-old">
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                </div>
+                <div class="buy-progress__icon buy-progress__confirm active">
+                    <span class="material-icons"> done </span>
+                </div>
+                <div class="buy-progress-list active">
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                    <div class="buy-progress__circle"></div>
+                </div>
+                <div class="buy-progress__icon buy-progress__pay">
+                    <span class="material-icons"> credit_card </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="lessons-cart">
+        <div class="container">
+            <div class="lessons-cart-container">
+                <div class="lessons-cart-cards ">
+                    <ul class="lessons-list">
+                        {% for workshopCart in workshopCarts %}
+                            <li>
+                                <div class="lesson-name"> {{ workshopCart.workshop.name }}</div>
+                                <div class="lesson-price"><span> {{ workshopCart.workshop.price }}</span> TND</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                    <div class="total-cost">
+                        <p class="text dark-primary-color">Total :</p>
+                        <p class="number"><span>{{ total }}</span> TND</p>
+                    </div>
+                    <div class="conditions">
+                        <p>As required by law, Honoris levies transaction taxes applicable to purchases made in certain tax
+                            jurisdictions.</p>
+                        <p>By validating your purchase, you accept these <a href="#" class="dark-primary-color">General
+                                Conditions of Use.</a></p>
+                    </div>
+                </div>
+
+                <div class="cart-action">
+                    <h3 class="text dark-primary-color">Payment with </h3>
+                    <div class="complete ">
+                        <a href="{{ path('cart_payment') }}" class="btn btn-sm complete-btn">Credit Card</a>
+                    </div>
+                    <div class="complete ">
+                        <a href="{{ path('bank_transfer_payment') }}" class="btn btn-sm complete-btn">Bank transfer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <picture>
+                        <source srcset="../../../images/logo-medical-center.png" media="(min-width: 768px)">
+                        <source srcset="../../../images/logo-medical-center.png" media="(max-width: 768px)">
+                        <img src="../../../images/logo-medical-center.png" alt="image"/>
+                    </picture>
+                </a>
+            </div>
+            <hr>
+            <ul class="social-media">
+                <li><a href="#"><img src="../../../images/icons/instagram.png" alt="instagram icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/facebook.png" alt="facebook icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/youtube-play.png" alt="youtube icon"></a></li>
+                <li><a href="#"><img src="../../../images/icons/linkedin.png" alt="linkedin icon"></a></li>
+            </ul>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascript %}
+<script src="../../../js/bootstrap.min.js"></script>
+<script src="../../../js/main.js"></script>
+{% endblock %}
+</body>
+
+</html>

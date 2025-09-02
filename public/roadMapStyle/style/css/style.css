@@ -1,0 +1,2518 @@
+.container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media only screen and (min-width: 36rem) {
+  .container {
+    max-width: 100%;
+  }
+}
+@media only screen and (min-width: 48rem) {
+  .container {
+    max-width: 46rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .container {
+    max-width: 60rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .container {
+    max-width: 72rem;
+  }
+}
+@media only screen and (min-width: 87.5rem) {
+  .container {
+    max-width: 84rem;
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Mulish", sans-serif;
+  font-family: "League Spartan", sans-serif;
+  color: #181818;
+  padding-top: 3.375rem;
+  font-size: 1rem;
+}
+@media only screen and (min-width: 75rem) {
+  body {
+    padding-top: 5.25rem;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.tag {
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: #8D1E32;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: "League Spartan", sans-serif;
+  line-height: 1;
+}
+.title--sm, .title--small {
+  font-size: 2rem;
+  line-height: 1.5;
+}
+.title--xs {
+  font-size: 1.375rem;
+}
+@media only screen and (min-width: 36rem) {
+  .title--xs {
+    font-size: 1.5rem;
+  }
+}
+.title--xl {
+  font-size: 3.5rem;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 1.125rem;
+  font-family: "League Spartan", sans-serif;
+  margin-bottom: 2rem;
+}
+.subtitle a {
+  color: #8D1E32;
+}
+
+.paragraph {
+  color: #181818;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: "Mulish", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: currentColor;
+}
+
+.flex-grow-3 {
+  flex-grow: 3;
+}
+
+.alreadyStudent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.alreadyStudent > * {
+  flex-grow: 1;
+}
+.alreadyStudent__image {
+  max-width: 11rem;
+}
+.alreadyStudent__image img {
+  width: 100%;
+  object-fit: cover;
+}
+.alreadyStudent__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: "League Spartan", sans-serif;
+  line-height: 1;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+.alreadyStudent__subtitle {
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: 0.75rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  padding-right: 0.75rem;
+}
+
+.page-contact {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.page-contact .contact__form {
+  margin-top: 0;
+}
+
+.text-md {
+  font-size: 1.125rem;
+}
+
+.categories {
+  padding: 4rem 0 0;
+  text-align: center;
+  background-color: #fff;
+}
+.categories .popular__tabs {
+  justify-content: flex-start;
+}
+
+@media only screen and (min-width: 75rem) {
+  .col-xl-recommanded {
+    width: 29%;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+.table {
+  margin: 0;
+}
+
+.slick-track {
+  display: flex;
+}
+.slick-track .slick-slide {
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.slick-dots li button {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background-color: #C7C7C7;
+}
+.slick-dots li button:before {
+  content: none;
+}
+.slick-dots .slick-active button {
+  background-color: #8D1E32;
+}
+
+.recommanded .slick-list {
+  max-width: 73rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.color-primary {
+  color: #8D1E32;
+}
+
+.page-conditions {
+  padding-bottom: 2.75rem;
+}
+.page-conditions .subtitle {
+  margin-top: 2.75rem;
+  font-size: 2rem;
+  font-family: "League Spartan", sans-serif;
+  color: #181818;
+  font-weight: 700;
+  max-width: 80rem;
+}
+.page-conditions .paragraph {
+  color: #808080;
+  font-family: "Mulish", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6875;
+  margin-top: 2.3125rem;
+  max-width: 80rem;
+}
+
+.navbar {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1607843137);
+  padding: 0;
+}
+.navbar-brand img {
+  max-width: 180px;
+}
+@media only screen and (min-width: 36rem) {
+  .navbar-brand img {
+    max-width: 200px;
+  }
+}
+.navbar .form-select {
+  padding-left: 0.5rem;
+}
+.navbar .form-select option {
+  padding: 0.75rem 1.25rem;
+}
+.navbar-nav {
+  align-items: center;
+}
+.navbar .container {
+  position: relative;
+}
+.navbar .container .toast {
+  position: absolute;
+  top: calc(100% - 2px);
+  right: 14rem;
+  border: none;
+}
+
+.nav-profile {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+}
+@media only screen and (min-width: 62rem) {
+  .nav-profile {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+}
+.nav-profile__link {
+  border: none;
+  background: none;
+}
+.nav-profile__link img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+}
+.nav-profile .dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+}
+.nav-profile .dropdown-toggle:after {
+  content: "\f078";
+  border: none;
+  font-weight: 700;
+  font-family: "Font Awesome 6 Free";
+}
+.nav-elevatedButton {
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1607843137);
+  border-radius: 6px;
+  color: #8D1E32;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+.nav-elevatedButton.cart__toggler {
+  position: relative;
+}
+.nav-elevatedButton.cart__toggler .cartLength {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.25rem;
+  background-color: #FF032E;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+.nav-elevatedButton.cart__toggler .cartLength.has-notification {
+  width: 0.625rem;
+  height: 0.625rem;
+  top: 0.75rem;
+  right: 1rem;
+}
+@media only screen and (min-width: 75rem) {
+  .nav-elevatedButton {
+    margin-left: 2rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .nav-elevatedButton:first-of-type {
+    margin-left: 1.5rem;
+  }
+}
+.nav-link {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #181818;
+  opacity: 1;
+  line-height: 1;
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  justify-content: center;
+  margin-left: auto !important;
+  margin-right: auto;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+@media only screen and (min-width: 75rem) {
+  .nav-link {
+    text-align: left;
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+.nav-link.nav-elevatedButton {
+  padding: 0 !important;
+  color: #8D1E32;
+}
+.nav-link.login-button {
+  margin-left: 2rem;
+  background-color: #8D1E32;
+  color: #fff;
+  padding: 1rem 1.25rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.375rem;
+}
+.nav-link:after {
+  content: "";
+  transform: scale(0);
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+  background-color: #8D1E32;
+}
+.nav-link:hover, .nav-link.active {
+  color: #181818;
+  opacity: 1;
+}
+.nav-link:hover:after, .nav-link.active:after {
+  transform: scale(1);
+}
+.nav-link:not(:first-of-type) {
+  margin-left: 2rem;
+}
+
+.hero {
+  padding-top: 2.75rem;
+}
+@media only screen and (min-width: 48rem) {
+  .hero {
+    padding-top: 4.75rem;
+  }
+}
+.hero__title {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.05;
+}
+@media only screen and (min-width: 48rem) {
+  .hero__title {
+    font-size: 3rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .hero__title {
+    font-size: 4.125rem;
+  }
+}
+@media only screen and (min-width: 87.5rem) {
+  .hero__title {
+    font-size: 4.5rem;
+  }
+}
+.hero__paragraph {
+  font-size: 1.125rem;
+  max-width: 40rem;
+  color: #313131;
+  font-family: "Mulish", sans-serif;
+  margin-bottom: 2rem;
+}
+.hero__search {
+  position: relative;
+}
+.hero__searchSubmit, .hero__searchIcon {
+  position: absolute;
+  top: 50%;
+}
+.hero__searchInput {
+  width: 100%;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: rgba(243, 243, 243, 0.6);
+  padding: 1.5rem 7.5rem 1.5rem 3.25rem;
+  font-size: 1.1875rem;
+}
+@media only screen and (min-width: 36rem) {
+  .hero__searchInput {
+    padding: 1.5rem 9.5rem 1.5rem 3.25rem;
+  }
+}
+.hero__searchSubmit {
+  background-color: #8D1E32;
+  border-radius: 0.375rem;
+  right: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  color: #fff;
+  border: none;
+  transform: translateY(-50%);
+}
+@media only screen and (min-width: 36rem) {
+  .hero__searchSubmit {
+    padding: 0.75rem 2.5rem;
+  }
+}
+.hero__searchIcon {
+  left: 1.125rem;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #989898;
+}
+.hero .row {
+  align-items: center;
+}
+
+.infos {
+  background-color: #8D1E32;
+  color: #fff;
+  padding: 1.875rem 0;
+  margin-bottom: 3rem;
+}
+@media only screen and (min-width: 48rem) {
+  .infos {
+    margin-bottom: 4rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .infos {
+    margin-bottom: 5rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .infos {
+    margin-bottom: 6rem;
+  }
+}
+.infos__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.125rem;
+}
+.infos__paragraph {
+  font-size: 0.825rem;
+  font-family: "Mulish", sans-serif;
+  line-height: 1.5;
+}
+.infos__card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+}
+@media only screen and (min-width: ) {
+  .infos__card {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+.infos__card.infos-first {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+.infos__card.infos-first h2 {
+  margin-bottom: 1.5rem;
+}
+.infos__card.infos-first p {
+  line-height: 2;
+}
+.infos__cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.infos__cardIcon {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: #AC273E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+@media only screen and (min-width: 48rem) {
+  .infos__cardIcon {
+    width: 4.125rem;
+    height: 4.125rem;
+  }
+}
+
+.about {
+  margin-bottom: 4rem;
+}
+.about__paragraph {
+  color: #808080;
+  font-size: 1rem;
+  line-height: 1.625;
+  font-family: "Mulish", sans-serif;
+}
+.about__list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  font-family: "Mulish", sans-serif;
+}
+.about__listItem {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  list-style-type: none;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+.about__listItem:before {
+  content: "\f00c";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #C9AC7A;
+}
+.about__images {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+.about__images .row {
+  align-items: flex-end;
+}
+.about__images .row > * {
+  margin-bottom: 2rem;
+}
+.about__images img {
+  border-radius: 0.5rem;
+}
+.about__images .row :last-of-type {
+  position: relative;
+}
+.about__images .row :last-of-type:after {
+  content: "";
+  background-image: url(/assets/images/hero_decorator.png);
+  background-size: 100% 100%;
+  max-width: 9.25rem;
+  aspect-ratio: 1;
+  width: 100%;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translateY(50%);
+  z-index: -1;
+}
+@media only screen and (min-width: 62rem) {
+  .about__content {
+    padding-left: 2rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .about__content {
+    padding-left: 4rem;
+  }
+}
+@media only screen and (min-width: 87.5rem) {
+  .about__content {
+    padding-left: 5rem;
+  }
+}
+
+.button--contained {
+  background-color: #8D1E32;
+  color: #fff;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: 0.375rem;
+  font-size: 1.125rem;
+  line-height: 1;
+  border: none;
+  box-shadow: none;
+}
+.button--contained--reverse {
+  background-color: #F5F5F5;
+  color: #8D1E32;
+}
+.button--contained--withArrow.arrow--reverse:after {
+  content: none;
+}
+.button--contained--withArrow.arrow--reverse:before {
+  content: "\f060";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.button--contained--withArrow:after {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.button--contained.text-center {
+  justify-content: center;
+  text-align: center;
+}
+.button--contained:hover {
+  color: #fff;
+  background-color: #AC273E;
+}
+.button--outlined {
+  border: 1px solid #9B9B9B;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  width: auto;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+.button--outlined--withArrow {
+  display: inline-flex;
+  align-items: center;
+}
+.button--outlined--withArrow:after {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.button--outlined:hover, .button--outlined.active {
+  background-color: #8D1E32;
+  color: #fff;
+  border-color: #8D1E32;
+}
+.button--text {
+  color: #AC273E;
+  font-size: 1.125rem;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 500;
+}
+
+.popular {
+  padding: 4rem 0;
+  text-align: center;
+  background-color: #f5f8f8;
+  background-image: url(./../../../assets/images/popularBG.png);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.popular__paragraph {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  max-width: 62.5rem;
+  margin: 2.5rem auto;
+  font-family: "Mulish", sans-serif;
+}
+.popular__tabs {
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+.popular__tabs > * {
+  text-transform: capitalize;
+}
+.popular .view-more {
+  margin-top: 3rem;
+  gap: 4rem;
+}
+
+.testimonial {
+  padding-top: 4rem;
+}
+.testimonial__card {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #797979;
+}
+.testimonial__cardWrapper {
+  border: 1px solid #EDEDED;
+  box-shadow: 0 2px 6px rgba(49, 49, 49, 0.0235294118);
+  padding-top: 3rem;
+  position: relative;
+  background-color: #fff;
+}
+.testimonial__cardBody {
+  padding: 0 1.25rem 1.25rem;
+}
+.testimonial__cardFooter {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #EAEFF3;
+  padding: 1.25rem;
+}
+.testimonial__image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999999px;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+.testimonial__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.testimonial__userName {
+  color: #453232;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+.testimonial__userPosition {
+  font-size: 0.75rem;
+}
+.testimonial__stars {
+  color: #F2B002;
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.testimonial__paragraph {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: "Mulish", sans-serif;
+}
+.testimonial__quote {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  transform: translateY(-50%);
+  padding: 1rem;
+  background-color: #fff;
+  color: #8D1E32;
+  font-size: 2.5rem;
+}
+.testimonial .slick-list {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.card {
+  text-align: left;
+  font-family: "Mulish", sans-serif;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  border: none;
+  height: 100%;
+}
+.card-image img {
+  width: 100%;
+  height: 15.5rem;
+  object-fit: cover;
+}
+.card__header, .card__footer {
+  display: flex;
+  align-items: center;
+}
+.card__header {
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.card__seperator {
+  width: 1px;
+  background-color: #989898;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  height: 75%;
+  min-height: 1rem;
+}
+.card__free {
+  margin-top: -3.5rem;
+  background-color: #c9ac7a;
+  color: #fff;
+  margin-bottom: 3.5rem;
+  max-width: 10.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+}
+@media only screen and (min-width: 36rem) {
+  .card__free {
+    max-width: 12.375rem;
+  }
+}
+.card__stars {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  margin-left: auto;
+}
+.card__stars svg, .card__stars i, .card__stars span {
+  color: #ffc107;
+  font-size: 1.25rem;
+}
+.card__title {
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.card__date {
+  font-size: 1.1875em;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #8D1E32;
+  margin-top: auto;
+}
+.card__date span {
+  font-size: 1.5rem;
+}
+.card__footer {
+  font-size: 1.0625rem;
+}
+.card__footer span {
+  color: #808080;
+  font-size: 1.1875em;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+.card__link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: 2;
+}
+.card .showToast {
+  position: absolute;
+  bottom: 2rem;
+  left: 1rem;
+  z-index: 3;
+  display: none;
+}
+.card:hover .cardHover {
+  opacity: 1;
+}
+.card:hover .showToast {
+  display: flex;
+}
+.cardHover {
+  position: absolute;
+  background: #8D1E32;
+  color: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+  padding-bottom: 10rem;
+}
+.cardHover .card__header {
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.cardHover .card__free {
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #fff;
+  color: #181818;
+}
+.cardHover .card__date {
+  color: #fff;
+  margin-top: 0;
+}
+.cardHover .card__content {
+  font-family: "Mulish", sans-serif;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+}
+.cardHover .card__footer {
+  margin-bottom: 1rem;
+}
+.card .button--contained {
+  background-color: #C9AC7A;
+  width: auto;
+  width: max-content;
+  max-width: 100%;
+  margin-top: auto;
+}
+
+.contact {
+  background-image: url(/assets/images/contact.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  margin-top: 16rem;
+}
+.contact__form {
+  background-color: #fff;
+  box-shadow: 0 -10px 30px rgba(152, 152, 152, 0.3019607843);
+  margin-top: -11rem;
+  z-index: 1;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.5rem;
+}
+@media only screen and (min-width: 36rem) {
+  .contact__form {
+    padding: 3.5rem;
+  }
+}
+.contact__list {
+  list-style: none;
+  padding: 0;
+}
+.contact__item {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.contact__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8D1E32;
+  font-size: 1.5rem;
+  width: 4.3125rem;
+  height: 4.3125rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background-color: #F3F3F3;
+}
+
+.form__group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+.form textarea.form__input {
+  height: 9.25rem;
+  resize: none;
+}
+.form textarea.form__input ~ label, .form textarea ~ .form__label {
+  top: 2rem;
+}
+.form__input {
+  width: 100%;
+  border: none;
+  background-color: rgba(152, 152, 152, 0.1098039216);
+  border-radius: 0.625rem;
+  padding: 1.5rem;
+}
+.form__input:focus ~ label, .form__input:focus-visible ~ label, .form__input:focus-within ~ label {
+  top: 0 !important;
+  transform: translateY(0%) !important;
+}
+.form__label {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+.form__label.active {
+  top: 0 !important;
+  transform: translateY(0%) !important;
+}
+
+.footer {
+  background-color: #252525;
+  color: #EAEAEA;
+  font-family: "Mulish", sans-serif;
+}
+.footer__top {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.footer__top * {
+  color: #EAEAEA;
+}
+.footer__bottom {
+  padding: 1rem;
+  background-color: #000;
+  color: #fff;
+  font-family: "League Spartan", sans-serif;
+}
+.footer__paragraph {
+  font-size: 1.125rem;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+.footer__title {
+  font-family: "League Spartan", sans-serif;
+  margin-bottom: 1.5rem;
+  font-size: 1.6875rem;
+  font-weight: 700;
+}
+.footer__logo {
+  margin-bottom: 1.5rem;
+  max-width: 15rem;
+}
+.footer__list {
+  padding: 0;
+  list-style-type: none;
+}
+.footer__listItem {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.footer__subtitle {
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+}
+.footer__text {
+  font-size: 1.25rem;
+}
+.footer__input {
+  padding: 1rem 0.5rem;
+  border-radius: 0.375rem;
+  color: #181818;
+}
+.footer__input::placeholder {
+  color: rgba(27, 28, 49, 0.4);
+  text-transform: uppercase;
+}
+.footer__contact {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer__contact input {
+  flex-grow: 2;
+}
+.footer__contact .button--contained {
+  flex-grow: 1;
+  gap: 1rem;
+  padding: 1rem 0.75rem;
+}
+
+.socialmedia {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.25rem;
+}
+.socialmedia__link {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3C3C3C;
+  font-size: 1.5rem;
+}
+
+.signup {
+  background-color: #F4F9FA;
+  padding-top: 9rem;
+  padding-bottom: 9rem;
+  isolation: isolate;
+}
+.signup__form {
+  background-color: #fff;
+  max-width: 35rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 2.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  position: relative;
+}
+.signup__form:after {
+  content: "";
+  background-image: url(/assets/images/hero_decorator.png);
+  background-size: 100% 100%;
+  max-width: 9.25rem;
+  aspect-ratio: 1;
+  width: 100%;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-50%, 50%);
+  z-index: -1;
+}
+.signup__form .form-label, .signup__form input, .signup__form select {
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.125rem;
+}
+.signup__form .form-label {
+  padding-left: 0.625rem;
+}
+.signup__form input:not([type=checkbox], [type=radio]), .signup__form select {
+  padding: 1.25rem 2rem;
+  border-color: #E4E5E4;
+}
+.signup__form input:not([type=checkbox], [type=radio])::placeholder, .signup__form select::placeholder {
+  color: #707071;
+}
+.signup__form .form-check label {
+  margin-top: 0.25rem;
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.125rem;
+}
+
+.banner {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f9fa;
+  isolation: isolate;
+}
+.banner__decorator {
+  position: absolute;
+  height: 9rem;
+}
+.banner__decorator img {
+  height: 100%;
+}
+.banner__decorator:first-of-type {
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+.banner__decorator:nth-of-type(2) {
+  right: 0;
+  top: 50%;
+  transform: translate(75%, 25%);
+}
+.banner:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url(/assets/images/bannerDecoration.png);
+  background-size: contain;
+  width: 36rem;
+  height: 12rem;
+  z-index: -1;
+}
+
+.pagination {
+  gap: 1rem;
+}
+.pagination .page-item {
+  padding: 0;
+  width: 2.625rem;
+  height: 2.625rem;
+  border: 1px solid #EDF0F6;
+  border-radius: 0.375rem;
+  color: #181818;
+  font-weight: 500;
+  overflow: hidden;
+}
+.pagination .page-item .page-link {
+  padding: 0;
+  border: none;
+  line-height: 1;
+  color: inherit;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+  gap: 0.5rem;
+}
+.pagination .page-item .page-link:hover {
+  color: #fff;
+  background-color: #C9AC7A;
+}
+.pagination .page-item .page-link .page-icon {
+  font-size: 0.875rem;
+}
+.pagination .page-item:first-of-type, .pagination .page-item:last-of-type {
+  border: none;
+  width: auto;
+}
+.pagination .page-item:first-of-type .page-link:hover, .pagination .page-item:last-of-type .page-link:hover {
+  background-color: transparent;
+  color: #C9AC7A;
+}
+
+.cart__summary {
+  max-width: 28.75rem;
+  margin-left: auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  gap: 1.5rem;
+  margin-right: -0.75rem;
+}
+.cart__buttons {
+  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-bottom: 3rem;
+  margin-right: -0.75rem;
+}
+.cart__total {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  margin-bottom: 2rem;
+}
+.cart__total * {
+  margin-bottom: 0;
+}
+.cart__totalBlock {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.cart__totalBlock:first-of-type {
+  border-bottom: 1px solid #707070;
+}
+.cart__totalPrice {
+  font-size: 1.375rem;
+}
+@media only screen and (min-width: 36rem) {
+  .cart__totalPrice {
+    font-size: 1.5rem;
+  }
+}
+.cart__totalPrice span {
+  vertical-align: top;
+  font-size: 0.875rem;
+}
+.cart__accept {
+  font-size: 1.125rem;
+  line-height: 1.5;
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  margin-bottom: 3rem;
+}
+.cart__accept a {
+  color: #AC273E;
+  font-weight: 700;
+}
+.cart__payementInput {
+  background-color: #F9F9F9;
+  border-radius: 0.5rem;
+  height: 100%;
+}
+.cart__payementInput input {
+  display: none;
+}
+.cart__payementInput input:checked ~ label .cart__payementRadioIcon {
+  background-color: #8D1E32;
+}
+.cart__payementInput label {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+}
+.cart__payementLabel {
+  margin: 0;
+  font-size: 1.125rem;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 400;
+}
+.cart__payementRadioIcon {
+  display: block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: #fff;
+  box-shadow: 0 0 0 5px #fff, 0 0 0 6px #989898;
+}
+.cart__payementIcon {
+  width: 2.5rem;
+}
+
+.Table {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.Table__container {
+  max-width: 53rem;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  border-radius: 0.375rem;
+}
+.Table__content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+}
+@media only screen and (min-width: 48rem) {
+  .Table__content {
+    gap: 2rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .Table__content {
+    gap: 3rem;
+  }
+}
+.Table__image {
+  max-width: 4.5rem;
+}
+@media only screen and (min-width: 36rem) {
+  .Table__image {
+    max-width: 5.5rem;
+  }
+}
+@media only screen and (min-width: 48rem) {
+  .Table__image {
+    max-width: 6.5rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .Table__image {
+    max-width: 8.5rem;
+  }
+}
+.Table table {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: "League Spartan", sans-serif;
+  background-color: #fff;
+  overflow: hidden;
+  min-width: 600px;
+}
+.Table table * {
+  font-size: 1.25rem;
+}
+.Table table * td span {
+  font-size: 0.75rem;
+  vertical-align: top;
+}
+.Table thead {
+  background-color: #8D1E32;
+  color: #fff;
+}
+.Table th {
+  padding: 1.25rem;
+  min-width: 12.5rem;
+}
+.Table td {
+  padding: 1.25rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.Table button {
+  background-color: transparent;
+  border: none;
+}
+.Table__status {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem !important;
+  font-weight: 500;
+  min-width: 8rem;
+  text-align: center;
+}
+.Table__status--approved {
+  background-color: #BEEEC6;
+  color: #00A700;
+}
+.Table__status--failed {
+  background-color: #FFD6DD;
+  color: #F40018;
+}
+.Table__status--hold {
+  background-color: #FFE5A2;
+  color: #F2B002;
+}
+
+.profile {
+  padding-top: 5rem;
+  position: relative;
+}
+.profile:before {
+  content: "";
+  background-image: url(/assets/images/hero_decorator.png);
+  background-size: 100% 100%;
+  max-width: 9.25rem;
+  aspect-ratio: 1;
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, 0);
+  z-index: -1;
+}
+.profile__card {
+  font-size: 1.125rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  font-family: "League Spartan", sans-serif;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+.profile__cardHeader {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  text-align: center;
+  border-bottom: 1px solid #707070;
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media only screen and (min-width: 48rem) {
+  .profile__cardHeader {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+.profile__cardImage {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+.profile__cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile__cardName {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.profile__cardTag {
+  padding: 0.75rem 1.25rem;
+  color: #fff;
+  background-color: #8D1E32;
+  font-weight: 500;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  font-size: inherit;
+  min-width: 12rem;
+  width: max-content;
+  margin: 0;
+  border-radius: 0.375rem;
+}
+.profile__cardBody {
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+}
+.profile__cardList {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style-type: none;
+}
+.profile__cardItem:last-of-type {
+  margin-top: 3rem;
+}
+.profile__cardLink {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  transition: background-color 0.3s ease;
+  color: #181818;
+}
+@media only screen and (min-width: 48rem) {
+  .profile__cardLink {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+.profile__cardLink:hover, .profile__cardLink.active {
+  background-color: #F6F6F6;
+}
+.profile__cardLinkIcon {
+  color: #8D1E32;
+  width: 1.25rem;
+}
+.profile__cardLinkArrow {
+  margin-left: auto;
+}
+.profile__cardLinkText {
+  font-weight: 500;
+}
+.profile__content {
+  margin-top: 3rem;
+}
+@media only screen and (min-width: 62rem) {
+  .profile__content {
+    margin-top: 0;
+  }
+}
+.profile__sideCard {
+  padding: 2rem 3rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  margin-top: 4rem;
+  border-radius: 0.375rem;
+}
+.profile__sideCardNumber {
+  font-size: 4.5rem;
+  font-weight: 700;
+}
+.profile__sideCardNumber--completed {
+  color: #3BA303;
+}
+.profile__sideCardNumber--progress {
+  color: #C9AC7A;
+}
+.profile__learningCard {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Mulish", sans-serif;
+}
+@media only screen and (min-width: 87.5rem) {
+  .profile__learningCard {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}
+@media only screen and (min-width: 36rem) {
+  .profile__learningCard {
+    flex-direction: row;
+  }
+}
+.profile__learningCardImage {
+  max-width: 100%;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+}
+@media only screen and (min-width: 36rem) {
+  .profile__learningCardImage {
+    width: 12rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .profile__learningCardImage {
+    width: 14rem;
+  }
+}
+@media only screen and (min-width: 87.5rem) {
+  .profile__learningCardImage {
+    width: 17rem;
+  }
+}
+.profile__learningCardImage img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+.profile__learningCardBody {
+  padding: 1.5rem 2rem;
+  flex-grow: 1;
+}
+@media only screen and (min-width: 36rem) {
+  .profile__learningCardBody {
+    max-width: calc(100% - 14rem);
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .profile__learningCardBody {
+    max-width: calc(100% - 16rem);
+  }
+}
+@media only screen and (min-width: 87.5rem) {
+  .profile__learningCardBody {
+    max-width: calc(100% - 19rem);
+  }
+}
+.profile__learningCardTitle {
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  margin-bottom: 1.5rem;
+}
+.profile__learningCardProgress {
+  width: 100%;
+  max-width: 38rem;
+  height: 0.75rem;
+  background-color: #EBEBEB;
+  border-radius: 0.125rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.profile__learningCardProgress .progress-bar {
+  transform: translateX(-100%);
+  background-color: #C9AC7A;
+  height: 100%;
+  border-radius: 0.125rem;
+  animation: progress 1.5s ease forwards;
+}
+.profile__learningCardLabel {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.profile__learningCardLabel:first-of-type {
+  font-weight: 700;
+}
+.profile__learningCardButton {
+  padding: 0.75rem 3rem 0.75rem 2rem;
+  border-radius: 0.375rem;
+  font-family: "League Spartan", sans-serif;
+  font-size: 0.875rem;
+  background-color: #8D1E32;
+  color: #fff;
+  position: relative;
+  transition: background-color 0.3s ease;
+  width: 9.5rem;
+  flex-grow: 1;
+  text-align: center;
+  margin-top: 1rem;
+}
+@media only screen and (min-width: 75rem) {
+  .profile__learningCardButton {
+    margin-top: 0;
+  }
+}
+.profile__learningCardButton:hover {
+  color: #fff;
+  background-color: #5a121f;
+}
+.profile__learningCardButton:after {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 700;
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.profile__learningCardButton--completed {
+  padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+  background-color: #e7cfd4;
+  color: #8D1E32;
+}
+.profile__learningCardButton--completed:hover {
+  color: #8D1E32;
+  background-color: #ebb4c0;
+}
+.profile__learningCardButton--completed:after {
+  display: none;
+}
+.profile__learningCardButton--installed {
+  background-color: #00A700;
+}
+.profile__learningCardButton--installed:hover {
+  background-color: #008a00;
+}
+.profile__learningCardButton--installed:after {
+  content: "\f00c";
+}
+.profile__learningCardText {
+  margin-bottom: 1.5rem;
+}
+.profile .form {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  padding: 1rem 1.5rem;
+}
+@media only screen and (min-width: 36rem) {
+  .profile .form {
+    padding: 2rem 2.5rem;
+  }
+}
+@media only screen and (min-width: 48rem) {
+  .profile .form {
+    padding: 3rem 3.5rem;
+  }
+}
+@media only screen and (min-width: 62rem) {
+  .profile .form {
+    padding: 4rem 4.5rem;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .profile .form {
+    padding: 4rem 7.5rem;
+  }
+}
+.profile .form-label {
+  margin-left: 0.25rem;
+}
+.profile .Table {
+  padding-top: 0;
+}
+.profile .Table__container {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.container .main-video-container .main-video {
+  border-radius: 5px;
+  width: 100%;
+  min-height: 480px;
+}
+
+.container .main-video-container .main-vid-title {
+  font-size: 20px;
+  color: #444;
+}
+
+.container .video-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container .video-list-container::-webkit-scrollbar-track {
+  background-color: rgba(141, 30, 50, 0.4980392157);
+  border-radius: 5px;
+}
+
+.container .video-list-container::-webkit-scrollbar-thumb {
+  background-color: #8D1E32;
+  border-radius: 5px;
+}
+
+.container .video-list-container .list-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.container .video-list-container .list-item:last-child {
+  margin-bottom: 0;
+}
+
+.container .video-list-container .list-item.active {
+  background-color: #444;
+}
+
+.container .video-list-container .list-item.active .list-title {
+  color: #fff;
+}
+
+.container .video-list-container .list-item .list-video {
+  width: 100px;
+  border-radius: 5px;
+  display: none;
+}
+
+.container .video-list-container .list-item .list-title {
+  font-size: 17px;
+  color: #444;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    margin: 0;
+  }
+}
+@media (max-width: 450px) {
+  .container .main-video-container .main-vid-title {
+    font-size: 15px;
+    text-align: center;
+  }
+  .container .video-list-container .list-item {
+    flex-flow: column;
+    gap: 10px;
+  }
+  .container .video-list-container .list-item .list-video {
+    width: 100%;
+  }
+  .container .video-list-container .list-item .list-title {
+    font-size: 15px;
+    text-align: center;
+  }
+}
+.video .container .subtitle {
+  margin-bottom: 0.5rem;
+}
+.video .container .video-list-container {
+  padding: 2rem 0 !important;
+  box-shadow: 0 3px 10px rgba(220, 220, 220, 0.1607843137);
+  max-height: 40rem;
+  overflow-y: auto;
+  border-radius: 0.375rem;
+  background-color: #fff;
+  margin-top: 2rem;
+  border: 1px solid #E9E9E9;
+}
+@media only screen and (min-width: 62rem) {
+  .video .container .video-list-container {
+    margin-top: 0rem;
+    margin-bottom: -10rem;
+  }
+}
+.video .container .video-list-container .list-item {
+  border-radius: 0;
+  margin-bottom: 0;
+  background-color: transparent;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+.video .container .video-list-container .list-item:hover, .video .container .video-list-container .list-item.active {
+  background-color: #F6F6F6;
+  color: #181818;
+  border-radius: 0;
+}
+.video .container .video-list-container .list-item:hover .list-title, .video .container .video-list-container .list-item.active .list-title {
+  color: #181818;
+}
+.video .container .video-list-container .list-item .list-title {
+  margin-bottom: 0;
+}
+.video .container .video-list-container .list-item p {
+  margin-left: auto;
+  font-weight: 700;
+}
+.video .container .video-list-container .list-item:before {
+  content: "\f04b";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #181818;
+  width: 1.25rem;
+  flex-shrink: 0;
+}
+.video .container .video-list-container .list-item.watched::before {
+  content: "\f00c";
+  color: #00A700;
+}
+.video .container .video-list-container .list-item.active::before {
+  color: #181818;
+  content: "\f04c";
+}
+
+@media only screen and (min-width: 62rem) {
+  .negative-mt {
+    margin-top: -3rem;
+  }
+}
+
+.categoriesDetails {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.categoriesDetails__list {
+  list-style-type: none;
+  padding: 0;
+}
+.categoriesDetails__item {
+  gap: 1rem;
+  display: flex;
+  align-items: flex-start;
+  color: #808080;
+  margin-bottom: 1.25rem;
+}
+.categoriesDetails__item:before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background-color: #C9AC7A;
+  flex-shrink: 0;
+  flex-grow: 0;
+  margin-top: 0.25rem;
+}
+.categoriesDetails__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+.categoriesDetails__tags .title {
+  margin-bottom: 0 !important;
+}
+.categoriesDetails__tag {
+  color: #181818;
+  border: 1px solid #9B9B9B;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+.categoriesDetails__tag:hover {
+  background-color: #181818;
+  color: #fff;
+}
+.categoriesDetails__review {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  align-items: center;
+}
+.categoriesDetails__reviewTotal {
+  background-color: #fff;
+  border-radius: 0.375rem;
+  width: 13.5rem;
+  height: 13.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.categoriesDetails__reviewCount {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #6F7070;
+}
+.categoriesDetails__reviewProgressList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+  min-width: 18rem;
+}
+.categoriesDetails__reviewProgressList .progressbar {
+  width: 100%;
+  max-width: 38rem;
+  height: 0.75rem;
+  background-color: #EBEBEB;
+  border-radius: 0.125rem;
+  overflow: hidden;
+}
+.categoriesDetails__reviewProgressList .progressbar .progressbar-filled {
+  transform: translateX(-100%);
+  background-color: #C9AC7A;
+  height: 100%;
+  border-radius: 0.125rem;
+  animation: progress 1.5s ease forwards;
+}
+.categoriesDetails__reviewProgressList .percentage {
+  width: 2rem;
+  flex-shrink: 0;
+}
+.categoriesDetails__reviewProgressItem {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.categoriesDetails__reviewProgressStarsCount {
+  width: 3rem;
+  flex-shrink: 0;
+}
+.categoriesDetails__review .title {
+  margin: 0 !important;
+}
+.categoriesDetails__comment {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  font-family: "League Spartan", sans-serif;
+  flex-wrap: wrap;
+}
+.categoriesDetails__commentImage {
+  width: 5.125rem;
+  height: 5.125rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.categoriesDetails__commentImage img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.categoriesDetails__commentBody {
+  width: 100%;
+}
+@media only screen and (min-width: 36rem) {
+  .categoriesDetails__commentBody {
+    min-width: 24rem;
+    width: calc(100% - 7.125rem);
+  }
+}
+.categoriesDetails__commentName {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: "League Spartan", sans-serif;
+}
+.categoriesDetails__commentStars {
+  display: flex;
+  gap: 0.25rem;
+}
+.categoriesDetails__commentStars .fa-star {
+  color: #ebebeb;
+  font-size: 0.75rem;
+}
+.categoriesDetails__commentStars .fa-star.active {
+  color: #ffc107;
+}
+.categoriesDetails__commentStars.add .fa-star {
+  font-size: 2rem;
+  color: #989898;
+}
+.categoriesDetails__commentStars.add .fa-star.active {
+  color: #ffc107;
+}
+.categoriesDetails__commentDate, .categoriesDetails__commentText {
+  font-size: 1rem;
+  color: #989898;
+  font-family: "League Spartan", sans-serif;
+}
+.categoriesDetails .order-mobile-1 {
+  order: 1;
+  margin-bottom: 2rem;
+}
+@media only screen and (min-width: 62rem) {
+  .categoriesDetails .order-mobile-1 {
+    order: 0;
+  }
+}
+.categoriesDetails .order-mobile-2 {
+  order: 2;
+}
+@media only screen and (min-width: 62rem) {
+  .categoriesDetails .order-mobile-2 {
+    order: 0;
+  }
+}
+.categoriesDetails .title {
+  margin-bottom: 1rem;
+}
+.categoriesDetails .paragraph {
+  margin-bottom: 2rem;
+}
+.categoriesDetails__commentInput {
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+.categoriesDetails__commentInput textarea {
+  min-height: 10rem;
+}
+.categoriesDetails__commentInput label {
+  top: 3rem;
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+#full-stars-example-two {
+  /* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
+  /* make hover effect work properly in IE */
+  /* hide radio inputs */
+  /* hide 'none' input from screenreaders */
+  /* set icon padding and size */
+  /* set default star color */
+  /* if any input is checked, make its following siblings grey */
+  /* make all stars orange on rating group hover */
+  /* make hovered input's following siblings grey on hover */
+}
+#full-stars-example-two .rating-group {
+  display: inline-flex;
+}
+#full-stars-example-two .rating__icon {
+  pointer-events: none;
+}
+#full-stars-example-two .rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+}
+#full-stars-example-two .rating__input--none {
+  display: none;
+}
+#full-stars-example-two .rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+}
+#full-stars-example-two .rating__icon--star {
+  color: orange;
+}
+#full-stars-example-two .rating__input:checked ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+#full-stars-example-two .rating-group:hover .rating__label .rating__icon--star {
+  color: orange;
+}
+#full-stars-example-two .rating__input:hover ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+
+.categoriesDetailsCard {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1607843137);
+  background-color: #fff;
+  border-radius: 0.375rem;
+  font-family: "League Spartan", sans-serif;
+}
+@media only screen and (min-width: 62rem) {
+  .categoriesDetailsCard {
+    margin-top: -18rem;
+    position: sticky;
+    z-index: 100;
+  }
+}
+.categoriesDetailsCard__image {
+  max-height: 17.5rem;
+  width: 100%;
+  aspect-ratio: 19/14;
+}
+.categoriesDetailsCard__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.categoriesDetailsCard__body {
+  padding: 2rem 1.125rem;
+}
+.categoriesDetailsCard__list {
+  list-style-type: none;
+  padding: 0;
+}
+.categoriesDetailsCard__item {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  font-weight: 500;
+}
+.categoriesDetailsCard__item:not(:last-of-type) {
+  border-bottom: 1px solid #F2F2F2;
+}
+.categoriesDetailsCard__item:first-of-type .categoriesDetailsCard__info {
+  font-size: 1.75rem;
+  color: #8D1E32;
+  font-weight: 700;
+}
+.categoriesDetailsCard__item:first-of-type .categoriesDetailsCard__info span {
+  font-size: 0.875rem;
+  vertical-align: top;
+}
+.categoriesDetailsCard__title {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.categoriesDetailsCard__title i, .categoriesDetailsCard__title svg, .categoriesDetailsCard__title path {
+  fill: #8D1E32;
+  color: #8D1E32;
+}
+.categoriesDetailsCard__title i, .categoriesDetailsCard__title svg {
+  width: 1.25rem;
+  margin-right: 0.75rem;
+}
+.categoriesDetailsCard__info {
+  font-size: 1.125rem;
+}
+.categoriesDetailsCard .socialmedia {
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+.categoriesDetailsCard .socialmedia__link {
+  background-color: #989898;
+  color: #fff;
+}
+.categoriesDetailsCard .button--contained {
+  display: flex;
+  width: max-content;
+  max-width: 12rem;
+}
+
+.modalCart {
+  backdrop-filter: blur(50px);
+}
+.modalCart__dialog {
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100vh;
+  max-width: 50rem;
+}
+.modalCart__content {
+  border-radius: 0;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 4rem;
+}
+.modalCart__close {
+  font-size: 1.5rem;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 0;
+}
+.modalCart__title, .modalCart__subtitle {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+.modalCart__title {
+  font-size: 3rem;
+}
+.modalCart__subtitle {
+  font-size: 2rem;
+  margin-top: 3rem;
+}
+.modalCart .seperator {
+  border-color: #707070;
+  margin: 0;
+  opacity: 0.3;
+}
+.modalCart__card {
+  padding: 1.75rem 2.5rem 1.75rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(112, 112, 112, 0.3);
+}
+.modalCart__cardBody {
+  width: calc(100% - 9.75rem);
+  padding: 0.5rem 1.25rem;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+}
+.modalCart__cardBody * {
+  font-family: inherit;
+  font-weight: inherit;
+}
+.modalCart__cardTitle {
+  font-size: 1.25rem;
+}
+.modalCart__cardPrice {
+  font-size: 1.25rem;
+}
+.modalCart__cardPrice span {
+  font-size: 0.875rem;
+  vertical-align: top;
+}
+.modalCart__image {
+  width: 8.5rem;
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+.modalCart__icon {
+  width: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+}
+.modalCart__totalRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.25rem;
+  font-family: "League Spartan", sans-serif;
+  margin-bottom: 5rem;
+}
+.modalCart__totalRowTitle {
+  font-size: 1.5rem;
+  font-family: inherit;
+  font-weight: 500;
+}
+.modalCart__totalRowPrice {
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 1.5rem;
+}
+.modalCart__totalRowPrice span {
+  font-size: 0.875rem;
+  vertical-align: top;
+}
+.modalCart .button--outlined {
+  color: #808080;
+  border-color: #808080;
+  margin-bottom: 1.5rem;
+}
+.modalCart .button--outlined:hover {
+  color: #fff;
+}
+.modalCart .button--contained, .modalCart .button--outlined {
+  justify-content: center;
+  gap: 2rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.transfertSteps__tab {
+  padding-top: 4rem;
+  padding-right: 6rem;
+  position: relative;
+}
+.transfertSteps__tab:not(:last-of-type):after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-size: 1rem;
+  font-weight: 900;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #AC273E;
+  display: block;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+.transfertSteps__index {
+  position: absolute;
+  font-size: 5.625rem;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 900;
+  color: rgba(24, 24, 24, 0.1);
+  top: 0;
+}
+.transfertSteps__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+  font-family: "League Spartan", sans-serif;
+}
+
+.bankInfo .row {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.bankInfo .row > *:not(.w-auto) {
+  min-width: 19.5rem;
+}
+.bankInfo__title {
+  font-size: 1.25rem;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  color: #AC273E;
+}
+.bankInfo .form__input {
+  background-color: #DFDFDF;
+}
+.bankInfo .form__label {
+  color: #181818;
+  font-weight: 600;
+}
+
+.customfileinput input {
+  display: none;
+}
+.customfileinput__label {
+  display: flex;
+  border: 2px dashed #808080;
+  padding: 0.825rem 2.5rem;
+  gap: 2rem;
+  border-radius: 0.375rem;
+  align-items: center;
+}
+.customfileinput__label span {
+  font-size: 1.125rem;
+  color: #707071;
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+}
+.customfileinput__label img {
+  width: 26px;
+  height: 26px;
+}
+
+.toast-body {
+  display: flex;
+  gap: 1.5rem;
+}
+.toast-body img {
+  width: 35px;
+}
+.toast-body span {
+  font-size: 1.25rem;
+  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  color: #181818;
+}
+
+/*# sourceMappingURL=style.css.map */

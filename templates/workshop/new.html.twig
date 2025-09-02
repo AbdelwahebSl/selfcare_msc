@@ -1,0 +1,345 @@
+{# <!DOCTYPE html> #}
+{# <html lang="en"> #}
+
+{# <head> #}
+{# <meta charset="UTF-8"> #}
+{# <meta http-equiv="X-UA-Compatible" content="IE=edge"> #}
+{# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
+{# <title>MSC Homepage</title> #}
+{# <link rel="preconnect" href="https://fonts.googleapis.com"> #}
+{# <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #}
+{# <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400;700&display=swap" rel="stylesheet"> #}
+{# <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/> #}
+{# <link rel="stylesheet" href="../../CSS/bootstrap.min.css"> #}
+{# <link rel="stylesheet" href="../../CSS/style.css"> #}
+
+{# </head> #}
+{# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+{# <body> #}
+{# <header> #}
+{# <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> #}
+{# <div class="container"> #}
+{# <a class="navbar-brand" href="#"> #}
+{# <picture> #}
+{# <source srcset="../../Images/logo.png" media="(min-width: 768px)"> #}
+{# <source srcset="../../Images/logo.png" media="(max-width: 768px)"> #}
+{# <img src="../../Images/logo.png" alt="image"/> #}
+{# </picture> #}
+{# </a> #}
+{# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" #}
+{# data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" #}
+{# aria-expanded="false" aria-label="Toggle navigation"> #}
+{# <span class="material-icons"> menu </span> #}
+{# </button> #}
+{# <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent"> #}
+{# <ul class="navbar-nav me-auto "> #}
+{# </ul> #}
+{# </div> #}
+{# <div class="uncollapse ms-4"> #}
+{# <ul class="navbar-nav"> #}
+{# </ul> #}
+{# </div> #}
+{# </div> #}
+{# </nav> #}
+
+
+{# </header> #}
+
+{# <section class="profile"> #}
+{# <div class="name-title"> #}
+{# <div class="container"> #}
+{# <div class="row"> #}
+{# <div class="col-md-4 col-lg-3 d-none d-md-block"></div> #}
+{# <div class="col-md-8 col-lg-9 font-color ps-md-4 d-none d-md-block"> #}
+{# <h1 class="section-title mb-2 mt-3 font-color">{{ user.fullName }}</h1> #}
+{# <p class="ps-lg-5 ps-3 mb-3">{{ user.description }}</p> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# <div class="profile-edit py-3"> #}
+{# <div class="container"> #}
+{# <div class="row"> #}
+{# <div class="profile-info d-flex flex-column col-lg-3 col-md-4 col-12 p-1"> #}
+{# <div class="profile-card mb-4"> #}
+{# <div class="profile-picture p-3"> #}
+{# <div class="d-flex justify-content-center align-items-start"> #}
+{# <div class="profile-image me-3 mx-md-auto"> #}
+{# <picture> #}
+{# {% if user.imageName %} #}
+{# <source srcset="{{ 'images/workshops/'~ user.imageName }}" #}
+{# media="(min-width: 768px)"> #}
+{# <source srcset="{{ 'images/workshops/'~ user.imageName }}" #}
+{# media="(max-width: 768px)"> #}
+{# <img src="{{ 'images/workshops/'~ user.imageName }}" alt=""/> #}
+{# {% else %} #}
+{# <source srcset="../../Images/Ellipse 34.jpg" media="(min-width: 768px)"> #}
+{# <source srcset="../../Images/Ellipse 34.jpg" media="(max-width: 768px)"> #}
+{# <img src="../../Images/Ellipse 34.jpg" alt=""/> #}
+{# {% endif %} #}
+{# </picture> #}
+{# </div> #}
+{# <div class="profile-name d-md-none"> #}
+{# <h1 class="section-title mb-2 mt-3 dark-primary-color">{{ user.fullName }}</h1> #}
+{# <p class="ps-lg-5 mb-3">{{ user.description }}</p> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# <div class="profile-card-buttons"> #}
+{# <div class="btn-group"> #}
+{# <button type="button" class="btn profile-card-button brn active" #}
+{# onclick="location.href='{{ path('workshops_list') }}';">Workshops #}
+{# </button> #}
+{# <button type="button" #}
+{# class="btn profile-card-button brn active dropdown-toggle dropdown-toggle-split" #}
+{# data-toggle="dropdown"> #}
+{# </button> #}
+{# <div class="dropdown-menu"> #}
+{# <a class="dropdown-item" href="{{ path('objectives_list') }}">Objectives</a> #}
+{# <a class="dropdown-item" href="{{ path('supports_list') }}">Supports</a> #}
+{# </div> #}
+{# </div> #}
+{# <a href="{{ path('themes_list') }}" class="profile-card-button brn ">Themes</a> #}
+{# <a href="{{ path('specialities_list') }}" class="profile-card-button brn ">Specialities</a> #}
+{# </div> #}
+{# </div> #}
+{# <div class="profile-actions d-none d-md-block"> #}
+{# <a href="{{ path('app_logout') }}" class="btn w-100 active">Log Out</a> #}
+{# </div> #}
+{# </div> #}
+{# <div class="profile-settings col-lg-9 col-md-8 col-12 px-4"> #}
+{# <div class="profile-settings-forms p-3"> #}
+{# <h3 class="section-title"> #}
+{# Add Workshop #}
+{# </h3> #}
+{# <div class="container"> #}
+{# {{ form_start(form) }} #}
+{# {{ form_row(form.name) }} #}
+{# {{ form_row(form.theme) }} #}
+{# {{ form_row(form.imageFile) }} #}
+{# {{ form_row(form.description) }} #}
+{# {{ form_row(form.workshopAbstract) }} #}
+{# {{ form_row(form.workshopEstablishment) }} #}
+{# {{ form_row(form.objectiveCount) }} #}
+{# {{ form_row(form.workshopDuration) }} #}
+{# {{ form_row(form.durationUnit) }} #}
+{# {{ form_row(form.price) }} #}
+{# {{ form_row(form.workshopType) }} #}
+{# {{ form_row(form.workshopOrder) }} #}
+
+{# <div class="row mb-3"> #}
+{# <h3 class="">Workshop parameter </h3> #}
+{# <div class="row"> #}
+{# <div class="col-md-4"> #}
+{# <input type="radio" checked id="parameterDateRadio" name="parameter"><label #}
+{# for="">Expiration with date</label> #}
+{# </div> #}
+{# <div class="col-md-8"> #}
+{# <input type="radio" id="parameterRadio" name="parameter"><label for="">Expiration #}
+{# with parameter</label> #}
+{# </div> #}
+
+{# </div> #}
+{# <div class="col" id="dateExpiration"> #}
+{# <div class="mb-3"> #}
+{# <input type="date" min="{{ "now"|date("Y-m-d") }}" id="expirationDate" #}
+{# name="expirationDate" #}
+{# placeholder="expiration date" class="form-control" #}
+{# onkeydown="return false" required> #}
+{# </div> #}
+{# </div> #}
+
+{# <div class="row" hidden id="parameterExpiration"> #}
+{# <div class="col"> #}
+{# <div class="mb-3"> #}
+{# <label for="">Unit number</label> #}
+{# <input type="number" name="unitNumber" id="unitNumber" maxlength="5" #}
+{# class="form-control" placeholder="work shop length"> #}
+{# </div> #}
+{# </div> #}
+{# <div class="col"> #}
+{# <div class="mb-3"> #}
+{# <label for="">Expiration unit</label> #}
+{# <select name="unit" id="unit" class="form-control"> #}
+{# <option value="years">YEAR</option> #}
+{# <option value="month">MONTH</option> #}
+{# <option value="days">DAY</option> #}
+{# <option value="hours">HOURS</option> #}
+{# </select> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# {{ form_row(form.workshopStatus) }} #}
+{# {{ form_row(form.save) }} #}
+{# {{ form_end(form) }} #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# <div class="profile-actions d-md-none"> #}
+{# <a href="{{ path('app_logout') }}" class="btn w-100 active">Log Out</a> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# </div> #}
+{# </section> #}
+
+{# <footer> #}
+{# <div class="container"> #}
+{# <div class="logo"> #}
+{# <a href="#"> #}
+{# <picture> #}
+{# <source srcset="../../Images/logo-medical-center.png" media="(min-width: 768px)"> #}
+{# <source srcset="../../Images/logo-medical-center.png" media="(max-width: 768px)"> #}
+{# <img src="../../Images/logo-medical-center.png" alt="image"/> #}
+{# </picture> #}
+{# </a> #}
+{# </div> #}
+{# <hr> #}
+{# <ul class="social-media"> #}
+{# <li><a href="#"><img src="../../Images/icons/instagram.png" alt="instagram icon"></a></li> #}
+{# <li><a href="#"><img src="../../Images/icons/facebook.png" alt="facebook icon"></a></li> #}
+{# <li><a href="#"><img src="../../Images/icons/youtube-play.png" alt="youtube icon"></a></li> #}
+{# <li><a href="#"><img src="../../Images/icons/linkedin.png" alt="linkedin icon"></a></li> #}
+{# </ul> #}
+{# </div> #}
+{# </footer> #}
+{# <script src="JS/bootstrap.min.js"></script> #}
+{# <script src="JS/main.js"></script> #}
+{# <script #}
+{# src="https://code.jquery.com/jquery-3.6.0.slim.min.js" #}
+{# integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" #}
+{# crossorigin="anonymous"></script> #}
+{# <script> #}
+{# $('#parameterDateRadio').on("click", function (e) { #}
+{# // modification de code #}
+{# $('#dateExpiration').prop("hidden", false); #}
+{# $('#expirationDate').prop("required", true); #}
+
+{# $('#parameterExpiration').prop("hidden", true); #}
+{# $('#unit').prop("required", false); #}
+{# $('#unitNumber').prop("required", false); #}
+
+{# }); #}
+{# $('#parameterRadio').on("click", function (e) { #}
+
+{# // modification de code #}
+{# $('#dateExpiration').prop("hidden", true); #}
+{# $('#expirationDate').prop("required", false); #}
+
+{# $('#parameterExpiration').prop("hidden", false); #}
+{# $('#unit').prop("required", true); #}
+{# $('#unitNumber').prop("required", true); #}
+
+{# }); #}
+{# </script> #}
+{# </body> #}
+
+{# </html> #}
+
+
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block style %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+
+    <h3 class="section-title">
+        Add Workshop
+    </h3>
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.theme) }}
+        {{ form_row(form.imageFile) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.workshopAbstract) }}
+        {{ form_row(form.workshopEstablishment) }}
+        {{ form_row(form.objectiveCount) }}
+        {{ form_row(form.workshopDuration) }}
+        {{ form_row(form.durationUnit) }}
+        {{ form_row(form.price) }}
+        {{ form_row(form.workshopType) }}
+        {{ form_row(form.workshopOrder) }}
+
+        <div class="row mb-3">
+            <h3 class="">Workshop parameter </h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="radio" checked id="parameterDateRadio" name="parameter"><label for="">Expiration with
+                        date</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="radio" id="parameterRadio" name="parameter"><label for="">Expiration with
+                        parameter</label>
+                </div>
+
+            </div>
+            <div class="col" id="dateExpiration">
+                <div class="mb-3">
+                    <input type="date" min="{{ "now"|date("Y-m-d") }}" id="expirationDate" name="expirationDate"
+                           placeholder="expiration date" class="form-control" onkeydown="return false" required>
+                </div>
+            </div>
+
+            <div class="row" hidden id="parameterExpiration">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="">Unit number</label>
+                        <input type="number" name="unitNumber" id="unitNumber" maxlength="5" class="form-control"
+                               placeholder="work shop length">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="">Expiration unit</label>
+                        <select name="unit" id="unit" class="form-control">
+                            <option value="years">YEAR</option>
+                            <option value="month">MONTH</option>
+                            <option value="days">DAY</option>
+                            <option value="hours">HOURS</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_row(form.workshopStatus) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+<script
+    src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+    crossorigin="anonymous"></script>
+<script>
+    $('#parameterDateRadio').on("click", function (e) {
+    // modification de code
+    $('#dateExpiration').prop("hidden", false);
+    $('#expirationDate').prop("required", true);
+
+    $('#parameterExpiration').prop("hidden", true);
+    $('#unit').prop("required", false);
+    $('#unitNumber').prop("required", false);
+
+});
+    $('#parameterRadio').on("click", function (e) {
+
+    // modification de code
+    $('#dateExpiration').prop("hidden", true);
+    $('#expirationDate').prop("required", false);
+
+    $('#parameterExpiration').prop("hidden", false);
+    $('#unit').prop("required", true);
+    $('#unitNumber').prop("required", true);
+
+});
+</script>
+{% endblock %}

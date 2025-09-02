@@ -1,0 +1,38 @@
+// import variables
+@import 'variables';
+
+// layout imports
+@import './layout/breakpoints';
+@import './layout/container';
+
+// global styles
+@import './globals';
+
+// import components
+@import './components/navbar';
+@import './components/hero';
+@import './components/infos';
+@import './components/about';
+@import './components/button';
+@import './components/popular';
+@import './components/testimonial';
+@import './components/card';
+@import './components/contact';
+@import './components/form';
+@import './components/footer';
+@import './components/socialmedia';
+@import './components/signup';
+@import './components/banner';
+@import './components/pagination';
+@import './components/cart';
+@import './components/Table';
+@import './components/profile';
+@import './components/video';
+@import './components/categoriesDetails';
+@import './components/ratingStars';
+@import './components/categoriesDetailsCard';
+@import './components/modal';
+@import './components/transfertSteps';
+@import './components/bankInfo';
+@import './components/customfileinput';
+@import './components/toast';

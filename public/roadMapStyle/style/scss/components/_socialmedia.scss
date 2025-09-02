@@ -1,0 +1,16 @@
+.socialmedia {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    &__link {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #3C3C3C;
+        font-size: 1.5rem;
+    }
+}

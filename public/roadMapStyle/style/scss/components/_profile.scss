@@ -1,0 +1,371 @@
+.profile {
+    padding-top: 5rem;
+    position: relative;
+
+    &:before {
+        content: "";
+        background-image: url(/assets/images/hero_decorator.png);
+        background-size: 100% 100%;
+        max-width: 9.25rem;
+        aspect-ratio: 1;
+        width: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, 0);
+        z-index: -1;
+    }
+
+    &__card {
+        font-size: 1.125rem;
+        box-shadow: 0 3px 10px #00000029;
+        font-family: $font-primary;
+        border-radius: $borderRadius;
+        font-weight: 500;
+
+        &Header {
+            padding-top: 2rem;
+            padding-bottom: 3rem;
+            text-align: center;
+            border-bottom: 1px solid #707070;
+            position: relative;
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            @include breakpoint('md') {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+
+        &Image {
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &Name {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        &Tag {
+            padding: 0.75rem 1.25rem;
+            color: #fff;
+            background-color: $color-primary;
+            font-weight: 500;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            font-size: inherit;
+            min-width: 12rem;
+            width: max-content;
+            margin: 0;
+            border-radius: $borderRadius;
+        }
+
+        &Body {
+            padding-top: 3rem;
+            padding-bottom: 1.5rem;
+        }
+
+        &List {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        &Item {
+            &:last-of-type {
+                margin-top: 3rem;
+            }
+        }
+
+        &Link {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            transition: background-color 0.3s ease;
+            color: #181818;
+
+            @include breakpoint('md') {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+
+            &:hover,
+            &.active {
+                background-color: #F6F6F6;
+            }
+
+            &Icon {
+                color: $color-primary;
+                width: 1.25rem;
+            }
+
+            &Arrow {
+                margin-left: auto;
+            }
+
+            &Text {
+                font-weight: 500;
+            }
+        }
+    }
+
+    &__content {
+        margin-top: 3rem;
+
+        @include breakpoint('lg') {
+            margin-top: 0;
+        }
+    }
+
+    &__sideCard {
+        padding: 2rem 3rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+        box-shadow: 0 3px 10px #00000029;
+        margin-top: 4rem;
+        border-radius: $borderRadius;
+
+        &Number {
+            font-size: 4.5rem;
+            font-weight: 700;
+
+            &--completed {
+                color: #3BA303;
+            }
+
+            &--progress {
+                color: #C9AC7A;
+            }
+        }
+    }
+
+    &__learningCard {
+        margin-bottom: 1.5rem;
+        box-shadow: 0 3px 10px #00000029;
+        border-radius: $borderRadius;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        font-family: $font-secondary;
+
+
+        @include breakpoint('2xl') {
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        @include breakpoint('sm') {
+            flex-direction: row;
+        }
+
+        &Image {
+            max-width: 100%;
+            width: 100%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f1f1;
+
+            @include breakpoint('sm') {
+                width: 12rem;
+            }
+
+            @include breakpoint('lg') {
+                width: 14rem;
+            }
+
+            @include breakpoint('2xl') {
+                width: 17rem;
+            }
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &Body {
+            padding: 1.5rem 2rem;
+            flex-grow: 1;
+
+            @include breakpoint('sm') {
+                max-width: calc(100% - 14rem);
+            }
+
+            @include breakpoint('lg') {
+                max-width: calc(100% - 16rem);
+            }
+
+            @include breakpoint('2xl') {
+                max-width: calc(100% - 19rem);
+            }
+        }
+
+        &Title {
+            font-size: 2rem;
+            font-weight: 500;
+            font-family: $font-primary;
+            margin-bottom: 1.5rem;
+        }
+
+        &Progress {
+            width: 100%;
+            max-width: 38rem;
+            height: 0.75rem;
+            background-color: #EBEBEB;
+            border-radius: 0.125rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+
+            .progress-bar {
+                transform: translateX(-100%);
+                background-color: #C9AC7A;
+                height: 100%;
+                border-radius: 0.125rem;
+                animation: progress 1.5s ease forwards;
+            }
+        }
+
+        &Label {
+            font-size: 1rem;
+            font-weight: 400;
+
+            &:first-of-type {
+                font-weight: 700;
+            }
+        }
+
+        &Button {
+            padding: 0.75rem 3rem 0.75rem 2rem;
+            border-radius: $borderRadius;
+            font-family: $font-primary;
+            font-size: 0.875rem;
+            background-color: $color-primary;
+            color: #fff;
+            position: relative;
+            transition: background-color 0.3s ease;
+            width: 9.5rem;
+            flex-grow: 1;
+            text-align: center;
+            margin-top: 1rem;
+            @include breakpoint('xl') {
+                margin-top: 0;
+            }
+
+            &:hover {
+                color: #fff;
+                background-color: #5a121f;;
+            }
+
+            &:after {
+                content: "\f061";
+                font-family: $font-awesome;
+                font-weight: 700;
+                position: absolute;
+                right: 1.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            &--completed {
+                padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+                background-color: #e7cfd4;
+                color: $color-primary;
+
+                &:hover {
+                    color: $color-primary;
+                    background-color: #ebb4c0;
+                }
+
+                &:after {
+                    display: none;
+                }
+            }
+            &--installed {
+                background-color: #00A700;
+                &:hover {
+                    background-color: #008a00;
+                }
+                &:after {
+                    content: "\f00c";
+                }
+            }
+        }
+        &Text {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+
+    .form {
+        box-shadow: 0 3px 10px #00000029;
+        padding: 1rem 1.5rem;
+
+        @include breakpoint('sm') {
+            padding: 2rem 2.5rem;
+        }
+
+        @include breakpoint('md') {
+            padding: 3rem 3.5rem;
+        }
+
+        @include breakpoint('lg') {
+            padding: 4rem 4.5rem;
+        }
+
+        @include breakpoint('xl') {
+            padding: 4rem 7.5rem;
+        }
+
+        &-label {
+            margin-left: 0.25rem;
+        }
+    }
+
+    .Table {
+        padding-top: 0;
+
+        &__container {
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
+
+@keyframes progress {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}

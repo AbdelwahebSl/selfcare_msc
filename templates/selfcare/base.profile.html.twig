@@ -1,0 +1,56 @@
+<div class="profile__card">
+    <div class="profile__cardHeader">
+        <div class="profile__cardImage">
+            <img src="{{ asset('roadMapStyle/assets/images/profile.jpg') }}" alt="">
+        </div>
+        <h2 class="profile__cardName title--xs">
+            {{ user.fullName }}
+        </h2>
+        <h3 class="profile__cardTag">{% if is_granted('ROLE_STUDENT') %}{{ 'profile.account.type.student'|trans({},'profile') }}{% else %}{{ 'profile.account.type.professional'|trans({},'profile') }}{% endif %}
+             </h3>
+
+    </div>
+    <div class="profile__cardBody">
+        <ul class="profile__cardList">
+            {#            <li class="profile__cardItem"><a href="#" class="profile__cardLink"> #}
+            {#                    <span class="profile__cardLinkIcon"> #}
+            {#                          <img src="{{ asset('roadMapStyle/assets/images/search-file.svg') }}" alt="icon"> #}
+            {#                    </span> #}
+            {#                    <span class="profile__cardLinkText">Overview</span> #}
+            {#                    <span class="profile__cardLinkArrow"><i #}
+            {#                                class="fa-solid fa-arrow-right"></i></span> #}
+            {#                </a></li> #}
+            <li class="profile__cardItem"><a href="{{ path('my_profile') }}"
+                                             class="profile__cardLink  {% if app.request.attributes.get('_route') == 'my_profile' %}
+                                           active{% endif %}">
+                    <span class="profile__cardLinkIcon"><i class="fa-regular fa-user"></i></span>
+                    <span class="profile__cardLinkText">{{ 'profile.section.edit'|trans({},'profile') }}</span>
+                    <span class="profile__cardLinkArrow">
+                        <i class="fa-solid fa-arrow-right"></i></span>
+                </a></li>
+            {#            my_learning #}
+            <li class="profile__cardItem"><a href="{{ path('my_learning') }}"
+                                             class="profile__cardLink  {% if app.request.attributes.get('_route') == 'my_learning' %}
+                                           active{% endif %}">
+                    <span class="profile__cardLinkIcon"><i class="fa-solid fa-book-open"></i></span>
+                    <span class="profile__cardLinkText">{{ 'profile.section.my_learning'|trans({},'profile') }}</span>
+                    <span class="profile__cardLinkArrow"><i
+                                class="fa-solid fa-arrow-right"></i></span>
+                </a></li>
+            <li class="profile__cardItem"><a href="{{ path('my_learning_history') }}"
+                                             class="profile__cardLink {% if app.request.attributes.get('_route') == 'my_learning_history' %}
+                                           active{% endif %}">
+                    <span class="profile__cardLinkIcon">
+                           <img src="{{ asset('roadMapStyle/assets/images/Page.svg') }}" alt="icon">
+                    </span>
+                    <span class="profile__cardLinkText">{{ 'profile.section.purchase_history'|trans({},'profile') }}</span>
+                    <span class="profile__cardLinkArrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </a></li>
+            <li class="profile__cardItem"><a href="{{ path('app_logout') }}" class="profile__cardLink">
+                                        <span class="profile__cardLinkIcon"><i
+                                                    class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                    <span class="profile__cardLinkText">{{ 'profile.action.logout'|trans({},'profile') }}</span>
+                </a></li>
+        </ul>
+    </div>
+</div>

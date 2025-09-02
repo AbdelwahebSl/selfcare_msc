@@ -1,0 +1,181 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>MSC Homepage</title>#}
+{#    <link rel="preconnect" href="https://fonts.googleapis.com">#}
+{#    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400;700&display=swap" rel="stylesheet">#}
+{#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>#}
+{#    <link rel="stylesheet" href="../../../css/bootstrap.min.css">#}
+{#    <link rel="stylesheet" href="../../../css/style.css">#}
+{#    {% form_theme form 'bootstrap_4_layout.html.twig' %}#}
+
+{#</head>#}
+
+{#<body>#}
+{#<header>#}
+{#    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">#}
+{#        <div class="container">#}
+{#            <a class="navbar-brand" href="#">#}
+{#                <picture>#}
+{#                    <source srcset="../../../images/logo.png" media="(min-width: 768px)">#}
+{#                    <source srcset="../../../images/logo.png" media="(max-width: 768px)">#}
+{#                    <img src=../../../images/logo.png"" alt="image"/>#}
+{#                </picture>#}
+{#            </a>#}
+{#            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"#}
+{#                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"#}
+{#                    aria-expanded="false" aria-label="Toggle navigation">#}
+{#                <span class="material-icons"> menu </span>#}
+{#            </button>#}
+{#            <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">#}
+{#                <ul class="navbar-nav me-auto ">#}
+{#                </ul>#}
+{#            </div>#}
+{#            <div class="uncollapse ms-4">#}
+{#                <ul class="navbar-nav">#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </nav>#}
+
+
+{#</header>#}
+
+{#<section class="profile">#}
+{#    <div class="name-title">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-md-4 col-lg-3 d-none d-md-block"></div>#}
+{#                <div class="col-md-8 col-lg-9 font-color ps-md-4 d-none d-md-block">#}
+{#                    <h1 class="section-title mb-2 mt-3 font-color">{{ user.fullName }}</h1>#}
+{#                    <p class="ps-lg-5 ps-3 mb-3">{{ user.description }}</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="profile-edit py-3">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="profile-info d-flex flex-column col-lg-3 col-md-4 col-12 p-1">#}
+{#                    <div class="profile-card mb-4">#}
+{#                        <div class="profile-picture p-3">#}
+{#                            <div class="d-flex justify-content-center align-items-start">#}
+{#                                <div class="profile-image me-3 mx-md-auto">#}
+{#                                    <picture>#}
+{#                                        {% if user.imageName %}#}
+{#                                            <source srcset="{{ 'images/workshops/'~ user.imageName }}"#}
+{#                                                    media="(min-width: 768px)">#}
+{#                                            <source srcset="{{ 'images/workshops/'~ user.imageName }}"#}
+{#                                                    media="(max-width: 768px)">#}
+{#                                            <img src="{{ 'images/workshops/'~ user.imageName }}" alt=""/>#}
+{#                                        {% else %}#}
+{#                                            <source srcset="../../../images/Ellipse 34.jpg" media="(min-width: 768px)">#}
+{#                                            <source srcset="../../../images/Ellipse 34.jpg" media="(max-width: 768px)">#}
+{#                                            <img src="../../../images/Ellipse 34.jpg" alt=""/>#}
+{#                                        {% endif %}#}
+{#                                    </picture>#}
+{#                                </div>#}
+{#                                <div class="profile-name d-md-none">#}
+{#                                    <h1 class="section-title mb-2 mt-3 dark-primary-color">{{ user.fullName }}</h1>#}
+{#                                    <p class="ps-lg-5 mb-3">{{ user.description }}</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="profile-card-buttons">#}
+{#                            <div class="btn-group">#}
+{#                                <button type="button" class="btn profile-card-button brn active"#}
+{#                                        onclick="location.href='{{ path('workshops_list') }}';">Workshops</button>#}
+{#                                <button type="button" class="btn profile-card-button brn active dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">#}
+{#                                </button>#}
+{#                                <div class="dropdown-menu">#}
+{#                                    <a class="dropdown-item" href="{{ path('objectives_list') }}">Objectives</a>#}
+{#                                    <a class="dropdown-item" href="{{ path('supports_list') }}">Supports</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <a href="{{ path('themes_list') }}" class="profile-card-button brn ">Themes</a>#}
+{#                            <a href="{{ path('specialities_list') }}" class="profile-card-button brn ">Specialities</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="profile-actions d-none d-md-block">#}
+{#                        <a href="{{ path('app_logout') }}" class="btn w-100 active">Log Out</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="profile-settings col-lg-9 col-md-8 col-12 px-4">#}
+{#                    <div class="profile-settings-forms p-3">#}
+{#                        <h3 class="section-title">#}
+{#                            Create Support#}
+{#                        </h3>#}
+{#                        {{ form(form) }}#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="profile-actions d-md-none">#}
+{#                    <a href="#" class="btn w-100 active">Log Out</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+
+{#<footer>#}
+{#    <div class="container">#}
+{#        <div class="logo">#}
+{#            <a href="#">#}
+{#                <picture>#}
+{#                    <source srcset="../../../images/logo-medical-center.png" media="(min-width: 768px)">#}
+{#                    <source srcset="../../../images/logo-medical-center.png" media="(max-width: 768px)">#}
+{#                    <img src=../../../images/logo-medical-center.png"" alt="image"/>#}
+{#                </picture>#}
+{#            </a>#}
+{#        </div>#}
+{#        <hr>#}
+{#        <ul class="social-media">#}
+{#            <li><a href="#"><img src="../../../images/icons/instagram.png" alt="instagram icon"></a></li>#}
+{#            <li><a href="#"><img src="../../../images/icons/facebook.png" alt="facebook icon"></a></li>#}
+{#            <li><a href="#"><img src="../../../images/icons/youtube-play.png" alt="youtube icon"></a></li>#}
+{#            <li><a href="#"><img src="../../../images/icons/linkedin.png" alt="linkedin icon"></a></li>#}
+{#        </ul>#}
+{#    </div>#}
+{#</footer>#}
+{#<script src="../../../js/bootstrap.min.js"></script>#}
+{#<script src="../../../js/main.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>#}
+
+{#</body>#}
+
+{#</html>#}
+
+
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block style %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+
+    <h3 class="section-title">
+        Create Support
+    </h3>
+    {{ form(form) }}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

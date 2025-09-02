@@ -1,0 +1,280 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ProfilePic;
+use App\Entity\Workshop;
+use App\Entity\WorkShopObjectives;
+use App\Entity\WorkShopSupport;
+use App\Form\ProfilePicType;
+use App\Form\WorkShopObjectivesType;
+use App\Form\WorkShopSupportType;
+use App\Form\WorkshopType;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+
+class WorkshopController extends AbstractController
+{
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+    #[Route('/workshop', name: 'app_workshop')]
+    public function index(): Response
+    {
+        return $this->render('workshop/index.html.twig', [
+            'controller_name' => 'WorkshopController',
+        ]);
+    }
+
+    #[Route('/workshop/new', name: 'create_workshop')]
+    public function create(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+
+        $user = $this->security->getUser();
+        $workshop = new Workshop();
+        $form = $this->createForm(WorkshopType::class, $workshop);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $expirationDate = $request->get('expirationDate');
+            $unitNumber = $request->get('unitNumber');
+            $unit = $request->get('unit');
+            $parameter = array("expirationDate" => '',
+                "unitNumber" => '',
+                "unit" => ''
+            );
+
+            $parameterRadio = $request->get('parameter');
+            if ($parameterRadio == '1') {
+                $parameter['expirationDate'] = $expirationDate;
+                $parameter['unitNumber'] = '';
+                $parameter['unit'] = '';
+            }
+            else {
+                $parameter['expirationDate'] = '';
+                $parameter['unitNumber'] = $unitNumber;
+                $parameter['unit'] = $unit;
+            }
+
+            $entityManager = $doctrine->getManager();
+            $workshop = $form->getData();
+            $workshop->setUpdatedAt(new \DateTime());
+            $workshop->setExpirationDate($parameter);
+            $entityManager->persist($workshop);
+            $entityManager->flush();
+            return $this->redirectToRoute('workshops_list');
+        }
+
+        return $this->renderForm('workshop/new.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
+
+    #[Route('/workshop/edit/{id}', name: 'edit_workshop')]
+    public function update(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+
+
+        $user = $this->security->getUser();
+
+        $entityManager = $doctrine->getManager();
+        $workshop = $entityManager->getRepository(Workshop::class)->find($id);
+
+        if (!$workshop) {
+            throw $this->createNotFoundException(
+                'No workshop found for id ' . $id
+            );
+        }
+        $form = $this->createForm(WorkshopType::class, $workshop);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $workshop = $form->getData();
+            $expirationDate = $request->get('expirationDate');
+            $unitNumber = $request->get('unitNumber');
+            $unit = $request->get('unit');
+            $parameter = array("expirationDate" => '',
+                "unitNumber" => '',
+                "unit" => ''
+            );
+            $parameterRadio = $request->get('parameter');
+            if ($parameterRadio == '1') {
+                $parameter['expirationDate'] = $expirationDate;
+                $parameter['unitNumber'] = '';
+                $parameter['unit'] = '';
+            } else {
+                $parameter['expirationDate'] = '';
+                $parameter['unitNumber'] = $unitNumber;
+                $parameter['unit'] = $unit;
+            }
+
+
+            $workshop->setExpirationDate($parameter);
+            $workshop->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+            return $this->redirectToRoute('workshops_list');
+        }
+        $expirationDate = $form->getData()->getExpirationDate();
+
+        return $this->renderForm('workshop/edit.html.twig', [
+            'form' => $form,
+            'user' => $user,
+            'expirationDate' => $expirationDate,
+        ]);
+    }
+
+    #[Route('/workshop/objective/new', name: 'create_workshop_objective')]
+    public function createObjective(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+
+        $user = $this->security->getUser();
+
+        $workshopObjective = new WorkShopObjectives();
+        $form = $this->createForm(WorkShopObjectivesType::class, $workshopObjective);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
+            $workshopObjective = $form->getData();
+            $workshopObjective->setUpdatedAt(new \DateTime());
+            $entityManager->persist($workshopObjective);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('objectives_list');
+        }
+
+        return $this->renderForm('workshop/objective/new.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/workshop/objective/edit/{id}', name: 'edit_workshop_objective')]
+    public function updateObjective(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+
+        $user = $this->security->getUser();
+
+        $entityManager = $doctrine->getManager();
+        $workshopObjective = $entityManager->getRepository(WorkShopObjectives::class)->find($id);
+
+        if (!$workshopObjective) {
+            throw $this->createNotFoundException(
+                'No workshop objective found for id ' . $id
+            );
+        }
+
+        $form = $this->createForm(WorkShopObjectivesType::class, $workshopObjective);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $workshopObjective = $form->getData();
+            $workshopObjective->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+
+            return $this->redirectToRoute('objectives_list');
+        }
+
+        return $this->renderForm('workshop/objective/edit.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/workshop/support/new', name: 'create_workshop_support')]
+    public function createSupport(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = $this->security->getUser();
+
+        $workshopSupport = new WorkShopSupport();
+        $form = $this->createForm(WorkShopSupportType::class, $workshopSupport);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
+            $workshopSupport = $form->getData();
+            $workshopSupport->setUpdatedAt(new \DateTime());
+
+            $entityManager->persist($workshopSupport);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('supports_list');
+        }
+
+
+        return $this->renderForm('workshop/support/new.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/workshop/support/edit/{id}', name: 'edit_workshop_support')]
+    public function updateSupport(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!($this->isGranted('ROLE_MKG') || $this->isGranted('ROLE_ADMIN')))
+            return $this->redirectToRoute('homepage');
+
+        $user = $this->security->getUser();
+
+        $entityManager = $doctrine->getManager();
+        $workshopSupport = $entityManager->getRepository(WorkShopSupport::class)->find($id);
+
+        if (!$workshopSupport) {
+            throw $this->createNotFoundException(
+                'No workshop objective found for id ' . $id
+            );
+        }
+
+        $form = $this->createForm(WorkShopSupportType::class, $workshopSupport);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $workshopSupport = $form->getData();
+            $workshopSupport->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+
+            return $this->redirectToRoute('supports_list');
+        }
+
+        return $this->renderForm('workshop/support/edit.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
+
+
+
+
+
+
+
+}

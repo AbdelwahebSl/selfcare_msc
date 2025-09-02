@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Sign in - Medical Simulation Center{% endblock %}
+{% block toaster %}
+
+{% endblock %}
+{% block content %}
+
+
+
+
+    <section class="signup">
+        <form method="post" class="form signup__form">
+            <h2 class="title title--small mb-4">{{ 'login.title'|trans }}</h2>
+            <h3 class="subtitle">{{ 'login.no_account_signup.title'|trans }} <a
+                        href="{{ path('app_register') }}">{{ 'login.no_account_signup.link'|trans }} </a></h3>
+            {% if error %}
+                <div class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <div class="mb-4 form--required">
+                <label for="username" class="form-label">Email</label>
+                <input type="email" class="form-control" id="username" name="_username" aria-describedby="emailHelp"
+                       placeholder="Email" required autofocus
+                       value="{{ last_username }}">
+            </div>
+
+            <div class="mb-4 form--required">
+                <label for="password" class="form-label">{{ 'login.form.password'|trans }}</label>
+                <input type="password" id="inputPassword" class="form-control" name="_password" required
+                       placeholder="{{ 'login.form.password'|trans }}">
+            </div>
+
+            {#        <div class="mb-3 form-check"> #}
+            {#            <input type="checkbox" class="form-check-input" id="exampleCheck1"> #}
+            {#            <label class="form-check-label" for="exampleCheck1">Remember me</label> #}
+            {#        </div> #}
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            <div class="alreadyStudent">
+                <div>
+                    <h3 class="alreadyStudent__title">{{ 'login.honoris_student'|trans }}</h3>
+                    <p class="alreadyStudent__subtitle">{{ 'login.sign_in_with'|trans }}</p>
+                </div>
+
+
+            </div>
+            <div class="alreadyStudent">
+                <a class="alreadyStudent__image" href="{{ path('hwi_oauth_service_redirect', {'service': 'azure' }) }}">
+                    <img src="{{ asset('roadMapStyle/assets/images/office.png') }}" alt="">
+                </a>
+
+                <a class="alreadyStudent__image" href="{{ path('saml_login') }}">
+                    <img src="{{ asset('roadMapStyle/assets/images/logo-myu.png') }}" width="60" height="60" alt="">
+                </a>
+            </div>
+            <button type="submit"
+                    class="button--contained button--contained--withArrow w-100  text-center">{{ "login.btn_connection"|trans }}
+            </button>
+            <a href="#" class="button--text text-center d-block my-4">{{ "login.lost_password"|trans }}</a>
+        </form>
+    </section>
+
+
+{% endblock %}
+
+{% block javaScript %}
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".testimonial-slider").slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3,
+                        },
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                    // You can unslick at a given breakpoint now by adding:
+                    // settings: "unslick"
+                    // instead of a settings object
+                ],
+            });
+        });
+    </script>
+{% endblock %}
+
+

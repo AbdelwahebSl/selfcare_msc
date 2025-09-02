@@ -1,0 +1,15 @@
+.toast {
+    &-body {
+        display: flex;
+        gap: 1.5rem;
+        img {
+            width: 35px;
+        }
+        span {
+            font-size: 1.25rem;
+            font-weight: 500;
+            font-family: $font-primary;
+            color: #181818;
+        }
+    }
+}

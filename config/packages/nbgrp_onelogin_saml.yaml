@@ -1,0 +1,76 @@
+nbgrp_onelogin_saml:
+  onelogin_settings:
+    default:
+      # Mandatory SAML settings
+      idp:
+        entityId: 'https://myu.universitecentrale.net/sge/sso/ssoServlet'
+        singleSignOnService:
+          url: 'https://myupp.universitecentrale.net/sge/sso/ssoServlet'
+          binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        singleLogoutService:
+          url: ''
+          binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        x509cert: "MIIFdjCCA16gAwIBAgIELRjOcjANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJUTjEQMA4GA1UECBMHVHVuaXNpYTEQMA4GA1UEBxMHVHVuaXNpYTEMMAoGA1UEChMDMkNTMQwwCgYDVQQLEwMyQ1MxDDAKBgNVBAMTAzJDUzAeFw0yMTAzMTIxNzQxMzdaFw00ODA3MjcxNzQxMzdaMFsxCzAJBgNVBAYTAlROMRAwDgYDVQQIEwdUdW5pc2lhMRAwDgYDVQQHEwdUdW5pc2lhMQwwCgYDVQQKEwMyQ1MxDDAKBgNVBAsTAzJDUzEMMAoGA1UEAxMDMkNTMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoA5Jlwq8oRH8nUi85OTXKQM/ycJiM7rgodaCvPTLeiM8z/UqDzKOcZJejgwauf9b1vbjDW6mhL87J0OxAWX+xeRVFOxybXXajJdT1vMWG5IUrqC1FSg3BX26Gf0wLwSbvPrWQtj6+53ah9f9DgTTOjVpjsny7vFjyJH9KXve9jRTHB5TkTXbdmAYY5etMDACt/wJ6fpcjBy6HqFVEQFzz74EMgpd5CJz6E9JGCyO7g766wL4UIRyER5gm9S67KG9uUpqzMar9KPF8+ZR5ZxIqRPdA8Xbh71vd5agNp9Ex8ZOZnhsBHigAINiRVREG3lh4PkA1FsS7ak00a5qioDQd9xARgHCAa/7BIRj+OZc4Uz7sKdAHfT/eij6cTtmZw6Lf3ch8/g8Ppa/zIvK59n3QT7kf64m1ZwOyDziUdtPX3laAJPMwhyk/DxNYEP+RlE2ePUkfwV2HsmhLptfnupZU1yPDsMOe3FPz7ZGKAwbSkdIPgeYBfekD8X9mAEPoOwEg16X54A0+gQ0J6MiRiPSRvfYqpdmGXNKTDPwgUrpyfdVaJytXdxG/x4JaJHyDaqqwV6nZs0dEzvzidvjD39JUJq4b677QiBPH91/y+3lURWTJJL4waTX1K3nWZj6jGC3N44b+qEepMacifOqsiu2/w2GHBajp6cESCCSrDr4Nr8CAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFK8OY4MpBQfgntKU+bvgqNmeJd4iMA0GCSqGSIb3DQEBCwUAA4ICAQA5z7Bzrh5+j8/4E/Z68NkXOkrZXYI3L6BPkFlc/A4gzag1XTxuCLTZxDl6foYHTrqJKrXsbwGbZETaBSHfxSMsmBCubXlLUQJCKKfbQIlwhadtN24gdhrzF7ZLtiJbCxAOG9scLQyg03zp+agdh325pcZT0Ht39x+7iXQxVLaLsdeIvb+jDT9r5ojy0HVDvTJPa3givlbB39S68073FIVXtYvoRGSxCyb4ambTKrv6t6XmWb8VvSA+q+LbQAJL8rF2ajDZ6iwrZFC+978/411dRXVLiaAW0TqoKXpvoG8mZ5FR//8JspOma2FXAjWklpe6Kn1HWyCsnXXDN+T8wrTxu3CZ3gPHn5DqKRmxUqqR9dDiD6z8vF5nAoMxrcVNW+draPG50B+Es1+jlgk7XfGz58LKOeLNkpUh7X2MPuUS4VvSs+/CiCH6m+y57x9hSLcaPuRIv7HPpX8cIjnBPCyfmsjF8zbitrfL41A7dlRKF6IOgIQAaiO7YKUcliF/6T7ugCC6C3tTpXsmqsPFrHJH2ySKa+qnUzAGfORcGQyTwUQ/zCoN62NkcAcPfFv3FS80OaLkYvdFH5zVQ3Jv7EnGtcDBMERk6oCp/vUjtoKnJeRQ+dz/s8IHEFXDqBfJv8ZUzH+iAU12dG0G0FIFlyD0LFsPgsCZupK+WlyS/s9f8A=="
+      sp:
+        entityId: 'http://localhost:8000/saml/metadata'  #  Default: '<request_scheme_and_host>/saml/metadata'
+        assertionConsumerService:
+          url: 'http://localhost:8000/saml/acs'  #  Default: '<request_scheme_and_host>/saml/acs'
+          binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+        singleLogoutService:
+          url: 'http://localhost:8000/saml/logout'  #  Default: '<request_scheme_and_host>/saml/logout'
+          binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        privateKey: ''
+      # Optional SAML settings
+      baseurl: 'http://localhost:8000/saml/'  #  Default: '<request_scheme_and_host>/saml/'
+      strict: true
+      debug: true
+      security:
+        nameIdEncrypted: false
+        authnRequestsSigned: false
+        logoutRequestSigned: false
+        logoutResponseSigned: false
+        signMetadata: false
+        wantMessagesSigned: false
+        wantAssertionsEncrypted: false
+        wantAssertionsSigned: true
+        wantNameId: false
+        wantNameIdEncrypted: false
+        requestedAuthnContext: true
+        wantXMLValidation: false
+        relaxDestinationValidation: false
+        destinationStrictlyMatches: true
+        allowRepeatAttributeName: false
+        rejectUnsolicitedResponsesWithInResponseTo: false
+        signatureAlgorithm: 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
+        digestAlgorithm: 'http://www.w3.org/2001/04/xmlenc#sha256'
+        encryption_algorithm: 'http://www.w3.org/2001/04/xmlenc#aes256-cbc'
+        lowercaseUrlencoding: false
+      contactPerson:
+        technical:
+          givenName: 'Abdelwaheb Slama'
+          emailAddress: 'abdelwaheb.slama@universitecentrale.tn'
+        support:
+          givenName: 'Abdelwaheb Slama'
+          emailAddress: 'abdelwaheb.slama@universitecentrale.tn'
+        administrative:
+          givenName: 'Administrative User'
+          emailAddress: 'abdelwaheb.slama@universitecentrale.tn'
+      organization:
+        en-US:
+          name: 'Université Centrale'
+          displayname: 'Université Centrale'
+          url: 'https://www.universitecentrale.net'
+      compress:
+        requests: true
+        responses: false
+    # Optional another one SAML settings (see Multiple IdP below)
+#    another:
+#      idp:
+#      # ...
+#      sp:
+#      # ...
+#      # ...
+  # Optional parameters
+  use_proxy_vars: true
+  idp_parameter_name: 'custom-idp'
+  entity_manager_name: 'custom-em'

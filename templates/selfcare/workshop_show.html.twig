@@ -1,0 +1,384 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ workshop.name | title }}{% endblock %}
+
+{% block toaster %}
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            {% if not existe %}
+                <img src="{{ asset('roadMapStyle/assets/images/toast.svg') }}" alt="icon">
+
+                <span>"{{ workshop.name }}" has been added to your cart.</span>
+            {% else %}
+                <img src="{{ asset('roadMapStyle/assets/images/x.svg') }}" alt="icon">
+                <span>"{{ workshop.name }}" Already exist in My Learning.</span>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <h1 class="title mb-4">{{ workshop.name }}</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">{{ 'title.home'|trans }}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ 'title.categories'|trans }}</li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ workshop.name }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="categoriesDetails">
+        <div class="container">
+
+            <div class="row py-5">
+                <div class="col-12 col-lg-7 col-xl-8 order-mobile-2">
+                    <h2 class="title mb-4">{{ 'workshop.course_overview'|trans }}</h2>
+                    <p class="paragraph">
+                        {{ workshop.description }}
+                    </p>
+                    <h3 class="title title--sm">{{ 'learner_should_be_able_to'|trans }}:</h3>
+                    <ul class="categoriesDetails__list row">
+                        {% for objective in objectives %}
+                            <li class="categoriesDetails__item col-12 col-md-6">
+                                {{ objective.description }}
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                    {#                    <div class="categoriesDetails__tags"> #}
+                    {#                        <h3 class="title title--small">Tags</h3> #}
+                    {#                        <a href="{{ path('theme_show_all') }}" class="categoriesDetails__tag">{{ workshop.theme }}</a> #}
+                    {#                        #}{#                        <a href="#" class="categoriesDetails__tag">Intubation trachéale difficile</a> #}
+                    {#                    </div> #}
+
+                    <h3 class="title title--small">{{ 'workshop.review'|trans }}</h3>
+
+                    <div class="categoriesDetails__review">
+                        <div class="categoriesDetails__reviewTotal">
+                            <h4 class="title title--xl">5,0</h4>
+                            <div class="testimonial__stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <h4 class="categoriesDetails__reviewCount">Total {{ totalRate5 }} Rating</h4>
+                        </div>
+                        <div class="categoriesDetails__reviewProgressList">
+                            {% for i in 5..1 %}
+
+                                <div class="categoriesDetails__reviewProgressItem">
+                                    <p class="categoriesDetails__reviewProgressStarsCount">{{ i }} {{ 'workshop.stars'|trans }}</p>
+                                    <div class="progressbar">
+                                        <div class="progressbar-filled"
+                                             style="width: {{ percentPerValueRate[i] }}%"></div>
+                                    </div>
+                                    <p class="percentage">{{ percentPerValueRate[i] }}%</p>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% for item in reviews %}
+                        <div class="categoriesDetails__comment">
+                            <div class="categoriesDetails__commentImage">
+
+                                <img src="{{ asset('roadMapStyle/assets/images/comment.png') }}" alt="">
+                            </div>
+                            <div class="categoriesDetails__commentBody">
+                                <div class="d-flex gap-3 align-items-center flex-wrap">
+                                    <h2 class="categoriesDetails__commentName">{{ item.user.fullName }}</h2>
+                                    <div class="categoriesDetails__commentStars">
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <p class="ms-auto categoriesDetails__commentDate"> {{ item.createdAt|date('d M Y') }}</p>
+                                </div>
+                                <p class="mt-3 categoriesDetails__commentText">{{ item.comment }}</p>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+
+                </div>
+                <div class="col-12 col-lg-5 col-xl-4 px-4 order-mobile-1">
+                    <div class="categoriesDetailsCard">
+                        <div class="categoriesDetailsCard__image">
+
+                            <img src="{{ asset('images/workshops/'~ workshop.imageName) }}" alt="">
+                        </div>
+                        <div class="categoriesDetailsCard__body">
+                            <ul class="categoriesDetailsCard__list">
+                                <li class="categoriesDetailsCard__item">
+                                    {% if  app.user %}
+                                    {% if( ((  is_granted('ROLE_STUDENT') and   workshop.workshopType =="1")) or ((workshop.workshopType =="1")) or
+                                        ((  not is_granted('ROLE_STUDENT') and   workshop.workshopType =="2"))
+
+                                        ) %}
+                                        <h3 class="categoriesDetailsCard__title">
+                                            <i class="fa-solid fa-dollar-sign"></i>
+                                            {{ 'workshop.price'|trans }}
+                                        </h3>
+
+                                        <p class="categoriesDetailsCard__info">{{ workshop.price }} <span>Dt</span>
+                                        </p>
+                                    {% endif %}
+                                    {% else %}
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                        {{ 'workshop.price'|trans }}
+                                    </h3>
+
+                                    <p class="categoriesDetailsCard__info">{{ workshop.price }} <span>Dt</span>
+                                        {% endif %}
+
+
+                                </li>
+                                <li class="categoriesDetailsCard__item">
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-regular fa-clock"></i>
+                                        {{ 'workshop.duration'|trans }}
+                                    </h3>
+                                    <p class="categoriesDetailsCard__info">{{ workshop.workshopDuration }} {{ workshop.durationUnit }}</p>
+                                </li>
+                                <li class="categoriesDetailsCard__item">
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-solid fa-bullseye"></i>
+                                        {{ 'workshop.objectives'|trans }}
+                                    </h3>
+                                    <p class="categoriesDetailsCard__info">{{ workshop.objectiveCount }}</p>
+                                </li>
+                                <li class="categoriesDetailsCard__item">
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-solid fa-book-open-reader"></i>
+                                        {{ 'workshop.enrolled'|trans }}
+                                    </h3>
+                                    <p class="categoriesDetailsCard__info">{{ workshop.purchasedCount }} {{ 'title.students'|trans }}</p>
+                                </li>
+                                <li class="categoriesDetailsCard__item">
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-solid fa-globe"></i>
+                                        {{ 'workshop.language'|trans }}:
+                                    </h3>
+                                    <p class="categoriesDetailsCard__info">{% if app.request.locale =='fr' %}
+                                            Français
+                                        {% else %}
+                                            English
+                                        {% endif %} </p>
+                                </li>
+                                <li class="categoriesDetailsCard__item">
+                                    <h3 class="categoriesDetailsCard__title">
+                                        <i class="fa-solid fa-globe"></i>
+                                        {{ 'workshop.rating'|trans }}
+                                    </h3>
+                                    <p class="categoriesDetailsCard__info">({{ workshop.rate|number_format(1) }})</p>
+                                </li>
+                            </ul>
+                            {#                            <h3 class="title title--xs">Share This Course</h3> #}
+                            {#                            <div class="socialmedia"> #}
+                            {#                                <a href="#" class="socialmedia__link"> #}
+                            {#                                    <i class="fa-brands fa-facebook-f"></i> #}
+                            {#                                </a> #}
+                            {#                                #}{#                                <a href="#" class="socialmedia__link"> #}
+                            {#                                #}{#                                    <i class="fa-brands fa-instagram"></i> #}
+                            {#                                #}{#                                </a> #}
+                            {#                                <a href="#" class="socialmedia__link"> #}
+                            {#                                    <i class="fa-brands fa-linkedin-in"></i> #}
+                            {#                                </a> #}
+                            {#                                #}{#                                <a href="#" class="socialmedia__link"> #}
+                            {#                                #}{#                                    <i class="fa-brands fa-youtube"></i> #}
+                            {#                                #}{#                                </a> #}
+                            {#                            </div> #}
+                            {#                            {% if   not is_granted('ROLE_STUDENT') and workshop.workshopType =="1" %} #}
+                            <a href="{{ path('workshop_reserve',{'id':workshop.id}) }}"
+                               class="button--contained button--contained--withArrow mx-auto"> {{ 'workshop.add_cart_btn'|trans }}</a>
+                            {#                            {% endif %} #}
+
+                            {#                            <a href="{{ path('workshop_reserve',{'id':workshop.id}) }}" #}
+                            {#                               class="button--contained button--contained--withArrow mx-auto">Add to cart</a> #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="related">
+                <h2 class="title">{{ "related_course"|trans }}</h2>
+                <div class="recommanded">
+                    {% for item in consultedWorkshops %}
+                        <div class="px-2">
+                            <div class="card">
+                                <a href="{{ path('workshop_show',{id: item.id}) }}" class="card__link"></a>
+                                <div class="card-image">
+                                    <img src="{{ asset('images/workshops/'~ item.imageName) }}" alt=""/>
+                                </div>
+                                <div class="card-body py-4">
+                                    <div class="card__header">
+                                        {% if (is_granted('ROLE_STUDENT') and workshop.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                            <p class="card__free">{{  'card__free'|trans }}</p>
+                                        {% endif %}
+
+                                        <p class="card__stars">
+                                            <i class="fa-solid fa-star"></i>
+                                            {% if item.rate %}
+                                                ( {{ item.rate|number_format(1) }} )
+                                            {% else %}
+                                                ( 0 )
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <h3 class="card__title">
+                                        {{ item.name }}
+                                    </h3>
+                                    <p class="card__date">
+                                        <span><i class="fa-regular fa-clock"></i></span>
+                                        {{ item.workshopDuration }} {{ item.durationUnit }}
+                                    </p>
+                                    <div class="card__footer">
+                                        <p class="card__target">
+                                            <span><i class="fa-solid fa-bullseye"></i></span>
+                                            {{ item.objectiveCount }} {{ 'title.objectives'|trans }}
+                                        </p>
+                                        <div class="card__seperator"></div>
+                                        <p class="card__students">
+                                            <span><i class="fa-regular fa-user"></i></span>
+                                            {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="cardHover">
+                                    <div class="card__header">
+                                        {% if (is_granted('ROLE_STUDENT') and workshop.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                            <p class="card__free">{{  'card__free'|trans }}</p>
+                                        {% endif %}
+                                        <p class="card__stars">
+                                            <i class="fa-solid fa-star"></i>
+                                            {% if item.rate %}
+                                                ( {{ item.rate|number_format(1) }} )
+                                            {% else %}
+                                                ( 0 )
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <h3 class="card__title">
+                                        {{ item.name }}
+                                    </h3>
+                                    <p class="card__content">
+                                        {{ item.description }}
+                                    </p>
+                                    <p class="card__date">
+                                        <span><i class="fa-regular fa-clock"></i></span>
+                                        {{ item.workshopDuration }} {{ item.durationUnit }}
+                                    </p>
+                                    <div class="card__footer">
+                                        <p class="card__target">
+                                            <span><i class="fa-solid fa-bullseye"></i></span>
+                                            {{ item.objectiveCount }} {{ 'title.objectives'|trans }}
+                                        </p>
+                                        <div class="card__seperator"></div>
+                                        <p class="card__students">
+                                            <span><i class="fa-regular fa-user"></i></span>
+                                            {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                        </p>
+                                    </div>
+                                    <a href="#" class="button--contained button--contained--withArrow">{{ 'title.enroll'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {#    {{ render(path('selfcare_contact_component')) }} #}
+
+    {#    {% include 'selfcare/popular_workshops.html.twig' %} #}
+{% endblock %}
+
+{% block javaScript %}
+    <script>
+        jQuery(document).ready(function ($) {
+
+
+            add_to_Cart = {{ addToCart|json_encode() }};
+            existe = {{ existe|json_encode() }};
+            if (add_to_Cart) {
+
+                $('.toast').addClass('show')
+                setTimeout(() => {
+                    $('.toast').removeClass('show')
+
+                    var uri = window.location.toString();
+                    if (uri.indexOf("?") > 0) {
+                        var clean_uri = uri.substring(0, uri.indexOf("?"));
+                        window.history.replaceState({}, document.title, clean_uri);
+                    }
+
+                }, 5000);
+                // });
+            }
+
+            $(".recommanded").slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 2,
+                dots: true,
+                arrows: false,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                ],
+            });
+
+        });
+
+
+        // $(function () {
+        //     if (add_to_Cart) {
+        //         $('#myModal').modal('show');
+        //     }
+        // });
+    </script>
+{% endblock %}

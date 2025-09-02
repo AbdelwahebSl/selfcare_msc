@@ -1,0 +1,11 @@
+
+.container {
+    max-width: $containerFull;
+    margin-left: auto;
+    margin-right: auto;
+    @each $size in $sizes {
+        @include breakpoint($size) {
+            max-width: map-get($containerWidths, $size);
+        }
+    }
+}

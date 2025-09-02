@@ -1,0 +1,242 @@
+{% extends "base.html.twig" %}
+{% block title %}Cart- Medical Simulation Center{% endblock %}
+
+{% block content %}
+
+
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="container">
+            <h1 class="title mb-4">{{ "cart.title"|trans({},'payment') }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('homepage') }}">{{ "cart.home"|trans({},'payment') }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ "cart.title"|trans({},'payment') }}</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="Table">
+        <div class="Table__container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">{{ "cart.Courses"|trans({},'payment') }}</th>
+                    <th scope="col">{{ "cart.Price"|trans({},'payment') }}</th>
+                    <th scope="col">{{ "cart.edit"|trans({},'payment') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in workshopCarts %}
+                    <tr>
+                        <td>
+                            <div class="Table__content">
+                                <div class="Table__image">
+                                    <img src="{{ 'images/workshops/'~ item.workshop.imageName }}" alt="">
+                                </div>
+                                <h2>{{ item.workshop.name }}</h2>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="Table__content">
+                                {% if (is_granted('ROLE_STUDENT') and item.workshop.workshopType == '2') %}
+                                    {{ "cart.Free"|trans({},'payment') }}
+                                {% else %}
+                                    <p>{{ item.workshop.price }} <span>dt</span></p>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="Table__content">
+                                <button>
+                                    <a href="{{ path('workshop_delete_from_cart',{'id':item.workshop.id}) }}"> <i
+                                                class="fa-regular fa-trash-can"></i></a>
+
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="container">
+                <div class="cart__summary">
+                    <div class="cart__buttons">
+                        <a href="{{ path('theme_show_all') }}"
+                           class="button--contained button--contained--withArrow button--contained--reverse w-auto">{{ "cart.add_mor_courses"|trans({},'payment') }}</a>
+                        <!-- <a href="{{ path('theme_show_all') }}" -->
+                           <!-- class="button--contained button--contained--withArrow w-auto">Add to my learning</a> -->
+                    </div>
+                    <h2 class="title title--small mb-4">{{ "cart.cart_totals"|trans({},'payment') }}</h2>
+                    <div class="cart__total">
+                        <div class="cart__totalBlock">
+                            <h3 class="title--xs light">{{ "cart.subtotal"|trans({},'payment') }}</h3>
+                            <p class="subtitle cart__totalPrice">{{ total }}<span>dt</span></p>
+                        </div>
+                        <div class="cart__totalBlock">
+                            <h3 class="title title--xs">{{ "cart.Total"|trans({},'payment') }}</h3>
+                            <p class="subtitle cart__totalPrice">{{ total }}<span>dt</span></p>
+                        </div>
+                    </div>
+                    <p class="cart__accept">{{ 'cart.policy.text'|trans({},'payment') }} <a href="#">{{ 'cart.policy.link'|trans({},'payment') }} </a></p>
+                    <div class="cart__payement">
+                        {% if total != 0 %}
+                            <h3 class="title title--xs mb-4">{{ "cart.payment_with"|trans({},'payment') }}</h3>
+                            <div class="row mb-5 align-items-stretch">
+                                <div class="col-12 col-md-6 px-2">
+                                    <div class="cart__payementInput">
+                                        <input type="radio" name="payement" id="credit">
+                                        <label for="credit">
+                                            <span class="cart__payementRadioIcon"></span>
+                                            <span class="cart__payementIcon">
+                                            <img src="{{ asset('roadMapStyle/assets/images/credit.PNG') }}" alt="">
+                                        </span>
+                                            <h4 class="cart__payementLabel">{{ "cart.payment_methods.credit_card"|trans({},'payment') }}</h4>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <div class="cart__payementInput">
+                                        <input type="radio" name="payement" id="transfer">
+                                        <label for="transfer">
+                                            <span class="cart__payementRadioIcon"></span>
+                                            <span class="cart__payementIcon">
+                                            <img src="{{ asset('roadMapStyle/assets/images/transfer.PNG') }}" alt="">
+                                        </span>
+                                            <h4 class="cart__payementLabel">{{ "cart.payment_methods.bank_transfer"|trans({},'payment') }}</h4>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="ml-auto d-flex justify-content-end">
+                            <a href="{{ path('bank_for_free_payment') }}" id="proceedCheckout"
+                               class="button--contained button--contained--withArrow w-auto" style="pointer-events: none;" >
+                                {% if total != 0 %}{{ "cart.proceed_to_checkout"|trans({},'payment') }}{% else %}{{ "cart.add_to_my_learning"|trans({},'payment') }} {% endif %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="recommanded mb-5 ">
+        <div class="container">
+            <h2 class="title mb-5">{{ 'cart.recommanded_for_you'|trans({},'payment') }}</h2>
+            <div class="row justify-content-center">
+                {% for item in recommandedWorkShop %}
+                    <div class="col-xl-recommanded col-md-6 col-12 px-2">
+                        <div class="card">
+                            <a href="{{ path('workshop_show',{id: item.id}) }}" class="card__link"></a>
+                            <div class="card-image">
+                                <img src="{{ asset('images/workshops/'~ item.imageName) }}" alt=""/>
+                            </div>
+                            <div class="card-body py-4">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                        <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    {% endif %}
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        ( 5,0 )
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }} {{ 'workshop.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="cardHover">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                        <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    {% endif %}
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        ( 5,0 )
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__content">      {{ item.description }} </p>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }} {{ 'workshop.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                            </div>
+                            <button class="button--contained button--contained--withArrow showToast">{{ 'title.enroll'|trans }}</button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- {{ render(path('selfcare_contact_component')) }} -->
+
+{% endblock %}
+
+
+{% block javaScript %}
+
+    <script src="{{ asset('roadMapStyle/js/popper.min.js') }}"></script>
+    <script src="{{ asset('roadMapStyle/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('roadMapStyle/js/all.min.js') }}"></script>
+    <script src="{{ asset('roadMapStyle/js/jquery.min.js') }}"></script>
+    <script>
+       var total = {{ total }};
+    
+        if (total == 0) {
+            $('#proceedCheckout').css("pointer-events", "auto");
+        }
+        jQuery(document).ready(function ($) {
+            $('#credit').on("click", function (e) {
+                $('#proceedCheckout').css("pointer-events", "auto");
+                $('#proceedCheckout').attr("href", "{{ path('cart_payment') }}");
+                $('#proceedCheckout').trigger('change');
+            });
+            $('#transfer').on("click", function (e) {
+                $('#proceedCheckout').css("pointer-events", "auto");
+                $('#proceedCheckout').attr("href", "{{ path('bank_transfer_payment') }}");
+                $('#proceedCheckout').trigger('change');
+            });
+
+
+        });
+    </script>
+{% endblock %}

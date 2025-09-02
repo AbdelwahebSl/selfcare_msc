@@ -1,0 +1,10 @@
+/vendor
+/vendor/*
+/src.BCKP_05-09-2024
+/templates.BCKP
+/templates-BCKP_05-09-2024
+/var
+/var/*
+/public/images/workshops/*.mp4
+
+.env

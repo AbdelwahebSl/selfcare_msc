@@ -1,0 +1,57 @@
+{{ form_start(form, {'action': path('update_profile_pic'), 'method': 'POST'}) }}
+{#<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"/>#}
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>#}
+
+<div class="profile-picture p-3">
+    <div class="d-flex justify-content-center align-items-start">
+        <div class="profile-image me-3 mx-md-auto position-relative">
+            <picture>
+                {% if  vich_uploader_asset(profilePic, 'imageFile') %}
+                    <source srcset="{{ vich_uploader_asset(profilePic, 'imageFile') }}" media="(min-width: 768px)">
+                    <source srcset="{{ vich_uploader_asset(profilePic, 'imageFile') }}" media="(max-width: 768px)">
+                    <img src="{{ vich_uploader_asset(profilePic, 'imageFile') }}" alt=""/>
+                {% else %}
+                    <source srcset="Images/Ellipse 34.jpg" media="(min-width: 768px)">
+                    <source srcset="Images/Ellipse 34.jpg" media="(max-width: 768px)">
+                    <img src="Images/Ellipse 34.jpg" alt=""/>
+                {% endif %}
+            </picture>
+            {{ form_row(form.imageFile,{ 'attr':
+                {'class': 'form-control d-done dark-primary-color'}}) }}
+            {{ form_row(form.save) }}
+
+            {# <input type="submit" value="" class="" id="_submit_photo"> #}
+        </div>
+        <div class="profile-name d-md-none">
+            <h1 class="section-title mb-2 mt-3 dark-primary-color">{{ user.fullName }}</h1>
+            <p class="ps-lg-5 mb-3">{{ user.description }}</p>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" crossorigin="anonymous"></script>
+<script>
+    $('#profile_pic_imageFile_file').change(function () {
+        var file = $('#user_imageFile_file');
+        $('#_submit_photo').trigger('click');
+    });
+    $('#profile_pic_imageFile_file').change(function () {
+        var file = $('#user_imageFile_file');
+        $('#profile_pic_save').trigger('click');
+    });
+
+
+
+    $('#profile_pic_imageFile_file').filestyle({
+
+        buttonName : 'btn-success',
+
+        buttonText : ' Open'
+
+    });
+
+
+</script>

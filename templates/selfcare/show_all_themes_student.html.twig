@@ -1,0 +1,257 @@
+{% extends "base.html.twig" %}
+{% block title %}Categories{% endblock %}
+{% block style %}
+    <style>
+        .page-item.active a {
+            background-color: #8D1E32;
+            color: white; /* Optionnel : pour changer la couleur du texte */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+
+
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="container">
+            <h1 class="title mb-4">{{ "link.student_training"|trans }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('theme_show_all') }}">{{ 'title.home'|trans }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ 'title.online_courses'|trans }}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+{#            <div class="row popular__tabs">#}
+{#                <a href="{{  path('theme_show_all_students') }}" class="button--outlined active">all courses</a>#}
+{#                {% for theme in themes %}#}
+{#                    <a href="{{ path('theme_show_all_students', {them_id:theme.id}) }}" class="button--outlined">{{ theme.name }} </a>#}
+
+{#                {% endfor %}#}
+{#            </div>#}
+
+            <div class="example_1 row" id="listWorshop">
+                {#            {% for theme in themes %} #}
+                {% for item in workshops %}
+
+                    <div class="item col-12 col-md-6 col-xl-4 px-2 mb-5">
+                        <div class="card">
+                            <a href="{{ path('workshop_show',{id: item.id}) }}" class="card__link"></a>
+                            <div class="card-image">
+                                <img src="{{ asset('images/workshops/'~ item.imageName )}}" alt=""/>
+                            </div>
+                            <div class="card-body py-4">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                        <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    {% endif %}
+
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        {% if item.rate %}
+                                            ( {{ item.rate|number_format(1) }} )
+                                        {% else %}
+                                            ( 0 )
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }} {{ 'title.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }}  {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="cardHover">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                    <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    {% endif %}
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        {% if item.rate %}
+                                            ( {{ item.rate|number_format(1) }} )
+                                        {% else %}
+                                            ( 0 )
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__content">
+                                    {{ item.description }}
+                                </p>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }} {{ 'title.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }}  {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                                <a
+                                        href="#"
+                                        class="button--contained button--contained--withArrow"
+                                >{{ 'title.enroll'|trans }}</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+
+                {% endfor %}
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" id="pagin">
+
+                    </ul>
+
+                </nav>
+            </div>
+
+        </div>
+    </section>
+
+{#    {{ render(path('selfcare_contact_component')) }}#}
+
+
+
+{% endblock %}
+
+{% block javaScript %}
+
+    <script type="text/javascript">
+        // Pagination
+        const pageSize = 6;
+        let startPage = 0;
+        let numberPage = 0;
+
+        const items = document.querySelectorAll(".item");
+        const pageCount = Math.ceil(items.length / pageSize);
+
+        if (pageCount > 1) {
+            const pagin = document.getElementById("pagin");
+
+            for (let i = 0; i < pageCount; i++) {
+                const li = document.createElement('li');
+                li.className = 'page-item';
+
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = (i + 1).toString();
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(i + 1);
+                });
+
+                li.appendChild(a);
+                pagin.appendChild(li);
+            }
+
+            // Previous pagination button
+            const prev = document.createElement('li');
+            prev.className = 'page-item';
+
+            const aPrev = document.createElement('a');
+            aPrev.className = 'page-link';
+            aPrev.href = '#';
+            aPrev.textContent = 'Prev';
+            aPrev.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (startPage > 0) {
+                    startPage -= 1;
+                    showPage(startPage + 1);
+                }
+            });
+            let spanElm = document.createElement('span');
+            spanElm.className = 'page-icon';
+
+            let iElm = document.createElement('i');
+            iElm.className = 'fa-solid fa-arrow-left';
+            spanElm.append(iElm);
+            aPrev.prepend(spanElm);
+
+            prev.appendChild(aPrev);
+            pagin.prepend(prev);
+
+            // Next pagination button
+            const next = document.createElement('li');
+            next.className = 'page-item';
+
+            const aNext = document.createElement('a');
+            aNext.className = 'page-link';
+            aNext.href = '#';
+            aNext.textContent = 'Next';
+            aNext.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (startPage < pageCount - 1) {
+                    startPage += 1;
+                    showPage(startPage + 1);
+                }
+            });
+            let spanElmNext = document.createElement('span');
+            spanElmNext.className = 'page-icon';
+
+            let iElmNext = document.createElement('i');
+            iElmNext.className = 'fa-solid fa-arrow-right';
+
+            spanElmNext.append(iElmNext);
+            aNext.append(spanElmNext);
+            next.appendChild(aNext);
+            pagin.appendChild(next);
+
+            showPage(1); // Show the first page initially
+
+            function showPage(page) {
+                items.forEach((item, index) => {
+                    item.style.display = (index >= pageSize * (page - 1) && index < pageSize * page) ? 'block' : 'none';
+                });
+
+                document.querySelectorAll('#pagin .page-item').forEach((li, index) => {
+                    li.classList.remove('active');
+                    if (index === page) {
+                        li.classList.add('active');
+                    }
+                });
+
+                startPage = page - 1;
+            }
+        }
+    </script>
+
+
+
+{% endblock %}

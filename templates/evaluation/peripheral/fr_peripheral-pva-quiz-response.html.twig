@@ -1,0 +1,534 @@
+{% extends "base.html.twig" %}
+ {% block title %}My Learning {% endblock %}
+ {% block style %}
+
+
+     <style>
+
+
+         .card {
+             background: white;
+             border-radius: 1rem;
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+             overflow: hidden;
+         }
+
+         .card-header {
+             background: #8D1E32;
+             padding: 1.5rem;
+             color: white;
+         }
+
+         .card-header h1 {
+             margin: 0;
+             font-size: 1.8rem;
+             text-align: center;
+         }
+
+         .card-body {
+             padding: 2rem;
+         }
+
+         .question-container {
+             background: white;
+             border-radius: 0.5rem;
+             padding: 1.5rem;
+             margin-bottom: 2rem;
+             border: 1px solid #e0e0e0;
+             transition: transform 0.2s;
+         }
+
+         .question-container:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+         }
+
+         h5 {
+             color: #8D1E32;
+             font-size: 1.1rem;
+             margin-bottom: 1.5rem;
+             font-weight: 600;
+             line-height: 1.4;
+         }
+
+         .form-check {
+             margin: 1rem 0;
+             padding-left: 2rem;
+             position: relative;
+         }
+
+         .form-check-input {
+             position: absolute;
+             margin-top: 0.3rem;
+             margin-left: -1.5rem;
+         }
+
+         .form-check-label {
+             padding-left: 0.5rem;
+             cursor: pointer;
+             transition: color 0.2s;
+         }
+
+         .form-check-label:hover {
+             color: #8D1E32;
+         }
+
+         .correct-answer {
+             background-color: #f0f9f0;
+             border-left: 4px solid #28a745;
+             padding: 1rem;
+             margin-top: 1rem;
+             border-radius: 0.25rem;
+             font-weight: 500;
+             /*display: block;*/
+         }
+
+         .btn-container {
+             position: sticky;
+             bottom: 1rem;
+             padding: 1rem;
+             background: rgba(255, 255, 255, 0.9);
+             backdrop-filter: blur(10px);
+             border-radius: 0.5rem;
+             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+             margin-top: 2rem;
+         }
+
+         /*.btn {*/
+         /*    padding: 0.75rem 1.5rem;*/
+         /*    border-radius: 0.5rem;*/
+         /*    font-weight: 500;*/
+         /*    transition: all 0.2s;*/
+         /*    min-width: 120px;*/
+         /*}*/
+
+         .btn-primary {
+             background-color: #8D1E32;
+             border: none;
+             color: white;
+         }
+
+         .btn-primary:hover {
+             background-color: #7a1a2b;
+             transform: translateY(-1px);
+         }
+
+         .btn-outline-secondary {
+             border: 1px solid #6c757d;
+             background: white;
+         }
+
+         .btn-outline-secondary:hover {
+             background-color: #f8f9fa;
+         }
+
+         .alert-primary {
+             background-color: #f8f9fa;
+             border-left: 4px solid #8D1E32;
+             padding: 1rem;
+             margin: 1rem 0;
+             border-radius: 0.25rem;
+         }
+
+         #score {
+             font-weight: 600;
+             color: #8D1E32;
+         }
+
+         @media (max-width: 768px) {
+             .container {
+                 margin: 1rem auto;
+             }
+
+             .card-body {
+                 padding: 1rem;
+             }
+
+             .question-container {
+                 padding: 1rem;
+             }
+
+             .btn {
+                 width: 100%;
+                 margin: 0.5rem 0;
+             }
+         }
+     </style>
+ {% endblock %}
+ {% block content %}
+
+
+     <!-- Sample content to show styling -->
+     <div class="container   my-5 " style="margin-top: 50px; margin-bottom: 50px;">
+         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;margin-top: 80px  ;">
+             <div id="dynamicToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                 <div class="toast-header">
+                     <span id="toastIcon" class="rounded me-2" style="width: 20px; height: 20px;"></span>
+                     <strong id="toastTitle" class="me-auto"></strong>
+                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                 </div>
+                 <div id="toastBody" class="toast-body"></div>
+             </div>
+         </div>
+         <div class="card">
+             <div class="card-header">
+                 <h1>{{ workshop.name }}</h1>
+             </div>
+             <div class="card-body">
+
+                 <div id="score-display" class="alert alert-primary d-none" role="alert">
+                     Your score: <span id="score">0</span> out of 10
+                 </div>
+                 <form id="quiz-form" method="post">
+                     <!-- Question 1 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 1: Quelles sont les recommandations en matière d’hygiène des mains et
+                             d’utilisation de gants avant l’insertion d’un cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q1" value="A" id="q1a"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q1a">A. Réaliser une hygiène des
+                                 mains avec un savon antiseptique ou une solution hydroalcoolique.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q1" value="B" id="q1b">
+                             <label class="form-check-label" for="q1b">B. Désinfecter les mains uniquement si elles sont
+                                 visiblement sales et utiliser des gants non stériles pour toutes les
+                                 manipulations.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q1" value="C" id="q1c"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q1c">C. Porter des gants pour
+                                 éviter l’exposition au sang et des gants stériles si le site est palpé après
+                                 l’antisepsie cutanée.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q1" value="D" id="q1d">
+                             <label class="form-check-label" for="q1d">D. Se laver les mains uniquement avec du savon
+                                 simple, sans solution hydroalcoolique, et utiliser des gants stériles dans tous les
+                                 cas.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> A, C
+                         </div>
+                     </div>
+
+                     <!-- Question 2 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 2: Quels sont les sites privilégiés pour l’insertion d’un cathéter intraveineux
+                             périphérique chez l’adulte ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" disabled name="q2" value="A" id="q2a">
+                             <label class="form-check-label" for="q2a">A. Membres inférieurs (ex. : veines du
+                                 pied)</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" disabled name="q2" value="B" id="q2b">
+                             <label class="form-check-label" for="q2b">B. Veines du cuir chevelu</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" checked disabled name="q2" value="C" id="q2c">
+                             <label class="form-check-label text-white bg-success" for="q2c">C. Membres supérieurs (ex.
+                                 : veines céphalique, basilique et médiane cubitale)</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" disabled name="q2" value="D" id="q2d">
+                             <label class="form-check-label" for="q2d">D. Veines centrales</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> C
+                         </div>
+                     </div>
+
+                     <!-- Continue for the remaining questions -->
+                     <!-- Question 3 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 3: Lesquelles des conditions suivantes sont des contre-indications absolues à
+                             l’insertion d’un cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q3" value="A" id="q3a"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q3a">A. Infections ou cellulite
+                                 au site d’insertion prévu</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q3" value="B" id="q3b"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q3b">B.Curage ganglionnaire ou
+                                 mastectomie préalable du même côté</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q3" value="C" id="q3c"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q3c">C. Présence d’une fistule
+                                 de dialyse fonctionnelle dans le même membre</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q3" value="D" id="q3d"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q3d">D. Phlébite dans la veine
+                                 choisie</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> A, B, C, D
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 4: Laquelle des conditions suivantes est une contre-indication relative à la pose
+                             d’un cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q4" value="A" id="q4a"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q4a">A. Veines fragiles chez les
+                                 patients âgés</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q4" value="B" id="q4b"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q4b">B. Veines dans le même
+                                 membre qu’une intervention chirurgicale récente</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q4" value="C" id="q4c">
+                             <label class="form-check-label" for="q4c">C. Veines dans le même membre qu’une intervention
+                                 chirurgicale récente</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q4" value="D" id="q4d"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q4d">D. Veines à proximité d’une
+                                 zone de traumatisme récent</label>
+                         </div>
+                         <div class="correct-answer">
+                             Réponse : A, B,D
+                         </div>
+                     </div>
+                     <!-- Question 5 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 5: Quelles étapes sont requises avant de ponctionner une veine pour poser un
+                             cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q5" value="A" id="q5a"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q5a">A.Désinfection large avec
+                                 un antiseptique.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q5" value="B" id="q5b"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q5b">B. Stabilisation de la
+                                 veine avec le pouce</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q5" value="C" id="q5c">
+                             <label class="form-check-label" for="q5c">C. Mesure de la pression artérielle</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q5" value="D" id="q5d"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q5d">D. Pose d’un garrot à 10 cm
+                                 au-dessus du site de ponction choisi.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> A, B, D
+                         </div>
+                     </div>
+
+                     <!-- Question 6 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 6: Quel est l’angle correct de l’aiguille lors de l’insertion d’un cathéter
+                             intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q6" value="A" id="q6a"
+                                    disabled>
+                             <label class="form-check-label" for="q6a">A. Tenir l’aiguille à un angle de 45
+                                 degrés.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q6" value="B" id="q6b" checked
+                                    disabled>
+                             <label class="form-check-label text-white bg-success" for="q6b">B. Tenir l’aiguille presque
+                                 parallèle à la peau, biseau vers le haut, en suivant le trajet de la veine</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q6" value="C" id="q6c"
+                                    disabled>
+                             <label class="form-check-label " for="q6c">C. Tenir l’aiguille perpendiculairement à la
+                                 peau pour accéder à une veine profonde</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q6" value="D" id="q6d"
+                                    disabled>
+                             <label class="form-check-label" for="q6d">D. Insérer l’aiguille selon l’angle le plus
+                                 confortable pour l’opérateur.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> B
+                         </div>
+                     </div>
+
+                     <!-- Question 7 -->
+                     <div class="question-container mb-4">
+                         <h5>Question 7: Quels sont les critères de réussite de la pose d’un cathéter intraveineux
+                             périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q7" value="A" id="q7a"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q7a">A. Retour sanguin
+                                 (flashback)</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q7" value="B" id="q7b"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q7b">B. Absence de gonflement au
+                                 point d’insertion.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q7" value="C" id="q7c"
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q7c">C. Absence de douleur ou
+                                 d’inconfort pour le patient.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="checkbox" disabled name="q7" value="D" id="q7d">
+                             <label class="form-check-label" for="q7d">D. Absence de saignement visible au point de
+                                 ponction.</label>
+                         </div>
+                         <div class="correct-answer mt-2">
+                             <strong>Réponse :</strong> A, B, C
+                         </div>
+                     </div>
+
+
+                     <div class="question-container">
+                         <h5>Question 8:Que faut-il faire en cas de gonflement local rapide indiquant une extravasation
+                             de sang lors de l’insertion d’un cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="A" id="q8a" checked
+                                    disabled>
+                             <label class="form-check-label text-white bg-success" for="q8a">A. Arrêter immédiatement la
+                                 procédure, retirer le garrot et l’aiguille, comprimer le site de ponction et choisir un
+                                 autre site pour une nouvelle tentative</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="B" id="q8b"
+                                    disabled>
+                             <label class="form-check-label" for="q8b">B. Poursuivre la procédure tout en desserrant le
+                                 garrot pour réduire le gonflement</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="C" id="q8c"
+                                    disabled>
+                             <label class="form-check-label" for="q8c">C. Laisser l’aiguille en place, appliquer une
+                                 compresse froide, et réessayer au même endroit après quelques minutes</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q8" value="D" id="q8d"
+                                    disabled>
+                             <label class="form-check-label" for="q8d">D. Ignorer le gonflement et continuer si le
+                                 patient ne signale pas de douleur</label>
+                         </div>
+                         <div class="correct-answer">
+                             Réponse : A
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 9: Quelle action immédiate faut-il prendre si un patient présente une réponse
+                             vaso-vagale lors de l’insertion d’un cathéter intraveineux périphérique ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="A" id="q9a"
+                                    disabled>
+                             <label class="form-check-label " for="q9a">A. Continuer la procédure rapidement pour
+                                 réduire le stress.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="B" id="q9b" disabled
+                                    checked>
+                             <label class="form-check-label text-white bg-success" for="q9b">B. Arrêter la procédure,
+                                 allonger le patient en position couchée ou avec élévation des jambes, et surveiller les
+                                 signes vitaux.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="C" id="q9c"
+                                    disabled>
+                             <label class="form-check-label" for="q9c">C. Administrer immédiatement des fluides
+                                 intraveineux.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q9" value="D" id="q9d"
+                                    disabled>
+                             <label class="form-check-label" for="q9d">D. Retirer le cathéter et poser un garrot
+                                 au-dessus du site d’insertion</label>
+                         </div>
+                         <div class="correct-answer">
+                             Réponse : B
+                         </div>
+                     </div>
+
+                     <div class="question-container">
+                         <h5>Question 10: Quand faut-il remplacer un cathéter intraveineux périphérique posé dans des
+                             conditions sous-optimales aux urgences ?</h5>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="A" id="q10a"
+                                    disabled checked>
+                             <label class="form-check-label text-white bg-success" for="q10a">A. Dès que
+                                 possible</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="B" id="q10b"
+                                    disabled>
+                             <label class="form-check-label" for="q10b">B. Après 24 heures</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="C" id="q10c"
+                                    disabled>
+                             <label class="form-check-label" for="q10c">C. Après 48 heures.</label>
+                         </div>
+                         <div class="form-check">
+                             <input class="form-check-input" type="radio" required name="q10" value="D" id="q10d"
+                                    disabled>
+                             <label class="form-check-label" for="q10d">D. Après 96 heures.</label>
+                         </div>
+
+                         <div class="correct-answer">
+                             Réponse : A
+                         </div>
+                     </div>
+
+
+                     <div class=" text-start">
+                         <div class="formbold-form-btn-wrapper">
+
+
+                             <div class="row">
+
+                                 <div class="col">
+                                     <a class="" href="{{ path('workshop_show_content',{'id':workshop.id}) }}"
+                                        style="background-color:#FFFFFF;  color:  #69313a; font-size: 20px">
+                                         <i class="fas fa-angle-left "></i>
+                                         Retour
+                                     </a>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </form>
+
+
+             </div>
+         </div>
+     </div>
+
+
+
+
+     {#    {{ render(path('selfcare_contact_component')) }} #}
+ {% endblock %}
+
+{% block javaScript %}
+
+
+{% endblock %}

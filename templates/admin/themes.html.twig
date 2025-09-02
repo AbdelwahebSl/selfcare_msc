@@ -1,0 +1,52 @@
+{% extends 'admin/admin_base.html.twig' %}
+{% block body %}
+    <h3 class="section-title">
+        Themes list
+    </h3>
+    <p class="text-right">
+        <button type="button" class="tn btn-secondary btn-lg active d-flex justify-content-center
+                            align-content-between" onclick="location.href='{{ path('create_theme') }}';">
+            <span>New Theme</span> <i class="material-icons mr-1">add_circle</i>
+        </button>
+    </p>
+
+
+    <div class="table-responsive">
+        <table class="table" id="myTable">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+{#                <th scope="col">Speciality</th>#}
+                <th scope="col">Order</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for theme in themes %}
+                <tr>
+                    <th scope="row" class="dark-primary-color">{{ theme.name }}</th>
+                    <td>{{ theme.description }}</td>
+                    <td>
+                        <div class="category flex mb-4">
+                            <img src="{{ 'images/workshops/'~ theme.imageName }}"
+                                 alt="Image"
+                                 class="category-icon">
+                        </div>
+                    </td>
+{#                    <td>{{ theme.speciality }}</td>#}
+                    <td>{{ theme.themeOrder }}</td>
+                    <td>{{ theme.themeStatus }}</td>
+                    <td>
+                        <a class="nav-link " href="{{ path('edit_theme',{'id':theme.id}) }}">
+                            <span class="material-icons">mode_edit</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

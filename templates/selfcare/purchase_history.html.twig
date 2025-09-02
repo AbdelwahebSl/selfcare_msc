@@ -1,0 +1,93 @@
+{% extends "base.html.twig" %}
+{% block title %}My Purchase {% endblock %}
+
+{% block content %}
+    <section class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-xxl-3">
+                    {% include "selfcare/base.profile.html.twig" %}
+                </div>
+                <div class="col-12 col-lg-8 col-xxl-9 profile__content">
+                    <h1 class="title mb-5">{{ "profile.section.purchase_history"|trans({},'profile') }}</h1>
+                    <section class="Table">
+                        <div class="Table__shadow">
+                            <div class="Table__container">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">{{ 'cart.Price'|trans({},'payment') }}</th>
+                                        <th scope="col">{{ "status"|trans }}</th>
+                                        <th scope="col">{{ "payment_method"|trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in workshopCarts %}
+                                        <tr>
+                                            <td>
+                                                <div class="Table__content">
+                                                    <p>
+                                                    {% if  item.smtPayedAt  %}
+                                                        {{ item.smtPayedAt|date("d/m/Y")  }}
+                                                    {% elseif  item.payedAt  %}
+                                                        {{ item.payedAt|date("d/m/Y")  }}
+                                                    {% endif %}
+                                                       </p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="Table__content">
+                                                    {% if  item.paymentAmount %}
+                                                        <p>{{ item.paymentAmount }} <span>dt</span></p>
+                                                    {% endif %}
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="Table__content">
+                                                    {% if item.file %}
+                                                        {% if item.file.status == '2' %}
+                                                            <span class="Table__status Table__status--failed">Failed</span>
+                                                        {% elseif  item.file.status == '0' %}
+                                                            <span class="Table__status Table__status--hold">On Hold</span>
+                                                        {% elseif  item.file.status == '1' %}
+                                                            <span class="Table__status Table__status--approved">Approved</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {% if item.status =='1' and not item.file %}
+                                                        <span class="Table__status Table__status--approved">Approved</span>
+                                                    {% endif %}
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="Table__content">
+
+                                                    {% if item.paymentMode =='1' %}
+                                                    {{ "cart.payment_methods.credit_card"|trans({},"payment") }}
+                                                    {% elseif   item.paymentMode =='3'%}
+                                                        {{ "cart.Free"|trans({},"payment") }}
+                                                    {% else %}
+                                                        {{ "cart.payment_methods.bank_transfer"|trans({},"payment") }}
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{#    {{ render(path('selfcare_contact_component')) }}#}
+
+{% endblock %}
+
+{% block javaScript %}
+{% endblock %}

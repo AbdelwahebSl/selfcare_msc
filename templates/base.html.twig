@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% block head %}
+        <title>{% block title %}Selfcare{% endblock %} - Medical Simulation Center</title>
+    {% endblock %}
+
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Mulish:wght@400;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/all.min.css') }}  "/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/slick-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/slick.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/style.css') }}"/>
+    {% block style %}
+    {% endblock %}
+</head>
+<body  >
+{# oncontextmenu="return false;" #}
+{# oncontextmenu="return false;" #}
+<nav class="navbar navbar-expand-xl bg-white fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('roadMapStyle/assets/images/logo.png') }}" alt=""/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                {#                <a class="nav-link {% if app.request.attributes.get('_route') == 'homepage' %} #}
+                {#                                           active{% endif %}" aria-current="page" href="{{ path('homepage') }}">Home</a> #}
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'theme_show_all' %}
+                   active {% endif %}" href="{{ path('theme_show_all') }}">{{ 'link.all_courses'|trans }}</a>
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'theme_show_all_students' %}
+                   active {% endif %}" href="{{ path('theme_show_all_students') }}">{{ 'link.student_training'|trans }}</a>
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'theme_show_all_professionals' %}
+                   active {% endif %}" href="{{ path('theme_show_all_professionals') }}">{{ 'link.professional_training'|trans }}</a>
+
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'honoris_equipment' %}
+                   active {% endif %}" href="{{ path('honoris_equipment') }}">Equipment</a>
+                {#                <a class="nav-link  {% if app.request.attributes.get('_route') == 'selfcare_contact' %} #}
+                {#                                           active{% endif %}" href="{{ path('selfcare_contact') }}">Contact</a> #}
+            </div>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-link nav-elevatedButton cart__toggler showToast" href="#" data-bs-toggle="modal"
+                   data-bs-target="">
+                    <div class="cartLength" id="warpTotalShop" hidden><span id="totalWorkShop"></span></div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            {% else %}
+                <a class="nav-link nav-elevatedButton cart__toggler " href="#" data-bs-toggle="modal"
+                   data-bs-target="#modalCart">
+                    <div class="cartLength" id="warpTotalShop" hidden><span id="totalWorkShop"></span></div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            {% endif %}
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-link login-button" href="{{ path('app_login') }}">
+                    <i class="fa-regular fa-user"></i>
+                    <span>{{  'login.register'|trans }}</span>
+                </a>
+            {% else %}
+                <div class="nav-profile">
+                    <a href="{{ path('my_profile') }}" class="nav-profile__link">
+                        <img src="{{ asset('roadMapStyle/assets/images/profile.jpg') }}" alt="profile photo">
+                    </a>
+                    <button type="button" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('my_profile') }}">My profile</a></li>
+                        <li><a class="dropdown-item" href="{{ path('my_learning') }}">My learning</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            {#            translation section #}
+{#            <div class="language-switcher dropdown ms-4">#}
+{#                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown"#}
+{#                        data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                    {% if app.request.locale == 'fr' %}#}
+{#                        <i class="fi fi-fr"></i> FR#}
+{#                    {% else %}#}
+{#                        <i class="fi fi-gb"></i> EN#}
+{#                    {% endif %}#}
+{#                </button>#}
+{#                <ul class="dropdown-menu" aria-labelledby="languageDropdown">#}
+{#                    <li>#}
+{#                        <a class="dropdown-item"#}
+{#                           href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">#}
+{#                            <i class="fi fi-gb"></i> English#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <a class="dropdown-item"#}
+{#                           href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}">#}
+{#                            <i class="fi fi-fr"></i> Français#}
+{#                        </a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+            {#            translation section #}
+
+        </div>
+
+
+        {% block toaster %}
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body">
+                    <img src="{{ asset('roadMapStyle/assets/images/toast.svg') }}" alt="icon">
+                    <span>Your basket is empty!</span>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+
+</nav>
+
+{# </header> #}
+
+
+
+{% block content %}
+
+{% endblock %}
+
+<div class="modal modalCart" tabindex="-1" id="modalCart">
+    <div class="modal-dialog modalCart__dialog">
+        <div class="modal-content modalCart__content">
+            <button type="button" class="btn-close modalCart__close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            <h2 class="modalCart__title">{{ 'your_shopping_cart'|trans({},'payment')  }}</h2>
+
+            {{ render(path('modal_cart')) }}
+
+        </div>
+    </div>
+</div>
+
+
+<footer class="footer">
+
+    <div class="subfooter">
+        <div class="container footer__top">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-xl-3 px-2">
+                    <div class="footer__logo">
+                        <img src="{{ asset('roadMapStyle/assets/images/logo-white.png') }}" alt="">
+                    </div>
+
+                </div>
+                <div class="col-12 col-sm-6 col-xl-4 px-2">
+                    <h2 class="footer__title">{{ 'link.name'|trans  }}</h2>
+                    <ul class="footer__list">
+                        {#                        <li class="footer__listItem"><a href="{{ path('homepage') }}" class="footer__link"><span #}
+                        {#                                        class="footer__subtitle">Home</span></a></li> #}
+                        <li class="footer__listItem"><a href="https://honorismedicalsimulation.net/"
+                                                        class="footer__link" target="_blank"><span
+                                        class="footer__subtitle">Honoris Medical Simulation</span></a></li>
+                        <li class="footer__listItem"><a href="{{ path('theme_show_all') }}" class="footer__link"><span
+                                        class="footer__subtitle">{{ 'link.all_courses'|trans }}</span></a></li>
+                        <li class="footer__listItem"><a href="{{ path('honoris_equipment') }}"
+                                                        class="footer__link"><span
+                                        class="footer__subtitle">Equipment</span></a></li>
+                        {#                        <li class="footer__listItem"><a href="{{ path('selfcare_contact') }}" class="footer__link"><span #}
+                        {#                                        class="footer__subtitle">Contact</span></a></li> #}
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-5 px-2">
+                    <h2 class="footer__title">Contact Info</h2>
+                    <ul class="footer__list">
+                        <li class="footer__listItem"><span class="footer__subtitle">{{ "footer.address"|trans }} : </span><span
+                                    class="footer__text">8 Av. kheireddine Pacha, Tunis</span></li>
+                        <li class="footer__listItem"><span class="footer__subtitle">{{ "footer.phone_number"|trans }} : </span><span
+                                    class="footer__text">96 458 156</span></li>
+                        <li class="footer__listItem"><span class="footer__subtitle">Email : </span><span
+                                    class="footer__text">contact@tn.honoris.net</span></li>
+                    </ul>
+                </div>
+                {#                <div class="col-12 col-sm-6 col-xl-4 px-2"> #}
+                {#                    <h2 class="footer__title">Contacts</h2> #}
+                {#                    <p class="footer__paragraph">Enter your email address to register to our newsletter subscription</p> #}
+
+                {#                    <div class="footer__contact"> #}
+                {#                        <input type="email" name="email" id="email-footer" class="footer__input" #}
+                {#                               placeholder="Your email"> #}
+                {#                        <button class="button--contained button--contained--withArrow">Subscribe</button> #}
+                {#                    </div> #}
+
+                {#                    <div class="socialmedia"> #}
+                {#                        <a href="#" class="socialmedia__link"> #}
+                {#                            <i class="fa-brands fa-facebook-f"></i> #}
+                {#                        </a> #}
+                {#                        <a href="#" class="socialmedia__link"> #}
+                {#                            <i class="fa-brands fa-instagram"></i> #}
+                {#                        </a> #}
+                {#                        <a href="#" class="socialmedia__link"> #}
+                {#                            <i class="fa-brands fa-linkedin-in"></i> #}
+                {#                        </a> #}
+                {#                        <a href="#" class="socialmedia__link"> #}
+                {#                            <i class="fa-brands fa-youtube"></i> #}
+                {#                        </a> #}
+                {#                    </div> #}
+                {#                </div> #}
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="container">
+                <p class="text-center">© Copyright {{ 'now' | date('Y') }}</p>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+
+<script src="{{ asset('roadMapStyle/js/popper.min.js') }}"></script>
+<script src="{{ asset('roadMapStyle/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('roadMapStyle/js/all.min.js') }}"></script>
+<script src="{{ asset('roadMapStyle/js/jquery.min.js') }}"></script>
+<script src="{{ asset('roadMapStyle/js/slick.min.js') }}"></script>
+
+<script src="{{ asset('roadMapStyle/js/input.js') }}"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $('.showToast').click(() => {
+            $('.toast').addClass('show')
+            setTimeout(() => {
+                $('.toast').removeClass('show')
+            }, 5000)
+        });
+
+        $.ajax({
+            method: "GET",
+            //async: false,
+            url: "{{ path('app_total_workshop') }}",
+            data: {},
+            contentType: "application/json",
+
+            success: function (r) {
+                //console.log(r);
+
+                var total = r['total']
+                if (total !== 0) {
+                    $('#totalWorkShop').text(total);
+                    $('#warpTotalShop').attr('hidden', false);
+                }
+
+            },
+            error: function () {
+                console.log('erorrr');
+            }
+        });
+
+    });
+</script>
+{% block javaScript %}
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".recommanded").slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                ],
+            });
+            // $('.showToast').click(() => {
+            //     $('.toast').addClass('show')
+            //     setTimeout(() => {
+            //         $('.toast').removeClass('show')
+            //     }, 5000)
+            // });
+
+            $.ajax({
+                method: "GET",
+                //async: false,
+                url: "{{ path('app_total_workshop') }}",
+                data: {},
+                contentType: "application/json",
+
+                success: function (r) {
+                    //console.log(r);
+
+                    var total = r['total']
+                    if (total !== 0) {
+                        $('#totalWorkShop').text(total);
+                        $('#warpTotalShop').attr('hidden', false);
+                    }
+
+                },
+                error: function () {
+                    console.log('erorrr');
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
+
+</body>
+</html>
+
+
+
+
+
+

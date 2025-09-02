@@ -1,0 +1,66 @@
+.infos {
+    background-color: $color-primary;
+    color: #fff;
+    padding: 1.875rem 0;
+    margin-bottom: 3rem;
+    @include breakpoint('md') {
+        margin-bottom: 4rem;
+    }
+    @include breakpoint('lg') {
+        margin-bottom: 5rem;
+    }
+    @include breakpoint('xl') {
+        margin-bottom: 6rem;
+    }
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.125rem;
+    }
+    &__paragraph {
+        font-size: 0.825rem;
+        font-family: $font-secondary;
+        line-height: 1.5;
+    }
+    &__card {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 0.75rem;
+        margin-top: 0.75rem;
+        @include breakpoint('xxl') {
+        margin-top: 0;
+        margin-bottom: 0;
+        }
+        &.infos-first {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            h2 {
+                margin-bottom: 1.5rem;
+            }
+            p {
+                line-height: 2;
+            }
+        }
+        &Title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        &Icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            background-color: $color-primaryLight;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            @include breakpoint('md') {
+                width: 4.125rem;
+                height: 4.125rem;
+            }
+        }
+    }
+}

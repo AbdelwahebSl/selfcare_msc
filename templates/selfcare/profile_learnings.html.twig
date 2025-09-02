@@ -1,0 +1,151 @@
+{% extends "base.html.twig" %}
+{% block title %}My Learning {% endblock %}
+
+{% block content %}
+
+    <section class="profile mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-xxl-3">
+                    {% include "selfcare/base.profile.html.twig" %}
+
+                    {#                <div class="profile__sideCard"> #}
+                    {#                    <p class="profile__sideCardNumber profile__sideCardNumber--completed">04</p> #}
+                    {#                    <h3 class="title title--xs">Courses completed</h3> #}
+                    {#                </div> #}
+
+                    {#                <div class="profile__sideCard"> #}
+                    {#                    <p class="profile__sideCardNumber profile__sideCardNumber--progress">02</p> #}
+                    {#                    <h3 class="title title--xs">Courses en progress</h3> #}
+                    {#                </div> #}
+                </div>
+
+
+                <div class="col-12 col-lg-8 col-xxl-9 profile__content">
+                    <h1 class="title mb-5"> {{ user.name }} </h1>
+                    <h2 class="title title--small mb-4">{{ 'profile.section.my_learning'|trans({},'profile') }}</h2>
+                    <div class="mb-5">
+                        {% for item in workshopCarts %}
+                            <div class="profile__learningCard">
+                                <div class="profile__learningCardImage">
+                                    <img src="{{ asset('images/workshops/'~ item.workshop.imageName) }}" alt="">
+                                </div>
+                                <div class="profile__learningCardBody">
+                                    <h3 class="profile__learningCardTitle">{{ item.workshop.name }}</h3>
+                                    {#                            <div class="profile__learningCardProgress"> #}
+                                    {#                                <div class="progress-bar" style="width: 48%"></div> #}
+                                    {#                            </div> #}
+                                    {#                            <div class="row mb-2 align-items-center"> #}
+                                    {#                                <p class="col-xl-4 col-6 profile__learningCardLabel">Learning progress</p> #}
+                                    {#                                <p class="col-xl-4 col-6 profile__learningCardLabel">48%</p> #}
+                                    {#                            </div> #}
+                                    <div class="row align-items-center">
+                                        <p class="col-xl-4 col-6 profile__learningCardLabel">{{ 'workshop.duration'|trans }}</p>
+                                        <p class="col-xl-4 col-6 profile__learningCardLabel">{{ item.workshop.workshopDuration }} {{ item.workshop.durationUnit }}</p>
+                                        <div class="col-xl-4 col-12 d-flex justify-content-end">
+                                            <a href="{{ path('workshop_show_content',{'id':item.workshop.id}) }}"
+                                               disabled class="profile__learningCardButton disabled"
+                                               {% if item.expired =='1' %}style=" pointer-events: none; background-color: #8b8b8b"
+                                                    {% endif %} > {% if item.expired =='1' %}Expired {% else %} Continue {% endif %}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <h2 class="title title--small mb-4">{{ 'recommendation.title'|trans }}</h2>
+
+                    <div class="row">
+                        {% for item in recommandedWorkShop %}
+                            <div class="col-12 col-xl-4">
+                                <div class="card">
+                                    <a href="{{ path('workshop_show',{id: item.id}) }}" class="card__link"></a>
+                                    <div class="card-image">
+                                        <img src="{{ asset('images/workshops/'~ item.imageName) }}" alt=""/>
+                                    </div>
+                                    <div class="card-body py-4">
+                                        <div class="card__header">
+                                            {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                                <p class="card__free">{{ 'card__free'|trans }}</p>
+                                            {% endif %}
+                                            {#                                        <p class="card__free">Free for Honoris students</p> #}
+                                            <p class="card__stars">
+                                                <i class="fa-solid fa-star"></i>
+                                                {% if item.rate %}
+                                                    ( {{ item.rate|number_format(1) }} )
+                                                {% else %}
+                                                    ( 0 )
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <h3 class="card__title">
+                                            {{ item.name }}
+                                        </h3>
+                                        <p class="card__date">
+                                            <span><i class="fa-regular fa-clock"></i></span>
+                                            {{ item.workshopDuration }}    {{ item.durationUnit }}
+                                        </p>
+                                        <div class="card__footer">
+                                            <p class="card__target">
+                                                <span><i class="fa-solid fa-bullseye"></i></span>
+                                                {{ item.objectiveCount }}  {{ 'workshop.objectives'|trans }}
+                                            </p>
+                                            <div class="card__seperator"></div>
+                                            <p class="card__students">
+                                                <span><i class="fa-regular fa-user"></i></span>
+                                                {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="cardHover">
+                                        <div class="card__header">
+                                            {% if (is_granted('ROLE_STUDENT') and item.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                                <p class="card__free">{{ 'card__free'|trans }}</p>
+                                            {% endif %}
+                                            <p class="card__stars">
+                                                <i class="fa-solid fa-star"></i>
+                                                {% if item.rate %}
+                                                    ( {{ item.rate|number_format(1) }} )
+                                                {% else %}
+                                                    ( 0 )
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <h3 class="card__title">
+                                            {{ item.name }}
+                                        </h3>
+                                        <p class="card__content">   {{ item.description }}</p>
+                                        <p class="card__date">
+                                            <span><i class="fa-regular fa-clock"></i></span>
+                                            {{ item.workshopDuration }}    {{ item.durationUnit }}
+                                        </p>
+                                        <div class="card__footer">
+                                            <p class="card__target">
+                                                <span><i class="fa-solid fa-bullseye"></i></span>
+                                                {{ item.objectiveCount }} {{ 'workshop.objectives'|trans }}
+                                            </p>
+                                            <div class="card__seperator"></div>
+                                            <p class="card__students">
+                                                <span><i class="fa-regular fa-user"></i></span>
+                                                {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                            </p>
+                                        </div>
+                                        <a href="{{ path('workshop_show',{id: item.id}) }}"
+                                           class="button--contained button--contained--withArrow">{{ 'title.enroll'|trans }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {#    {{ render(path('selfcare_contact_component')) }} #}
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "base.html.twig" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <section class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-xxl-3">
+
+                    {% include "selfcare/base.profile.html.twig" %}
+                </div>
+                <div class="col-12 col-lg-8 col-xxl-9 profile__content">
+                    <h1 class="title mb-5">{{ 'profile.title'|trans({},'profile') }}</h1>
+                    <form action="{{ path('my_profile') }}" method="post" class="form mb-5">
+                        <h2 class="title title--small mb-4">{{ 'profile.section.basic_info'|trans({},'profile') }}</h2>
+                        <div class="mb-4 form--required">
+                            <label for="name" class="form-label">{{ 'profile.field.name'|trans({},'profile') }}</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="{{ 'profile.field.name'|trans({},'profile') }}" value="{{ user.name }}"
+                                   required>
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="lastname"
+                                   class="form-label">{{ 'profile.field.last_name'|trans({},'profile') }}</label>
+                            <input type="text" class="form-control" id="lastname" name="lastname"
+                                   placeholder="{{ 'profile.field.last_name'|trans({},'profile') }}" required
+                                   value="{{ user.lastName }}">
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="exampleInputEmail1"
+                                   class="form-label">{{ 'profile.field.email'|trans({},'profile') }}</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="{{ 'profile.field.email'|trans({},'profile') }}"
+                                   value="{{ user.email }}" readonly>
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="tel"
+                                   class="form-label">{{ 'profile.field.phone_number'|trans({},'profile') }}</label>
+                            <input type="tel" class="form-control" id="tel"
+                                   placeholder="{{ 'profile.field.phone_number'|trans({},'profile') }}" name="_phone"
+                                   value="{{ user.phoneNumber }}">
+                        </div>
+                        <div class="mb-4 form--required">
+                            <label for="Address"
+                                   class="form-label">{{ 'profile.field.address'|trans({},'profile') }}</label>
+                            <input type="text" class="form-control" id="Address" name="address"
+                                   value="{{ user.userAddress }}" placeholder="98822 Baron de Caumartin">
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="pays"
+                                   class="form-label">{{ 'profile.field.country'|trans({},'profile') }}</label>
+
+                            <select class="form-select" aria-label="Default select example" id="_country"
+                                    name="_country" required>
+                                <option selected>Select {{ 'profile.field.country'|trans({},'profile') }}</option>
+
+                                {% for item in country %}
+                                    <option value="{{ item.id }}" {% if user.country == item.nationality %} selected {% endif %}>{{ item.nationality }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="etude"
+                                   class="form-label">{{ 'profile.field.study'|trans({},'profile') }}</label>
+
+                            <select class="form-select" aria-label="Default select example" id="etude" name="etude">
+                                <option selected> {{ 'profile.field.level_of_study'|trans({},'profile') }}</option>
+                                <option value="Bac +1" {% if user.level =="Bac +1" %} selected {% endif %}>Bac +1
+                                </option>
+                                <option value="Bac +2" {% if user.level =="Bac +2" %} selected {% endif %}>Bac +2
+                                </option>
+                                <option value="Bac +3" {% if user.level =="Bac +3" %} selected {% endif %}>Bac +3
+                                </option>
+                                <option value="Other" {% if user.level =="Other" %} selected {% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4 form--required">
+                            <label for="Institution"
+                                   class="form-label">{{ 'profile.field.institution'|trans({},'profile') }} </label>
+                            <input type="text" class="form-control" id="Institution"
+                                   placeholder="{{ 'profile.field.institution'|trans({},'profile') }}"
+                                   name="_institution"
+                                   value="{{ user.establishment }}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="Speciality"
+                                   class="form-label">{{ 'profile.field.speciality'|trans({},'profile') }}</label>
+                            <input type="text" class="form-control" id="Speciality"
+                                   placeholder="{{ 'profile.field.speciality'|trans({},'profile') }}"
+                                   value="{{ user.speciality }}" name="_speciality">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="Description" class="form-label">Description</label>
+                            <textarea class="form-control" id="Description" rows="4"
+                                      name="_description" v
+                                      placeholder="Ratione tempora impedit illo cum inventore voluptatem quo sequi aut. Commodi et sapiente esse natus harum rerum dignissimos quidem. Quisquam culpa earum quo eius. Unde ut molestiae. Corporis debitis velit et nihil veniam perspiciatis qui. Enim tenetur quos quia ullam omnis rerum.">
+                                {{ user.description }}
+
+                            </textarea>
+                        </div>
+
+                        <button type="submit" name="_submit"
+                                class="w-auto d-flex mx-auto button--contained button--contained--withArrow w-100  text-center">
+                            {{ 'profile.action.update_info'|trans({},'profile') }}
+                        </button>
+                    </form>
+                    {% if user.password %}
+                        <form action="{{ path('my_profile') }}" method="post" class="form mb-5">
+                            <h2 class="title title--small mb-4">{{ 'profile.section.basic_info'|trans({},'profile') }}</h2>
+                            {% for message in app.flashes('error') %}
+                                <div class="alert alert-warning">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                            <div class="mb-4 form--required">
+                                <label for="oldpassword"
+                                       class="form-label">{{ 'profile.password.old'|trans({},'profile') }}</label>
+                                <input type="password" class="form-control" id="oldpassword" required
+                                       placeholder="{{ 'profile.password.old'|trans({},'profile') }}" name="_old">
+                            </div>
+                            <div class="mb-4 form--required">
+                                <label for="newPassword"
+                                       class="form-label">{{ 'profile.password.new'|trans({},'profile') }}</label>
+                                <input type="password" class="form-control" id="newPassword" required
+                                       placeholder="{{ 'profile.password.new'|trans({},'profile') }}" name="_new">
+                            </div>
+
+                            <div class="mb-4 form--required">
+                                <label for="confirmNewPassword"
+                                       class="form-label">{{ 'profile.password.confirm'|trans({},'profile') }}</label>
+                                <input type="password" class="form-control" id="confirmNewPassword" required
+                                       placeholder="{{ 'profile.password.confirm'|trans({},'profile') }}"
+                                       name="confirmNewPassword">
+                            </div>
+                            <button type="submit" name="_submit_pwd"
+                                    class="w-auto d-flex mx-auto button--contained button--contained--withArrow w-100  text-center">
+                                {{ 'profile.password.update'|trans({},'profile') }}
+                            </button>
+
+                        </form>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {#    {{ render(path('selfcare_contact_component')) }} #}
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+#All Courses "Tous les c
+link.all_courses: All Courses
+link.student_training: Student Training
+link.professional_training: Professional Training
+link.name: Links
+title.home: Home
+title.categories: Categories
+title.objectives: Objectives
+title.students: Students
+title.enroll: Enroll
+title.hours: Hours
+title.online_courses: Online Courses
+card__free: Free for Honoris students
+learner_should_be_able_to: "The learner should be able to"
+status: Status
+payment_method: Payement Method
+
+recommendation:
+  title: Recommended for you
+write_your_review: "Write your review"
+rate_the_course: "Rate the course"
+write_something_about_course: "Would you like to write anything about This course ?"
+submit_review: "Submit review"
+related_course: "Related Course"
+
+workshop:
+  price: Price
+  duration: Duration
+  objectives: Objectives
+  enrolled: Enrolled
+  language: Language
+  rating: Rating
+  add_cart_btn: Add to cart
+  course_overview: Course overview
+  what_will_you_learn: "What Will You Learn?"
+  review: Review
+  stars: Stars
+
+login:
+  register: "Login"
+  title: "Login"
+  no_account_signup:
+    title: "Don’t have an account?"
+    link: "Sign up"
+  form:
+    password: Password
+  honoris_student: "Honoris Group Student?"
+  sign_in_with: "Sign In With"
+  btn_connection: "Connection"
+  lost_password: "Lost your password?"
+
+register:
+  title: Register
+  name: "Name"
+  last_name: "Last name"
+  country: "Country"
+  phone_number: "Phone number"
+  email: "Email"
+  level_of_study: "Level of study"
+  password: "Password"
+  confirm_password: "Confirm Password"
+  terms_notice: "By signing up, you agree to our Terms of Use and Privacy Policy."
+  get_started_now: "Get Started Now"
+
+
+footer:
+  address: Address
+  phone_number: Phone number

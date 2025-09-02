@@ -1,0 +1,40 @@
+.form {
+    &__group {
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    textarea.form__input {
+        height: 9.25rem;
+        resize: none;
+    }
+    textarea.form__input ~ label, textarea ~ .form__label {
+        top: 2rem;
+    }
+    &__input {
+        width: 100%;
+        border: none;
+        background-color: #9898981c;
+        border-radius: 0.625rem;
+        padding: 1.5rem;
+        &:focus ~ label, 
+        &:focus-visible ~ label, 
+        &:focus-within ~ label {
+            top: 0!important;
+            transform: translateY(0%)!important;
+        }
+    }
+    &__label {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        &.active {
+            top: 0!important;
+            transform: translateY(0%)!important;
+        }
+    }
+   
+
+}

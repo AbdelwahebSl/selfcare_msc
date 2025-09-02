@@ -1,0 +1,551 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ProfilePic;
+use App\Entity\SelfcareUser;
+use App\Entity\Theme;
+use App\Entity\Speciality;
+use App\Entity\Workshop;
+use App\Entity\WorkshopCart;
+use App\Entity\WorkShopObjectives;
+use App\Entity\WorkShopSupport;
+
+use App\Form\ProfilePicType;
+use App\Form\UserType;
+use App\Form\WorkshopType;
+use ContainerDBjbYvt\getMimeTypesService;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use function Symfony\Bundle\FrameworkBundle\Controller\redirect;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Security;
+
+class SelfcareController extends AbstractController
+{
+
+    private $requestStack;
+    private $security;
+    private $doctrineManager;
+
+    public function __construct(RequestStack $requestStack, Security $security, ManagerRegistry $doctrine)
+    {
+        $this->requestStack = $requestStack;
+        $this->security = $security;
+        $this->doctrineManager = $doctrine;
+    }
+
+    #[Route('/', name: 'homepage')]
+    public function index(Request $request, ManagerRegistry $doctrine): Response
+    {
+        //return $this->render('sorry.html.twig');
+        $session = $this->requestStack->getSession();
+        $workshopType = 1;
+        $workshopTypeRequest = $request->get('wt');
+        if ($workshopTypeRequest) $workshopType = $workshopTypeRequest;
+
+        $session->set('workshop-type', $workshopType);
+
+        $entityManager = $doctrine->getManager();
+        $workshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopStatus' => 1, 'workshopType' => $workshopType],
+                ['workshopOrder' => 'ASC'], 5);
+        $themes = $entityManager->getRepository(Theme::class)->findBy(['themeStatus' => 1],
+            ['themeOrder' => 'ASC'], 7);
+        $popularTheme = $themes[0];
+        $popularWorkshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['theme' => $popularTheme->getId(), 'workshopType' => $workshopType],
+                ['workshopOrder' => 'ASC'], 3);
+
+        return $this->render('selfcare/index.html.twig', [
+            'workshops' => $workshops,
+            'themes' => $themes,
+            'popularWorkshops' => $popularWorkshops,
+        ]);
+    }
+
+    #[Route('/search', name: 'search')]
+    public function search(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $session = $this->requestStack->getSession();
+        $workshopType = 1;
+        $workshopTypeSession = $session->get('workshop-type');
+        if ($workshopTypeSession) $workshopType = $workshopTypeSession;
+
+        $workshops = array();
+        $entityManager = $doctrine->getManager();
+
+        $submittedForm = $request->get('_submitS');
+        if ($request->getMethod() == 'POST' && isset($submittedForm)) {
+            $searchValue = $request->get('_search');
+            $workshops = $entityManager->getRepository(Workshop::class)
+                ->findBy(['name' => $searchValue, 'workshopType' => $workshopType, 'status' => 1]);
+        }
+
+        return $this->render('selfcare/search.html.twig', [
+            'workshops' => $workshops
+        ]);
+    }
+
+    #[Route('/theme-show-all', name: 'theme_show_all')]
+    public function show(ManagerRegistry $doctrine): Response
+    {
+        $session = $this->requestStack->getSession();
+
+        $workshopType = 1;
+        $workshopTypeSession = $session->get('workshop-type');
+        if ($workshopTypeSession) $workshopType = $workshopTypeSession;
+
+        $entityManager = $doctrine->getManager();
+        $workshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopStatus' => 1, 'workshopType' => $workshopType], ['workshopOrder' => 'ASC']);
+
+        $workshopsThemes = array();
+        foreach ($workshops as $key => $item) {
+            $workshopsThemes[$item->getTheme()->getId()][0] = $item->getTheme();
+            $workshopsThemes[$item->getTheme()->getId()][$key + 1] = $item;
+        }
+        // dump($workshopsThemes);die;
+
+        return $this->render('selfcare/show_all_themes.html.twig', [
+            'themes' => $workshopsThemes
+        ]);
+    }
+
+    #[Route('/theme-show-{id}', name: 'workshop_by_theme')]
+    public function workshopByTheme(ManagerRegistry $doctrine, int $id): Response
+    {
+        $session = $this->requestStack->getSession();
+        $workshopType = 1;
+        $workshopTypeSession = $session->get('workshop-type');
+        if ($workshopTypeSession) $workshopType = $workshopTypeSession;
+
+        $entityManager = $doctrine->getManager();
+        $workshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopStatus' => 1, 'theme' => $id, 'workshopType' => $workshopType], ['workshopOrder' => 'ASC']);
+        $theme = $entityManager->getRepository(Theme::class)->findOneBy(['id' => $id]);
+
+        $consultedWorkshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopType' => $workshopType, 'workshopStatus' => 1],
+                ['consultedCount' => 'DESC'], 4);
+        $popularWorkshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopType' => $workshopType, 'workshopStatus' => 1],
+                ['purchasedCount' => 'DESC'], 2);
+        return $this->render('selfcare/workshop_show_by_theme.html.twig', [
+            'workshops' => $workshops,
+            'themeName' => $theme->getName(),
+            'themeDescription' => $theme->getDescription(),
+            'consultedWorkshops' => $consultedWorkshops,
+            'popularWorkshops' => $popularWorkshops,
+        ]);
+    }
+
+
+    #[Route('/workshop-show-{id}', name: 'workshop_show')]
+    public function workshopById(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $session = $this->requestStack->getSession();
+        $workshopType = 1;
+        $workshopTypeSession = $session->get('workshop-type');
+        if ($workshopTypeSession) $workshopType = $workshopTypeSession;
+
+        $entityManager = $doctrine->getManager();
+        $workshop = $entityManager->getRepository(Workshop::class)
+            ->findOneBy(['workshopType' => $workshopType, 'id' => $id, 'workshopStatus' => 1]);
+
+        $consultedWorkshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopType' => $workshopType, 'workshopStatus' => 1],
+                ['consultedCount' => 'DESC'], 4);
+        $popularWorkshops = $entityManager->getRepository(Workshop::class)
+            ->findBy(['workshopType' => $workshopType, 'workshopStatus' => 1],
+                ['purchasedCount' => 'DESC'], 2);
+        $consultedCount = $workshop->getConsultedCount();
+        if (isset($consultedCount)) {
+            $consultedCount++;
+            $workshop->setConsultedCount($consultedCount);
+            $entityManager->flush();
+        }
+        $addToCart = null;
+        if ($request->get('addToCart')) $addToCart = true;
+        $objectives = $entityManager->getRepository(WorkShopObjectives::class)->findBy(['workshop' => $workshop->getId(), 'objectiveStatus' => 1]);
+        $images = $entityManager->getRepository(WorkShopSupport::class)->findBy(['workshop' => $workshop->getId(), 'supportStatus' => 1, 'supportType' => 'Image']);
+        return $this->render('selfcare/workshop_show.html.twig', [
+            'workshop' => $workshop,
+            'consultedWorkshops' => $consultedWorkshops,
+            'popularWorkshops' => $popularWorkshops,
+            'objectives' => $objectives,
+            'images' => $images,
+            'addToCart' => $addToCart,
+        ]);
+    }
+
+
+    #[Route('/add-to-cart-{id}', name: 'workshop_reserve')]
+    public function workshopReserve(ManagerRegistry $doctrine, int $id): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $workshopCart = $entityManager->getRepository(WorkshopCart::class)
+            ->findOneBy(['selfcareUer' => $user, 'workshop' => $id, 'status' => 0]);
+
+        if ($workshopCart) {
+            $workshopCart->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+        } else {
+            $workshop = $entityManager->getRepository(Workshop::class)
+                ->findOneBy(['id' => $id, 'workshopStatus' => 1]);
+            $workshopCart = new WorkshopCart();
+            $workshopCart->setWorkshop($workshop);
+            $workshopCart->setSelfcareUer($user);
+            $workshopCart->setStatus('0');
+            $workshopCart->setExpired(0);
+            $workshopCart->setUpdatedAt(new \DateTime());
+            $entityManager->persist($workshopCart);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('workshop_show', ['id' => $id, 'addToCart' => true]);
+    }
+
+    #[Route('/buy-now-{id}', name: 'workshop_buy_now')]
+    public function workshopBuyNow(ManagerRegistry $doctrine, int $id): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $workshopCart = $entityManager->getRepository(WorkshopCart::class)
+            ->findOneBy(['selfcareUer' => $user, 'workshop' => $id, 'status' => 0]);
+
+        if ($workshopCart) {
+            $workshopCart->setUpdatedAt(new \DateTime());
+            $entityManager->flush();
+        } else {
+            $workshop = $entityManager->getRepository(Workshop::class)
+                ->findOneBy(['id' => $id, 'workshopStatus' => 1]);
+            $workshopCart = new WorkshopCart();
+            $workshopCart->setWorkshop($workshop);
+            $workshopCart->setSelfcareUer($user);
+            $workshopCart->setStatus('0');
+            $workshopCart->setExpired(0);
+            $workshopCart->setUpdatedAt(new \DateTime());
+            $entityManager->persist($workshopCart);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('workshop_cart');
+    }
+
+    #[Route('/delete-from-cart-{id}', name: 'workshop_delete_from_cart')]
+    public function workshopDeleteFromCart(ManagerRegistry $doctrine, int $id): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $workshopCart = $entityManager->getRepository(WorkshopCart::class)
+            ->findOneBy(['selfcareUer' => $user, 'workshop' => $id, 'status' => 0]);
+
+        if ($workshopCart) {
+            $entityManager->remove($workshopCart);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('workshop_cart');
+    }
+
+    #[Route('/cart', name: 'workshop_cart')]
+    public function workshopCart(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => '0']);
+        $total = 0;
+        $dateNow = date('Y-m-d H:i:s');
+        foreach ($workshopCarts as $workshopCart) {
+            $createdAt = $workshopCart->getCreatedAt()->format('Y-m-d H:i:s');
+            $createdAt = date('Y-m-d H:i:s', strtotime($createdAt . '+ 1 days'));
+            if ($dateNow > $createdAt) {
+                $entityManager->remove($workshopCart);
+                $index = array_search($workshopCart, $workshopCarts);
+                unset($workshopCarts[$index]);
+            } else {
+                $total += number_format(floatval(str_replace(',', '.', $workshopCart->getWorkshop()->getPrice())), 3, '.', '');
+            }
+        }
+        $entityManager->flush();
+        if ($request->get('confirmCart')) {
+            return $this->render('selfcare/confirm_cart.html.twig', [
+                'workshopCarts' => $workshopCarts,
+                'total' => $total,
+            ]);
+        } else {
+            return $this->render('selfcare/cart.html.twig', [
+                'workshopCarts' => $workshopCarts,
+                'total' => $total,
+            ]);
+        }
+    }
+
+
+    #[Route('/workshop/show-content/{id}', name: 'workshop_show_content')]
+    public function workshopContentById(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+
+        $workshopCart = $entityManager->getRepository(WorkshopCart::class)
+            ->findOneBy(['selfcareUer' => $user, 'workshop' => $id, 'status' => '1']);
+
+        if (!$workshopCart) {
+            return $this->render('selfcare/404.html.twig');
+        }
+
+        if ($workshopCart->getPaymentMode() != '1') {
+            if ($workshopCart->getFile()->getStatus() == '0') {
+                return $this->render('selfcare/workshop_not_valid.html.twig', [
+                    'workshop' => $workshopCart->getWorkshop(),
+                ]);
+            }
+        }
+
+        // check workshopcart is valid
+        $this->checkCartIsValid($workshopCart);
+        $entityManager->flush();
+        if ($workshopCart->getExpired()) {
+            return $this->render('selfcare/404.html.twig');
+        }
+
+
+        $objectives = $entityManager->getRepository(WorkShopObjectives::class)->findBy(['workshop' => $workshopCart->getWorkshop()->getId(), 'objectiveStatus' => 1]);
+        //$images = $entityManager->getRepository(WorkShopSupport::class)->findBy(['workshop' => $workshopCart->getWorkshop()->getId(), 'supportStatus' => 1, 'supportType' => 'Image']);
+        $courseContent = $entityManager->getRepository(WorkShopSupport::class)
+            ->findBy(['workshop' => $workshopCart->getWorkshop()->getId(), 'supportType' => 'Link', 'supportStatus' => 1]);
+        $videoSuuport = $entityManager->getRepository(WorkShopSupport::class)
+            ->findOneBy(['workshop' => $workshopCart->getWorkshop()->getId(), 'supportType' => 'Video', 'supportStatus' => 1]);
+
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => 1, 'expired' => 0]);
+
+        return $this->render('selfcare/workshop_show_content.html.twig', [
+            'workshop' => $workshopCart->getWorkshop(),
+            'objectives' => $objectives,
+            'courseContent' => $courseContent,
+            'workshopCarts' => $workshopCarts,
+            'videoSupport' => $videoSuuport,
+        ]);
+    }
+
+    #[Route('/my-profile', name: 'my_profile')]
+    public function myProfile(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+                              ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+
+
+
+        $submittedForm = $request->get('_submit');
+        if ($request->getMethod() == 'POST' && isset($submittedForm)) {
+            $user->setFullName($request->get('_username'));
+            $user->setPhoneNumber($request->get('_phone'));
+            $user->setUserAddress($request->get('_address'));
+            $user->setCountry($request->get('_country'));
+            $user->setEstablishment($request->get('_institution'));
+            $user->setSpeciality($request->get('_speciality'));
+            $user->setDescription($request->get('_description'));
+//            $user->setImageFile($request->get('profilePictureUpdate'));
+            // encode the plain password
+            /*$user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $request->get('_plainPassword')
+                )
+            );
+
+            $entityManager->persist($user);*/
+            $entityManager->flush();
+        }
+
+        $submittedFormPWD = $request->get('_submit_pwd');
+        if ($request->getMethod() == 'POST' && isset($submittedFormPWD)) {
+
+            // encode the plain password
+            $oldPwd = $userPasswordHasher->hashPassword(
+                $user,
+                $request->get('_old')
+            );
+            if ($user->getPassword() == $oldPwd) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $request->get('_new')
+                    )
+                );
+                $entityManager->flush();
+            }
+        }
+
+        //$submitedPhoto = $request->get('_submit_photo');
+        $profilePic = $doctrine->getRepository(ProfilePic::class)->findOneBy(['user'=>$user]);
+        if (!$profilePic) $profilePic = new ProfilePic();
+
+
+        /*if ($form->isSubmitted() && $form->isValid()  && isset($submitedPhoto)) {
+            $user = $form->getData();
+
+            $entityManager->flush();
+//            dd($user);die();
+        }*/
+
+//        if ($request->getMethod() == 'POST' && isset($submitedPhoto)) {
+//            $data = $request->files->get('profilePictureUpdate');
+//
+//            $user->setImageFile( $data);
+//
+//            $entityManager->flush();
+//        }
+
+
+        return $this->render('selfcare/profile.html.twig', [
+            'user' => $user,
+            'profilePic'=>$profilePic,
+            //'form'=>$form->createView()
+        ]);
+    }
+
+    #[Route('/my-learning', name: 'my_learning')]
+    public function myLearning(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $profilePic = $doctrine->getRepository(ProfilePic::class)->findOneBy(['user'=>$user]);
+        $workshopCartsOnPay = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => ['1', '2'], 'paymentMode' => '1']);
+        $workshopCartsFile = $entityManager->getRepository(WorkshopCart::class)->findByValidateFile($user);
+        $workshopCarts = array_merge($workshopCartsOnPay, $workshopCartsFile);
+
+        foreach ($workshopCarts as $workshopCart) {
+            if ($workshopCart->getPayedAt()) $this->checkCartIsValid($workshopCart);
+        }
+
+        $entityManager->flush();
+        return $this->render('selfcare/profile_learnings.html.twig', [
+            'workshopCarts' => $workshopCarts,
+            'user' => $user,
+            'paymentAuthorization' => $request->get('paymentAuthorization'),
+            'paymentReference' => $request->get('paymentReference'),
+            'profilePic' =>$profilePic
+        ]);
+    }
+
+    #[Route('/my-learning-history', name: 'my_learning_history')]
+    public function myLearningHistory(ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+
+        $profilePic = $doctrine->getRepository(ProfilePic::class)->findOneBy(['user'=>$user]);
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => ['1', '2']]);
+        return $this->render('selfcare/purchase_history.html.twig', [
+            'workshopCarts' => $workshopCarts,
+            'user' => $user,
+            'profilePic' =>$profilePic
+        ]);
+    }
+
+
+    /*
+     * set expiration date value into WorkshopCart
+     */
+    public function setExpirationDate(WorkshopCart $workshopCart)
+    {
+        //dump('la');die;
+        if ($workshopCart->getStatus() != '0') {
+            $expiredDate = $workshopCart->getWorkshop()->getExpirationDate();
+            if (!$expiredDate['expirationDate']) {
+                $unitNumber = intval($expiredDate['unitNumber']);
+                $payedAt = $workshopCart->getPayedAt();
+                $expiredDate = date('Y-m-d H:i:s', strtotime($payedAt . '+' . $unitNumber . ' ' . $expiredDate['unit']));
+            }
+            $expiredDate = new \DateTime($expiredDate);
+            $workshopCart->setExpirationDate($expiredDate);
+        }
+
+    }
+
+    /*
+     *  check workshop cart is valid
+     */
+    public function checkCartIsValid(WorkshopCart $workshopCart)
+    {
+        $dateNow = (new \DateTime())->format('Y-m-d H:i:s');
+        $expirationDate = $workshopCart->getExpirationDate();
+
+        if ($expirationDate) {
+            $expirationDate = $expirationDate->format('Y-m-d H:i:s');
+            if ($expirationDate < $dateNow) {
+                $workshopCart->setExpired(1);
+                $workshopCart->setStatus('2');
+            }
+        }
+    }
+
+
+    #[Route('/profile-pic/update', name: 'update_profile_pic')]
+    public function createProfilePic( Request $request, ManagerRegistry $doctrine,ProfilePic $profilePic = null): Response
+    {
+//        dump($profilePic);die;
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->security->getUser();
+
+        $profilePic = $doctrine->getRepository(ProfilePic::class)->findOneBy(['user'=>$user]);
+        if (!$profilePic) $profilePic = new ProfilePic();
+
+        $newPic = false;
+        if (!$profilePic) {
+            $newPic = true;
+            $profilePic = new ProfilePic();
+            $profilePic->setUser($user);
+        }
+        $form = $this->createForm(ProfilePicType::class, $profilePic);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() ) {
+            $profilePic = $form->getData();
+            $entityManager = $doctrine->getManager();
+            if ($newPic) {
+                $entityManager->persist($profilePic);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('my_profile');
+        }
+
+        return $this->renderForm('profile/update.html.twig', [
+            'form' => $form,
+            'user' => $user,
+            'profilePic'=>$profilePic
+        ]);
+    }
+
+
+}

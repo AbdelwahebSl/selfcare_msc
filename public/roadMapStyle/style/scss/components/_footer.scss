@@ -1,0 +1,72 @@
+.footer {
+    background-color: #252525;
+    color: #EAEAEA;
+    font-family: $font-secondary;
+    &__top {
+        padding-top: 4rem;
+        padding-bottom:  4rem;
+        * {
+            color: #EAEAEA;
+        }
+    }
+    &__bottom {
+        padding: 1rem;
+        background-color: #000;
+        color: #fff;
+        font-family: $font-primary;
+    }
+
+    &__paragraph {
+        font-size: 1.125rem;
+        line-height: 1.25;
+        margin-bottom: 1rem;
+    }
+    &__title {
+        font-family: $font-primary;
+        margin-bottom: 1.5rem;
+        font-size: 1.6875rem;
+        font-weight: 700;
+    }
+    &__logo {
+        margin-bottom: 1.5rem;
+        max-width: 15rem;
+    }
+    &__list {
+        padding: 0;
+        list-style-type: none;
+        &Item {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+    &__subtitle {
+        font-weight: 500;
+        font-family: $font-primary;
+    }
+    &__text {
+        font-size: 1.25rem;
+    }
+    &__input {
+        padding: 1rem 0.5rem;
+        border-radius: $borderRadius;
+        color: #181818;
+        &::placeholder {
+            color: #1b1c3166;
+            text-transform: uppercase;
+        }
+    }
+    &__contact {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        input {
+            flex-grow: 2;
+        }
+        .button--contained {
+            flex-grow: 1;
+            gap: 1rem;
+            padding: 1rem .75rem;
+        }
+    }
+}

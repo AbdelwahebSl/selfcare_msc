@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+{% block title %}My Learning {% endblock %}
+{% block style %}
+
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/video-js.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/video-js-city.min.css') }}"/>
+{% endblock %}
+{% block content %}
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="container">
+            <h1 class="title mb-4">Show content</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('my_learning') }}">My learning</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Show content
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="categories mb-5">
+        <div class="container  mb-5">
+
+
+            <div class="example_1 row">
+                <div class="col-6 mx-auto">
+                    <div class="card h-100 border-primary justify-content-center ">
+                        <div class="card-header primary  mb-3" style="color: #8D1E32;">
+                           <b>Warning</b>
+                        </div>
+                        <div class="card-body mb-3">
+                            <p class="card-text  mb-lg-5">
+                                The proof of payment is in the validation process.
+                            </p>
+
+                            <a href="{{ path('my_learning') }}" class="button--contained button--contained--withArrow" style="background-color: #8D1E32;">
+                                My learning
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+{#    {{ render(path('selfcare_contact_component')) }}#}
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}
+
+

@@ -1,0 +1,85 @@
+.about {
+    margin-bottom: 4rem;
+
+    &__paragraph {
+        color: #808080;
+        font-size: 1rem;
+        line-height: 1.625;
+        font-family: $font-secondary;
+    }
+
+    &__list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        font-family: $font-secondary;
+
+        &Item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            list-style-type: none;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+
+            &:before {
+                content: "\f00c";
+                font-family: $font-awesome;
+                font-size: 1.25rem;
+                font-weight: 700;
+                color: #C9AC7A;
+            }
+        }
+    }
+
+    &__images {
+        padding-right: 1rem;
+        padding-left: 1rem;
+
+        .row {
+            align-items: flex-end;
+        }
+
+        .row>* {
+            margin-bottom: 2rem;
+        }
+
+        img {
+            border-radius: 0.5rem;
+        }
+
+        .row :last-of-type {
+            position: relative;
+
+            &:after {
+                content: "";
+                background-image: url(/assets/images/hero_decorator.png);
+                background-size: 100% 100%;
+                max-width: 9.25rem;
+                aspect-ratio: 1;
+                width: 100%;
+                display: block;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                transform: translateY(50%);
+                z-index: -1;
+            }
+        }
+    }
+
+    &__content {
+        @include breakpoint('lg') {
+            padding-left: 2rem;
+        }
+
+        @include breakpoint('xl') {
+            padding-left: 4rem;
+        }
+
+        @include breakpoint('2xl') {
+            padding-left: 5rem;
+        }
+    }
+}

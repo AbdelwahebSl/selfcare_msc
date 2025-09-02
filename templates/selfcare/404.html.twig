@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+    <section class="page-404 error my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-5 error-info dark-secondary-color">
+                    <h1 class="error-title dark-primary-color mb-5">Oops !</h1>
+
+
+                    {% set flashErrors = app.flashes('error') %}
+
+                    {% if flashErrors is not empty %}
+                        {% for flashError in flashErrors %}
+                            <h3 class="error-text mb-3">{{ flashError }}</h3>
+                        {% endfor %}
+                    {% else %}
+                        <h2 class="error-text mb-3">the page you are looking seems not found.. </h2>
+                    {% endif %}
+                    <p class="error-code">Error code : 404</p>
+
+                    {% if reference is defined %}
+                        <br>
+                        <p class="error-code">{{ reference }}</p>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="col-12 col-md-7 error-image">
+                    <img src="{{ asset('images/error404.png') }}" alt="error illustration - page not found">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

@@ -1,0 +1,75 @@
+#All Courses "Tous les c
+link.all_courses: Tous les cours
+link.student_training: Formation des Étudiants
+link.professional_training: Formation Professionnelle
+link.name: Liens
+title.home: Accueil
+title.categories: Catégories
+title.objectives: Objectifs
+title.students: Étudiant(s)
+title.enroll: Inscrire
+title.hours: Heures
+title.online_courses: Cours en ligne
+card__free: Gratuit pour les étudiants Honoris
+status: Statut
+payment_method: Mode de paiement
+
+
+recommendation:
+  title: Recommandé pour vous
+
+write_your_review: "Écrivez votre avis"
+rate_the_course: "Notez le cours"
+write_something_about_course: "Souhaitez-vous écrire quelque chose à propos de ce cours ?"
+submit_review: "Envoyer l’avis"
+related_course: "Cours Recommandé"
+learner_should_be_able_to: "L’apprenant devra être capable de"
+
+
+
+workshop:
+  price: Prix
+  duration: Durée
+  objectives: Objectifs
+  enrolled: Inscrits
+  language: Langue
+  rating: Note
+  add_cart_btn: Ajouter au panier
+  course_overview: Aperçu du cours
+  what_will_you_learn: "Que vas-tu apprendre ?"
+  review: Avis
+  stars: Stars
+login:
+  register: Connexion
+  title: "Connexion"
+  no_account_signup:
+    title: "Vous n’avez pas de compte ?"
+    link: "Inscrivez-vous"
+  form:
+    password: Mot de passe
+  honoris_student: "Étudiant du groupe Honoris ?"
+  sign_in_with: "Se connecter avec"
+  btn_connection: "Connexion"
+  lost_password: "Mot de passe oublié ?"
+
+register:
+  title: Inscription
+  name: "Prénom"
+  last_name: "Nom"
+  country: "Pays"
+  phone_number: "Numéro de téléphone"
+  email: "Email"
+  level_of_study: "Niveau d'études"
+  password: "Mot de passe"
+  confirm_password: "Confirmer le mot de passe"
+  terms_notice: "En vous inscrivant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité."
+  get_started_now: "Commencer maintenant"
+
+
+
+
+
+footer:
+  address: Adresse
+  phone_number: Numéro de téléphone
+

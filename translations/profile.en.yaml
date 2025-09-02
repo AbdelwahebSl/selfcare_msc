@@ -1,0 +1,37 @@
+profile:
+  title: My Profile
+  section:
+    basic_info: Basic Information
+    my_learning: My Learning
+    purchase_history: Purchase History
+    edit: Edit profile
+  account:
+    type:
+      student: Student Account
+      professional: Professional Account
+
+
+  field:
+    name: Name
+    last_name: Last Name
+    email: Email
+    phone: Phone Number
+    address: Address
+    country: Country
+    study: Study
+    institution: Institution / Service
+    description: Description
+    student_account: Student Account
+    speciality: Speciality  # en.yaml
+    level_of_study: Level of study
+    phone_number: "Phone number"
+  password:
+    old: Old password
+    new: New password
+    confirm: Confirm new password
+    update: Update Password
+
+  action:
+    edit: Edit Profile
+    logout: Logout
+    update_info: Update informations

@@ -1,0 +1,309 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\CartFile;
+use App\Entity\WorkshopCart;
+use App\Form\PaymentFileType;
+use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Message;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+class PaymentController extends AbstractController
+{
+    private $requestStack;
+    private $security;
+    private $doctrineManager;
+
+    public function __construct(RequestStack $requestStack, Security $security, ManagerRegistry $doctrine)
+    {
+        $this->requestStack = $requestStack;
+        $this->security = $security;
+        $this->doctrineManager = $doctrine;
+    }
+
+
+    #[Route('/workshop/cart/payment', name: 'cart_payment')]
+    public function workshopCartPayment(Request $request, ManagerRegistry $doctrine, LoggerInterface $logger): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => 0]);
+        $total = 0;
+        $transactionId = '';
+        $workshopId = '';
+        $workshopInitials = '';
+        foreach ($workshopCarts as $workshopCart) {
+            $transactionId .= $workshopCart->getId();
+            $workshopId .= $workshopCart->getWorkshop()->getId();
+            $workshopName = $workshopCart->getWorkshop()->getName();
+            $workshopInitials .= substr($workshopName, 0, 1);
+            $workshopPrice = intval($workshopCart->getWorkshop()->getPrice());
+            $total += number_format(floatval(str_replace(',', '.', $workshopPrice)), 3, '.', '');
+        }
+        $workshopInitials .= '123456789';
+        $transactionId = "$transactionId" . str_shuffle($workshopInitials) . "$workshopId";
+        foreach ($workshopCarts as $workshopCart) {
+            $workshopCart->setPaymentTransactionId($transactionId);
+        }
+        $entityManager->flush();
+
+        $dnsS = $this->getParameter('app.msc_dns');
+        $confirmPaymentUrl = $this->generateUrl('cart_payment_complete', array(), true);
+        $confirmPaymentUrl = "$dnsS$confirmPaymentUrl";
+        $paymentParams = array(
+            'password' => 'V64iV2cGx',
+            'userName' => '100090386',
+            'orderNumber' => $transactionId,
+            'amount' => $total * 1000,
+            'currency' => '788',
+            'language' => 'FR',
+            'returnUrl' => $confirmPaymentUrl
+        );
+        $paymentHttpQuery = urldecode(http_build_query($paymentParams));
+        $clicktopayA = $this->getParameter('app.clicktopay_reg');
+        $smtUri = "$clicktopayA?$paymentHttpQuery";
+
+        $client = HttpClient::create();
+        $response = $client->request('GET', $smtUri);
+        $logger->alert('***onlinePaymentReq**' . $smtUri . '***onlinePaymentRes**' . json_encode($response->toArray()));
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode == 200) {
+            $content = $response->toArray();
+            if (isset($content['orderId']) && isset($content['formUrl'])) {
+                foreach ($workshopCarts as $workshopCart) {
+                    $workshopCart->setOrderIdSMT($content['orderId']);
+                }
+                $entityManager->flush();
+                return $this->redirect($content['formUrl']);
+            }
+        }
+        return $this->render('selfcare/404.html.twig');
+    }
+
+
+    #[Route('/workshop/cart/payment-complete', name: 'cart_payment_complete')]
+    public function workshopCartPaymentComplete(Request $request, ManagerRegistry $doctrine, LoggerInterface $logger): Response
+    {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $orderId = $request->get('orderId');
+        $entityManager = $doctrine->getManager();
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['orderIdSMT' => $orderId, 'status' => 0]);
+        if (empty($workshopCarts)) {
+            return $this->render(
+                'selfcare/404.html.twig',
+                array('reference' => $orderId)
+            );
+
+        }
+
+        $paymentReference = $workshopCarts[0]->getPaymentTransactionId();
+
+        $transactionAmount = 0;
+        foreach ($workshopCarts as $workshopCart) {
+            $workshopPrice = intval($workshopCart->getWorkshop()->getPrice());
+            $transactionAmount += number_format(floatval(str_replace(',', '.', $workshopPrice)), 3, '.', '');
+        }
+
+        $paymentParams = array(
+            'password' => 'V64iV2cGx',
+            'userName' => '100090386',
+            'orderId' => $orderId,
+            'language' => 'en',
+        );
+        $paymentHttpQuery = urldecode(http_build_query($paymentParams));
+        $clicktopayO = $this->getParameter('app.clicktopay_os');
+        $smtUri = "$clicktopayO?$paymentHttpQuery";
+
+
+        $client = HttpClient::create();
+        $response = $client->request('GET', $smtUri);
+        $logger->alert('***onlinePaymentStatusReq**' . $smtUri . '***onlinePaymentStatusRes**' . json_encode($response->toArray()));
+        if ($response->getStatusCode() == 200) {
+            $content = $response->toArray();
+            if (isset($content['cardAuthInfo']['approvalCode'])) {
+                if ($content['cardAuthInfo']['approvalCode'] != null && $content['cardAuthInfo']['approvalCode'] != 0) {
+
+                    $dateNow = new \DateTime();
+                    $dateNowF = $dateNow->format('Y/m/d H:i:s');
+
+                    foreach ($workshopCarts as $workshopCart) {
+
+                        $workshopCart->setStatus('1');//Payed
+                        $workshopCart->setPaymentMode('1');// payment with credit cart
+
+                        //set expiration date
+                        $workshopCart->setExpired(0);
+                        $workshopCart->setPayedAt($dateNowF);
+                        $this->setExpirationDate($workshopCart);
+
+
+
+                        //Set Click to pay details
+                        $workshopCart->setSmtPayedAt($dateNowF);
+                        $workshopCart->setPaymentAuthorization($content['cardAuthInfo']['approvalCode']);
+
+                        //Count purchase
+                        $purchasedCount = $workshopCart->getWorkshop()->getPurchasedCount();
+                        $purchasedCount++;
+                        $workshopCart->getWorkshop()->setPurchasedCount($purchasedCount);
+                    }
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('my_learning', [
+                        'paymentAuthorization' => $content['cardAuthInfo']['approvalCode'],
+                        'paymentReference' => $paymentReference,
+                    ]);
+                }
+            }
+            else{
+                dump($content);
+                dump('stooooooooop here'); die();
+            }
+        }
+        else{
+            return $this->render(
+                'selfcare/404.html.twig',
+                array('reference' => $paymentReference.'  An error has occurred, please try again later!')
+            );
+
+        }
+
+
+        return $this->render(
+            'selfcare/404.html.twig',
+            array('reference' => $paymentReference)
+        );
+    }
+
+
+    #[Route('/workshop/bank-tranfer/payment', name: 'bank_transfer_payment')]
+    public function workshopBankTransferPayment(Request $request, ManagerRegistry $doctrine,
+                                                SluggerInterface $slugger, MailerInterface $mailer): Response
+    {
+
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $entityManager = $doctrine->getManager();
+        $user = $this->security->getUser();
+
+        $workshopCarts = $entityManager->getRepository(WorkshopCart::class)
+            ->findBy(['selfcareUer' => $user, 'status' => 0]);
+        $total = 0;
+
+        if (!$workshopCarts) {
+            return $this->render('selfcare/404.html.twig');
+        }
+
+        foreach ($workshopCarts as $workshopCart) {
+            $workshopPrice = intval($workshopCart->getWorkshop()->getPrice());
+            $total += number_format(floatval(str_replace(',', '.', $workshopPrice)), 3, '.', '');
+        }
+
+        $paymentFile = new CartFile();
+        $form = $this->createForm(PaymentFileType::class, $paymentFile);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $paymentFile = $form->getData();
+            $paymentBank = $request->get('paymentBank');
+
+            $paymentFile->setStatus('0');
+            $entityManager->persist($paymentFile);
+            $entityManager->flush();
+            foreach ($workshopCarts as $workshopCart) {
+                $workshopCart->setStatus('1');
+                $workshopCart->setExpired('0');
+                $workshopCart->setFile($paymentFile);
+                $workshopCart->setPaymentBank($paymentBank);
+                $workshopCart->setPaymentMode('2');
+                $workshopCart->setPaymentAmount($workshopCart->getWorkshop()->getPrice());
+            }
+            $entityManager->flush();
+            $email = (new TemplatedEmail())
+                ->from($_ENV['MAIL_ADMIN'])
+                ->to($_ENV['MAIL_TEST'])
+                ->subject('Approval File')
+                ->htmlTemplate('emails/approvment_email.html.twig');
+            $mailer->send($email);
+
+            return $this->redirectToRoute('my_learning');
+        }
+
+        return $this->render('selfcare/confirm_bank_tranfer.html.twig', [
+            'total' => $total,
+            'workshopCarts' => $workshopCarts,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+  /*
+  * set expiration date value into WorkshopCart
+  */
+    public function setExpirationDate(WorkshopCart $workshopCart)
+    {
+        if ($workshopCart->getStatus() != '0') {
+            $expiredDate = $workshopCart->getWorkshop()->getExpirationDate();
+            if (!$expiredDate['expirationDate']) {
+                $unitNumber = intval($expiredDate['unitNumber']);
+                $payedAt = $workshopCart->getPayedAt();
+                $expiredDate = date('Y-m-d H:i:s', strtotime($payedAt . '+' . $unitNumber . ' ' . $expiredDate['unit']));
+            } else {
+                $expiredDate = $expiredDate['expirationDate'];
+            }
+            $expiredDate = new \DateTime($expiredDate);
+            $workshopCart->setExpirationDate($expiredDate);
+        }
+
+    }
+
+    /*
+     *  check workshop cart is valid
+     */
+    public function checkCartIsValid(WorkshopCart $workshopCart)
+    {
+        $dateNow = (new \DateTime())->format('Y-m-d H:i:s');
+        $expirationDate = $workshopCart->getExpirationDate();
+
+        $expirationDate = $expirationDate->format('Y-m-d H:i:s');
+        if ($expirationDate) {
+            if ($expirationDate < $dateNow) {
+                $workshopCart->setExpired(1);
+                $workshopCart->setStatus('2');
+            }
+        }
+    }
+
+    /*
+     *  calculate the sum  of workshopcart
+     */
+    public function sumWorkshopCarts(array $workshopCarts)
+    {
+        $total = 0;
+        foreach ($workshopCarts as $workshopCart) {
+            $workshopName = $workshopCart->getWorkshop()->getName();
+            $workshopPrice = intval($workshopCart->getWorkshop()->getPrice());
+            $total += number_format(floatval(str_replace(',', '.', $workshopPrice)), 3, '.', '');
+        }
+        return $total;
+    }
+
+}

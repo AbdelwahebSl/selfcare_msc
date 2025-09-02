@@ -1,0 +1,69 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h3 class="section-title">
+        Cart file list
+    </h3>
+    <div class="table-responsive">
+        <table class="table" id="myTable">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Workshop Carts</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cartFile in cartFiles %}
+                <tr>
+                    <td>
+                        {% if  cartFile.fileName  is not null %}
+                            {# <div class="category flex mb-4"> #}
+                            <img src="{{ 'images/paymentFile/'~ cartFile.fileName }}"
+                                 alt="Image"
+                                 class="category-icon img-thumbnail">
+                            {# </div> #}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for workshopCart in workshpCarts %}
+                            {% if workshopCart.file == cartFile %}
+                                {{ workshopCart.workshop.name }} <br>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </td>
+                    <td>
+                        {% if cartFile.status =='0' %}
+                            In progress
+                        {% elseif cartFile.status =='1' %}
+                            Valid
+                        {% else %}
+                            Rejected
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="nav-link " href="{{ path('bank_transfer_complete_payment', {id: cartFile.id }) }}">
+                            {% if cartFile.status =='0' %}
+                                <span class="material-icons">mode_edit</span>
+                            {% else %}
+                                <span class="material-icons">remove_red_eye</span>
+                            {% endif %}
+
+
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

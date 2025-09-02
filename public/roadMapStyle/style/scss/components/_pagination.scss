@@ -1,0 +1,48 @@
+.pagination {
+    gap: 1rem;
+
+    .page-item {
+        padding: 0;
+        width: 2.625rem;
+        height: 2.625rem;
+        border: 1px solid #EDF0F6;
+        border-radius: $borderRadius;
+        color: #181818;
+        font-weight: 500;
+        overflow: hidden;
+        .page-link {
+            padding: 0;
+            border: none;
+            line-height: 1;
+            color: inherit;
+            font-weight: 500;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0;
+            gap: 0.5rem;
+            
+            &:hover {
+                color: #fff;
+                background-color: #C9AC7A;
+            }
+            .page-icon {
+                font-size: 0.875rem;
+            }
+        }
+
+        &:first-of-type,
+        &:last-of-type {
+            border: none;
+            width: auto;
+
+            .page-link:hover {
+                background-color: transparent;
+                color: #C9AC7A;
+            }
+        }
+
+    }
+}

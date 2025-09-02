@@ -1,0 +1,119 @@
+{% extends "base.html.twig" %}
+{% block title %}CONTACT{% endblock %}
+
+{% block content %}
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt="" />
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt="" />
+        </div>
+        <div class="container">
+            <h1 class="title mb-4">Contact</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <section class="page-contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-xl-6 px-3 mb-4">
+                    <h2 class="title mb-5">Leave Us A Message</h2>
+                    <p class="about__paragraph mb-5">Quis voluptas nam aspernatur. The Medical Simulation Center has training spaces equipped with technology for transmitting and sharing simulation sessions, as well as high-fidelity equipment: mannequins and simulators allowing training in emergency procedures and gestures. Both professionals and students can acquire and update their skills as well as good practices in the disciplines taught.</p>
+                    <ul class="contact__list">
+                        <li class="contact__item">
+                            <div class="contact__icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="contact__info">
+                                <h3 class="title--xs title mt-2">OUR LOCATION</h3>
+                                <p class="text-md">8 Av. Kheireddine Pacha, Tunis</p>
+                            </div>
+                        </li>
+                        <li class="contact__item">
+                            <div class="contact__icon">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div class="contact__info">
+                                <h3 class="title--xs title mt-2">EMAIL ADDRESS:</h3>
+                                <p class="text-md">Contact@Tn.Honoris.Net</p>
+                            </div>
+                        </li>
+                        <li class="contact__item">
+                            <div class="contact__icon">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <div class="contact__info">
+                                <h3 class="title--xs title mt-2">PHONE NUMBER:</h3>
+                                <p class="text-md">96 458 156</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-xl-6 px-3">
+                    <form action="{{ path('selfcare_contact') }}" method="post" class="contact__form form">
+                        <h3 class="tag">Contact</h3>
+                        <h2 class="title title--small mb-4">
+                            CONTACT US FOR MORE INFORMATION
+                        </h2>
+                        <div class="form__group">
+                            <input type="text" name="name" id="name" class="form__input"         required />
+                            <label for="name" class="form__label">Name</label>
+                        </div>
+                        <div class="form__group">
+                            <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    class="form__input"
+                                    required
+                            />
+                            <label for="email" class="form__label">Email</label>
+                        </div>
+                        <div class="form__group">
+                            <input
+                                    type="text"
+                                    name="subject"
+                                    id="subject"
+                                    class="form__input"
+                                    required
+                            />
+                            <label for="subject" class="form__label">Subject</label>
+                        </div>
+                        <div class="form__group">
+                <textarea
+                        name="message"
+                        id="message"
+                        class="form__input"
+                        required
+                ></textarea>
+                            <label for="message" class="form__label">Your message</label>
+                        </div>
+                        <div class="row">
+                            <button
+                                    type="submit"
+                                    class="button--contained button--contained--withArrow w-auto"
+                            >
+                                Submit now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map">
+        <div style="width: 100%"><iframe width="100%" height="318" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=318&amp;hl=en&amp;q=8%20Av.%20Kheireddine%20Pacha,%20Tunis+(Universit%C3%A9%20Centrale%20Medical%20Simulation%20Center)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.maps.ie/distance-area-calculator.html">measure distance on map</a></iframe></div>
+    </section>
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}

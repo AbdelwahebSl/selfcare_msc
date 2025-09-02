@@ -1,0 +1,183 @@
+{% extends "base.html.twig" %}
+{% block title %}Bank transfert - Medical Simulation Center{% endblock %}
+
+{% block content %}
+    <section class="banner">
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="banner__decorator">
+            <img src="{{ asset('roadMapStyle/assets/images/hero_decorator.png') }}" alt=""/>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <h1 class="title mb-4">{{ "payment.bank_transfer_payment"|trans({},'payment') }}</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('homepage' ) }}">{{ "cart.home"|trans({},'payment') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ path('workshop_cart') }}">{{ "cart.title"|trans({},'payment') }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ "payment.bank_transfer_payment"|trans({},'payment') }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="transfertSteps py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3 transfertSteps__tab">
+                    <p class="transfertSteps__index">01</p>
+                    <h2 class="transfertSteps__title">{{ "payment.get_bank_details"|trans({},'payment') }}</h2>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3 transfertSteps__tab">
+                    <p class="transfertSteps__index">02</p>
+                    <h2 class="transfertSteps__title">{{ "payment.transfer_money"|trans({},'payment') }}</h2>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3 transfertSteps__tab">
+                    <p class="transfertSteps__index">03</p>
+                    <h2 class="transfertSteps__title">{{ "payment.scan_receipt"|trans({},'payment') }}</h2>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3 transfertSteps__tab">
+                    <p class="transfertSteps__index">04</p>
+                    <h2 class="transfertSteps__title">{{ "payment.attach_receipt"|trans({},'payment') }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bankInfo mb-5">
+        <div class="container">
+
+            <div class="row flex-wrap mb-3">
+                <h2 class="title title--sm col flex-grow-3">{{ "payment.banking_information"|trans({},'payment') }}</h2>
+                <a href="#" class="col ms-auto flex-grow-1 color-primary">{{ "payment.banking_information"|trans({},'payment') }}</a>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <h3 class="bankInfo__title col-3">Bank</h3>
+                    <div class="form__group">
+                        <input type="text" name="bank1" id="bank1" class="form__input" readonly disabled>
+                        <label for="bank1" class="form__label">STB</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="bank2" id="bank2" class="form__input" disabled>
+                        <label for="bank2" class="form__label">BRK</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="bank3" id="bank3" class="form__input" disabled>
+                        <label for="bank3" class="form__label">ATTIJARI</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h3 class="bankInfo__title col-3">RIB</h3>
+
+                    <div class="form__group">
+                        <input type="number" name="rib1" id="rib1" class="form__input" disabled>
+                        <label for="rib1" class="form__label">TN59 10006035187105</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="number" name="rib2" id="rib2" class="form__input" disabled>
+                        <label for="rib2" class="form__label">TN59 10006035187105</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="number" name="rib3" id="rib3" class="form__input" disabled>
+                        <label for="rib3" class="form__label">TN59 10006035187105</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h3 class="bankInfo__title col-3">IBAN</h3>
+
+                    <div class="form__group">
+                        <input type="text" name="iban1" id="iban1" class="form__input" disabled>
+                        <label for="iban1" class="form__label">TN59 10006035187105</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="iban2" id="iban2" class="form__input" disabled>
+                        <label for="iban2" class="form__label">TN59 10006035187105</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="iban3" id="iban3" class="form__input" disabled>
+                        <label for="iban3" class="form__label">TN59 10006035187105</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h3 class="bankInfo__title col-3">{{ "payment.currency"|trans({},'payment') }}</h3>
+
+                    <div class="form__group">
+                        <input type="text" name="currency1" id="currency1" class="form__input" disabled>
+                        <label for="currency1" class="form__label">TND</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="currency2" id="currency2" class="form__input" disabled>
+                        <label for="currency2" class="form__label">TND</label>
+                    </div>
+                    <div class="form__group">
+                        <input type="text" name="currency3" id="currency3" class="form__input" disabled>
+                        <label for="currency3" class="form__label">TND</label>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="title title--sm my-5">{{ "payment.proof_of_payment"|trans({},'payment') }}</h2>
+            <form action="{{ path('bank_transfer_payment') }}" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <select class="form-select" id="inputGroupSelect01" style="height: 56px;" required>
+                                <option value="" selected>Select Bank</option>
+                                <option value="ATTIJARI">ATTIJARI</option>
+                                <option value="BRK-002">BRK</option>
+                                <option value="STB-KHB001">STB</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Date of payment"
+                                   aria-label="Date-payment"
+                                   aria-describedby="basic-addon1" style="height: 56px;" required>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="input-group mb-3 customfileinput">
+                            <input type="file" class="form-control" id="input-file" style="height: 56px;"
+                                   accept="image/jpeg,image/png,img/jpg,application/pdf" name="proof"
+                                   required>
+{#                            {{ form_row(form.file, { 'attr':{'class':'form-control', 'id':'input-file'} }) }}#}
+
+                            {# <input type="file" name="file" id="filep" style="display:none;" required> #}
+                            <label for="input-file" class="customfileinput__label" style="height: 56px;">
+                                <img src="{{ asset('roadMapStyle/assets/images/fileinput.svg') }}" alt="icon">
+                                <span>Drag & drop your payment receipt</span>
+                            </label>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row gap-3 mt-5">
+                    <a href="{{ path('workshop_cart') }}"
+                       class="button--contained button--contained--withArrow arrow--reverse button--contained--reverse w-auto ms-auto w-auto">{{ "payment.cancel"|trans({},'payment') }}</a>
+                    <button type="submit"  class="button--contained button--contained--withArrow w-auto">{{ "cart.proceed_to_checkout"|trans({},'payment') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+{#    {{ render(path('selfcare_contact_component')) }}#}
+
+{% endblock %}
+
+{% block javaScript %}
+
+
+
+{% endblock %}

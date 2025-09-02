@@ -1,0 +1,38 @@
+.banner {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f9fa;
+  isolation: isolate;
+  &__decorator {
+    position: absolute;
+    height: 9rem;
+    img {
+      height: 100%;
+    }
+    &:first-of-type {
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+    &:nth-of-type(2) {
+      right: 0;
+      top: 50%;
+      transform: translate(75%, 25%);
+    }
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(/assets/images/bannerDecoration.png);
+    background-size: contain;
+    width: 36rem;
+    height: 12rem;
+    z-index: -1;
+
+  }
+}

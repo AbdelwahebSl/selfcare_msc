@@ -1,0 +1,40 @@
+.transfertSteps {
+    &__tab {
+        padding-top: 4rem;
+        padding-right: 6rem;
+        position: relative;
+        &:not(:last-of-type):after {
+            content: "\f105";
+            font-family: $font-awesome;
+            font-size: 1rem;
+            font-weight: 900;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: $color-primaryLight;
+            display: block;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+            right: 3rem;
+            top: 50%;
+            transform: translate(50%, -50%);
+        }
+    }
+    &__index {
+        position: absolute;
+        font-size: 5.625rem;
+        font-family: $font-primary;
+        font-weight: 900;
+        color: rgba(24, 24, 24, 0.1);
+        top: 0;
+    }
+    &__title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.5;
+        font-family: $font-primary;
+    }
+}

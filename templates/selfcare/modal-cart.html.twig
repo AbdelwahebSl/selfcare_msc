@@ -1,0 +1,40 @@
+{# {% if workshopCarts %} #}
+<hr class="seperator">
+{% for item in workshopCarts %}
+    <div class="modalCart__card">
+        <div class="modalCart__image">
+            <img src="{{ asset('images/workshops/'~ item.workshop.imageName) }}" alt="">
+        </div>
+
+        <div class="modalCart__cardBody">
+            <h3 class="modalCart__cardTitle">{{ item.workshop.name }}</h3>
+
+            <p class="modalCart__cardPrice"> {% if( ((  is_granted('ROLE_STUDENT') and   item.workshop.workshopType =="1")) or ((item.workshop.workshopType =="1")) or
+                    ((  not is_granted('ROLE_STUDENT') and   item.workshop.workshopType =="2"))
+
+                    ) %}
+
+                    {{ item.workshop.price }}<span>dt</span>
+
+                {% else %}
+                {{ 'cart.Free'|trans({},'payment') }}
+
+                {% endif %}</p>
+
+        </div>
+
+
+    </div>
+{% endfor %}
+<h3 class="modalCart__subtitle">  {{ 'cart.cart_totals'|trans({},'payment') }}</h3>
+<div class="modalCart__totalRow">
+    <h4 class="modalCart__totalRowTitle">{{ 'cart.subtotal'|trans({},'payment')  }}</h4>
+    <p class="modalCart__totalRowPrice">{{ total }}<span>DT</span></p>
+</div>
+<a href="{{ path('workshop_cart') }}" class="button--outlined button--outlined--withArrow">{{ 'view_cart'|trans({},'payment') }}</a>
+
+{# {% else %} #}
+
+
+
+{# <a href="" class="button--contained button--contained--withArrow">Check out</a> #}

@@ -1,0 +1,630 @@
+{% extends "base.html.twig" %}
+{% block title %}My Learning {% endblock %}
+{% block style %}
+
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/video-js.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('roadMapStyle/style/css/video-js-city.min.css') }}"/>
+    <style>
+
+        .isDisabled {
+            color: currentColor;
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: none;
+            pointer-events: none;
+        }
+        .video-link{
+            border-radius: 0;
+            margin-bottom: 0;
+            background-color: transparent;
+            padding-left:3.5rem;
+            padding-right: 1.5rem;
+            padding-top: 0.875rem;
+            padding-bottom: 0.875rem;
+        }
+
+        /*.video-js .vjs-big-play-button {*/
+        /*    top: 50%;*/
+        /*    left: 50%;*/
+        /*    transform: translate(-50%, -50%);*/
+        /*}*/
+        .video-js {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        #myVideo {
+            max-height: 500px;
+            width: 100%;
+            object-fit: contain;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="video">
+        {#        oncontextmenu="return false;" #}
+        <div class="container py-5">
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="main-video-container col-12 col-lg-7 col-xl-8" id="skin">
+
+                            {% if videoSupport %}
+                                <video
+                                        id="myVideo"
+                                        class="main-video vjs-theme-city video-js vjs-default-skin"
+                                        controls
+                                        preload="auto"
+                                        width="100%"
+                                        height="500"
+                                        data-setup='{"fluid": true}'>
+                                    <source src="{{ asset('images/workshops/'~ videoSupport.imageName ) }}" type="video/mp4">
+
+                                </video>
+                            {% endif %}
+
+                        </div>
+                        <div class="video-list-container col-12 col-lg-5 col-xl-4">
+                            <h2 class="title title--xs px-4">
+                                {{ workshop.videoTitle }}
+                            </h2>
+                            {% for  content in courseContent %}
+                                {% if content.supportType=='Video' %}
+                                    <div class="list-item watched">
+                                        <video src="{{ asset('images/workshops/'~ content.imageName ) }}"
+                                               class="list-video"></video>
+                                        <h3 class="list-title">{{ content.name }}</h3>
+                                        <p class="bold duration-display" data-video-src="{{ asset('images/workshops/'~ content.imageName ) }}">
+                                            Chargement...
+                                        </p>
+                                    </div>
+
+                                {% endif %}
+                            {% endfor %}
+                            {% if workshop.quizLink %}
+                                <div class="link-primary video-link {% if not workshopCard.readed %} isDisabled {% endif %}"
+                                     id="QCM_Link" style="">
+                                    <a href="{{ path(workshop.quizLink,{id: workshopCart_id }) }}"
+                                       class=" ">Quiz {{ workshop.name }} </a>
+                                </div>
+                            {% endif %}
+                            {% if workshop.quizLink %}
+                                <div class="link-primary  video-link  {% if not workshopCard.readed or not workshopCard.QuizPassed %} isDisabled {% endif %}"
+                                     id="QCM_Link">
+                                    <a href="{{ path(workshop.quizLink ~'_response',{id: workshopCart_id }) }}"
+                                       class="">Quiz Answers {{ workshop.name }}</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 negative-mt" oncontextmenu="return false;">
+        <div class="row">
+            <div class="col-12 col-lg-7 col-xl-8">
+                <h2 class="title mb-4">{{ 'workshop.course_overview'|trans }}</h2>
+                <p class="paragraph">
+                    {{ workshop.description }}
+                </p>
+                <h3 class="title title--sm mb-4 mt-5">{{ 'workshop.what_will_you_learn'|trans }}</h3>
+                <ul class="categoriesDetails__list row">
+                    {% for objective in objectives %}
+                        <li class="categoriesDetails__item col-12 col-md-6">
+                            {{ objective.name }}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+                <h3 class="title title--small">{{ "workshop.review"|trans }}</h3>
+
+                <div class="categoriesDetails__review">
+                    <div class="categoriesDetails__reviewTotal">
+                        <h4 class="title title--xl">5,0</h4>
+                        <div class="testimonial__stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h4 class="categoriesDetails__reviewCount">Total {{ totalRate5 }} Rating</h4>
+                    </div>
+                    <div class="categoriesDetails__reviewProgressList">
+                        {% for i in 5..1 %}
+
+                            <div class="categoriesDetails__reviewProgressItem">
+                                <p class="categoriesDetails__reviewProgressStarsCount">{{ i }} {{ "workshop.stars"|trans }}</p>
+                                <div class="progressbar">
+                                    <div class="progressbar-filled"
+                                         style="width: {{ percentPerValueRate[i] }}%"></div>
+                                </div>
+                                <p class="percentage">{{ percentPerValueRate[i] }}%</p>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% for item in comments %}
+                    <div class="categoriesDetails__comment">
+                        <div class="categoriesDetails__commentImage">
+                            <img src="{{ asset('roadMapStyle/assets/images/profile.jpg') }}" alt="">
+                        </div>
+                        <div class="categoriesDetails__commentBody">
+                            <div class="d-flex gap-3 align-items-center flex-wrap">
+                                <h2 class="categoriesDetails__commentName">{{ item.user.fullName }}</h2>
+                                <div class="categoriesDetails__commentStars">
+
+                                    {% if item.rate=="1" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="2" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="3" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="4" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% elseif item.rate=="5" %}
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active "></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                        <i class="fa-solid fa-star active"></i>
+                                    {% else %}
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star "></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    {% endif %}
+
+                                </div>
+                                <p class="ms-auto categoriesDetails__commentDate">
+                                    {{ item.createdAt|date('d M Y') }}
+                                </p>
+                            </div>
+                            <p class="mt-3 categoriesDetails__commentText">
+                                {% if item.comment %}
+                                    {{ item.comment }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <form action="{{ path('selfcare_workshop_review_add',{id:workshop.id}) }}" method="post">
+
+
+                    <h3 class="title title--small">{{ 'write_your_review'|trans }}</h3>
+                    <h4 class="subtitle">{{ 'rate_the_course'|trans }}</h4>
+                    <div class="categoriesDetails__commentStars add">
+                        <div id="full-stars-example-two">
+                            <div class="rating-group">
+                                {#                                disabled checked   #}
+                                <input class="rating__input rating__input--none" name="rating3"
+                                       id="rating3-none"
+                                       value="10" type="radio" required>
+                                <label aria-label="1 star" class="rating__label" for="rating3-1"><i
+                                            class="rating__icon rating__icon--star fa fa-star"></i></label>
+
+                                <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio"
+                                       required>
+                                <label aria-label="2 stars" class="rating__label" for="rating3-2"><i
+                                            class="rating__icon rating__icon--star fa fa-star"></i></label>
+
+                                <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio"
+                                       required>
+                                <label aria-label="3 stars" class="rating__label" for="rating3-3"><i
+                                            class="rating__icon rating__icon--star fa fa-star"></i></label>
+
+                                <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio"
+                                       required>
+                                <label aria-label="4 stars" class="rating__label" for="rating3-4"><i
+                                            class="rating__icon rating__icon--star fa fa-star"></i></label>
+
+                                <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio"
+                                       required>
+                                <label aria-label="5 stars" class="rating__label" for="rating3-5"><i
+                                            class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__group categoriesDetails__commentInput">
+                    <textarea
+                            name="comment"
+                            id="comment"
+                            class="form__input" required
+                    ></textarea>
+                        <label for="comment" class="form__label"
+                        >{{ "write_something_about_course"|trans }}</label>
+                    </div>
+
+                    <button
+                            type="submit" name="_commentSubmit"
+                            class="button--contained button--contained--withArrow"
+                    >
+                        {{ 'submit_review'|trans }}
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container" oncontextmenu="return false;">
+        <div class="related py-5">
+            <h2 class="title">{{ 'related_course'|trans }}</h2>
+            <div class="recommanded">
+                {% for item in recomendedWorkshop %}
+
+                    <div class="px-2">
+                        <div class="card">
+                            <a href="{{ path('workshop_show',{id: item.id}) }}" class="card__link"></a>
+                            <div class="card-image">
+                                <img src="{{ asset('images/workshops/'~ item.imageName ) }}" alt=""/>
+                            </div>
+                            <div class="card-body py-4">
+                                <div class="card__header">
+                                    <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        {% if item.rate %}
+                                            ( {{ item.rate|number_format(1) }} )
+                                        {% else %}
+                                            ( 0 )
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }}  {{ 'workshop.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="cardHover">
+                                <div class="card__header">
+                                    {% if (is_granted('ROLE_STUDENT') and workshop.workshopType == '2') or ( not is_granted('IS_AUTHENTICATED_FULLY') ) %}
+                                        <p class="card__free">{{ 'card__free'|trans }}</p>
+                                    {% endif %} <p class="card__stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        {% if item.rate %}
+                                            ( {{ item.rate|number_format(1) }} )
+                                        {% else %}
+                                            ( 0 )
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <h3 class="card__title">
+                                    {{ item.name }}
+                                </h3>
+                                <p class="card__content">
+                                    {{ item.description }}
+                                </p>
+                                <p class="card__date">
+                                    <span><i class="fa-regular fa-clock"></i></span>
+                                    {{ item.workshopDuration }} {{ item.durationUnit }}
+                                </p>
+                                <div class="card__footer">
+                                    <p class="card__target">
+                                        <span><i class="fa-solid fa-bullseye"></i></span>
+                                        {{ item.objectiveCount }}  {{ 'workshop.objectives'|trans }}
+                                    </p>
+                                    <div class="card__seperator"></div>
+                                    <p class="card__students">
+                                        <span><i class="fa-regular fa-user"></i></span>
+                                        {{ item.purchasedCount }} {{ 'title.students'|trans }}
+                                    </p>
+                                </div>
+                                <a
+                                        href="#"
+                                        class="button--contained button--contained--withArrow"
+                                >{{ 'title.enroll'|trans }}</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+    {#    {{ render(path('selfcare_contact_component')) }}#}
+{% endblock %}
+
+{% block javaScript %}
+    <script src="{{ asset('roadMapStyle/js/video.js') }}"></script>
+    <script src="{{ asset('roadMapStyle/js/video-js.min.js') }}"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function initCarousel() {
+                $(".recommanded").slick({
+                    infinite: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false,
+                    adaptiveHeight: true, // Important pour l'ajustement automatique
+                    responsive: [
+                        {
+                            breakpoint: 1200,
+                            settings: {
+                                slidesToShow: 3,
+                            }
+                        },
+                        {
+                            breakpoint: 992,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 1,
+                            }
+                        },
+                        {
+                            breakpoint: 576,
+                            settings: {
+                                slidesToShow: 1,
+                                dots: false
+                            }
+                        }
+                    ]
+                });
+            }
+            $(window).on('load', function() {
+                initCarousel();
+
+                // Redimensionner le carousel après initialisation
+                setTimeout(function() {
+                    $('.slick-slider').slick('resize');
+                }, 100);
+            });
+
+            // Réinitialiser le carousel quand la fenêtre est redimensionnée
+            $(window).on('resize', function() {
+                if ($('.slick-slider').hasClass('slick-initialized')) {
+                    $('.slick-slider').slick('resize');
+                }
+            });
+            // Initialiser le player Video.js principal
+            var myPlayer = videojs('myVideo', {
+                fluid: true,
+                playbackRates: [0.5, 1, 1.5, 2],
+                userActions: {
+                    hotkeys: true
+                }
+            });
+
+            // Fonction pour formater le temps en minutes:secondes
+            function formatTime(timeInSeconds) {
+                if (isNaN(timeInSeconds) || timeInSeconds === Infinity) return '00:00';
+
+                const minutes = Math.floor(timeInSeconds / 60);
+                const seconds = Math.floor(timeInSeconds % 60);
+                return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            }
+
+            // Fonction pour obtenir la durée d'une vidéo
+            function getVideoDuration(videoSrc, callback) {
+                var video = document.createElement('video');
+                video.src = videoSrc;
+
+                video.addEventListener('loadedmetadata', function() {
+                    callback(video.duration);
+                });
+
+                video.addEventListener('error', function() {
+                    callback(0);
+                });
+
+                // Charger les métadonnées
+                video.load();
+            }
+
+            // Afficher la durée de la vidéo principale
+            myPlayer.ready(function() {
+                this.on('loadedmetadata', function() {
+                    const duration = this.duration();
+                    const formattedDuration = formatTime(duration);
+                    document.querySelectorAll('#duration').forEach(el => {
+                        el.textContent = formattedDuration + ' min';
+                    });
+
+                    // Mettre à jour le titre avec la durée
+                    const titleElement = document.querySelector('.title.title--xs');
+                    if (titleElement && !titleElement.dataset.durationAdded) {
+                        titleElement.textContent += ' (' + formattedDuration + ')';
+                        titleElement.dataset.durationAdded = true;
+                    }
+                });
+            });
+
+            // Afficher les durées des vidéos de la liste
+            document.querySelectorAll('.duration-display').forEach(function(element) {
+                var videoSrc = element.getAttribute('data-video-src');
+
+                getVideoDuration(videoSrc, function(duration) {
+                    if (duration > 0) {
+                        const minutes = Math.floor(duration / 60);
+                        const seconds = Math.floor(duration % 60);
+                        const formattedTime = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                        element.textContent = formattedTime + ' min';
+                    } else {
+                        element.textContent = 'N/A';
+                    }
+                });
+            });
+
+            // Vérifier la progression de la vidéo
+            var id = {{ workshopCart_id }};
+            var progressChecked = false;
+
+            myPlayer.on('timeupdate', function() {
+                var currentTime = this.currentTime();
+                var duration = this.duration();
+
+                if (duration > 0 && currentTime / duration >= 0.9 && !progressChecked) {
+                    progressChecked = true;
+
+                    var element = document.getElementById("QCM_Link");
+                    if (element) {
+                        element.classList.remove("isDisabled");
+                    }
+
+                    $.ajax({
+                        method: "GET",
+                        url: "{{ path('app_api_update_wrk_shop_crt_add') }}",
+                        data: {id: id, type: 1},
+                        success: function(response) {
+                            console.log('Progress updated successfully', response);
+                        }
+                    });
+                }
+            });
+
+            // Sauvegarder/restaurer la position de lecture
+            myPlayer.on('timeupdate', function() {
+                localStorage.setItem('videoPosition_' + {{ workshop.id }}, this.currentTime());
+            });
+
+            var savedPosition = localStorage.getItem('videoPosition_' + {{ workshop.id }});
+            if (savedPosition) {
+                myPlayer.ready(function() {
+                    this.currentTime(parseFloat(savedPosition));
+                });
+            }
+        });
+
+        // Fonction pour formater le temps de manière plus lisible
+        function formatTimeReadable(timeInSeconds) {
+            if (isNaN(timeInSeconds) || timeInSeconds === Infinity) return 'Durée non disponible';
+
+            const hours = Math.floor(timeInSeconds / 3600);
+            const minutes = Math.floor((timeInSeconds % 3600) / 60);
+            const seconds = Math.floor(timeInSeconds % 60);
+
+            if (hours > 0) {
+                return hours + 'h ' + minutes + 'min ' + seconds + 'sec';
+            } else if (minutes > 0) {
+                return minutes + 'min ' + seconds + 'sec';
+            } else {
+                return seconds + 'sec';
+            }
+        }
+
+
+
+        var myPlayer = videojs('myVideo');
+
+        if (myPlayer.readyState() < 1) {
+            // wait for loadedmetdata event
+            myPlayer.one("loadedmetadata", onLoadedMetadata);
+        } else {
+            // metadata already loaded
+            onLoadedMetadata();
+        }
+
+        function onLoadedMetadata() {
+            // alert(myPlayer.duration());
+            // $('#duration').html("Duration: " + myPlayer.duration());
+            var duration = myPlayer.duration() / 60;
+            $('#duration').innerText = duration.toFixed(2)
+            $('#duration').text(duration.toFixed(2).toString().replace('.', ':'));
+
+        }
+
+        function getCurentTime() {
+            let vid = videojs("myVideo");
+            let currentTime = vid.currentTime() / 60;
+
+            return currentTime.toFixed(2)
+        }
+
+        function getDuration() {
+            let vid = videojs("myVideo");
+            let duration = vid.duration() / 60;
+            return duration.toFixed(2);
+        }
+
+        var id = {{ workshopCart_id }}
+
+            setInterval(() => {
+                var duration = getDuration();
+                var currentTime = getCurentTime();
+                duration = duration - 0.30;
+
+
+                if (currentTime >= duration) {
+                    // if (currentTime >= 0.001) {
+                    // $('#QCM_Link').attr('hidden',false);
+                    var element = document.getElementById("QCM_Link");
+                    element.classList.remove("isDisabled");
+                    // $('#QCM_Link').classList.remove("isDisabled");
+                    $.ajax({
+                        method: "GET",
+                        //async: false,
+                        url: "{{ path('app_api_update_wrk_shop_crt_add') }}",
+                        data: {id: id, type: 1},
+                        contentType: "application/json",
+
+                        success: function (r) {
+                            console.log(r)
+
+                        }
+                    });
+                }
+            }, 20000)
+
+
+
+
+        document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
+            this.currentTime = savedPosition || 0;
+        });
+    </script>
+{% endblock %}

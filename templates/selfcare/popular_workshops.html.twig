@@ -1,0 +1,162 @@
+<section class="formation-courses">
+    <div class="container">
+        <h2 class="section-title">Explore most <span class="dark-primary-color">popular courses</span></h2>
+        <div class="row">
+            {% for popularWorkshop in popularWorkshops %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ path('workshop_show',{'id':popularWorkshop.id}) }}" class="card">
+                        <div class="card-image">
+                            <picture>
+                                <source srcset="{{ 'images/workshops/'~ popularWorkshop.imageName }}"
+                                        media="(min-width: 768px)">
+                                <source srcset="{{ 'images/workshops/'~ popularWorkshop.imageName }}"
+                                        media="(max-width: 768px)">
+                                <img src="{{ 'images/workshops/'~ popularWorkshop.imageName }}" alt="image"/>
+                            </picture>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-info">
+                                <h3 class="card-title dark-primary-color ">{{ popularWorkshop.name }}</h3>
+                                <div class="card-text-icon">
+                                    <span class="material-icons"> layers </span>
+                                    <p>{{ popularWorkshop.objectiveCount }} Objectives</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-action">
+                            <div class="time">
+                                <div class="icon"><span class="material-icons"> schedule </span></div>
+                                <span>{{ popularWorkshop.workshopDuration }} {{ popularWorkshop.durationUnit }}</span>
+                            </div>
+                            <button class="card-button">
+                                <span class="material-icons"> arrow_forward </span>
+                            </button>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="{{ path('theme_show_all', {'type': type}) }}" class="card card-last">
+                    <div class="card-image">
+                        <picture>
+                            <source srcset="images/card-1.jpg" media="(min-width: 768px)">
+                            <source srcset="images/card-1.jpg" media="(max-width: 768px)">
+                            <img src="images/card-1.jpg" alt="image"/>
+                        </picture>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info">
+                            <h3 class="card-title dark-primary-color ">Cardiorespiratory arrest (CRA)</h3>
+                            <div class="card-text-icon">
+                                <span class="material-icons"> layers </span>
+                                <p>6 Objectives</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-action">
+                        <div class="time">
+                            <div class="icon"><span class="material-icons"> schedule </span></div>
+                            <span>3 Hours</span>
+                        </div>
+                        <button class="card-button">
+                            <span class="material-icons"> arrow_forward </span>
+                        </button>
+                    </div>
+                    <div class="see-more">
+                        <span class="text">View all</span>
+                        <button class="card-button">
+                            <span class="material-icons"> arrow_forward </span>
+                        </button>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="formation-recommandation">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <h3 class="section-subtitle">Participants also consult</h3>
+                {% for consultedWorkshop in consultedWorkshops %}
+                    {% if loop.index > 1 %}
+                        <a href="{{ path('workshop_show',{'id':consultedWorkshop.id}) }}">
+                            <div class="consult-card">
+                                <div class="consult-card-image">
+                                    <picture>
+                                        <source srcset="{{ 'images/workshops/'~ consultedWorkshop.imageName }}"
+                                                media="(min-width: 768px)">
+                                        <source srcset="{{ 'images/workshops/'~ consultedWorkshop.imageName }}"
+                                                media="(max-width: 768px)">
+                                        <img src="{{ 'images/workshops/'~ consultedWorkshop.imageName }}"
+                                             alt="image"/>
+                                    </picture>
+                                </div>
+                                <div class="consult-card-body">
+                                    <h4 class="consult-card-title">{{ consultedWorkshop.name }}</h4>
+                                    <div class="consult-card-time">
+                                        <span class="material-icons"> schedule </span>
+                                        <span>{{ consultedWorkshop.workshopDuration }} {{ consultedWorkshop.durationUnit }}</span>
+                                    </div>
+                                </div>
+                                <div class="consult-card-view">
+                                    <span>View details</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                <a class="consult-more" href="{{ path('theme_show_all', {'type':type}) }}">
+                    Show More
+                </a>
+            </div>
+
+
+            <div class="col-12 col-md-4">
+                <h3 class="section-subtitle">Recommended for you</h3>
+                {% set firstItem = consultedWorkshops|first %}
+                {% if workshop is defined %}
+                    {% if firstItem.id == workshop.id and consultedWorkshops[1] is defined %}
+                        {% set firstItem = consultedWorkshops[1] %}
+                    {% endif %}
+                {% endif %}
+                {% if firstItem %}
+                    <a href="{{ path('workshop_show',{'id':firstItem.id}) }}" class="card">
+                        <div class="card-image">
+                            <picture>
+                                <source srcset="{{ 'images/workshops/'~ firstItem.imageName }}"
+                                        media="(min-width: 768px)">
+                                <source srcset="{{ 'images/workshops/'~ firstItem.imageName }}"
+                                        media="(max-width: 768px)">
+                                <img src="{{ 'images/workshops/'~ firstItem.imageName }}" alt="image"/>
+                            </picture>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-info">
+                                <h3 class="card-title dark-primary-color ">{{ firstItem.name }}</h3>
+                                <div class="card-text-icon">
+                                    <span class="material-icons"> layers </span>
+                                    <p>{{ firstItem.objectiveCount }} Objectives</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-action">
+                            <div class="time">
+                                <div class="icon"><span class="material-icons"> schedule </span></div>
+                                <span>{{ firstItem.workshopDuration }} {{ firstItem.durationUnit }}</span>
+                            </div>
+                            <button class="card-button">
+                                <span class="material-icons"> arrow_forward </span>
+                            </button>
+                        </div>
+                    </a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

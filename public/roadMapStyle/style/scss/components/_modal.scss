@@ -1,0 +1,126 @@
+.modal {
+    &Cart {
+        backdrop-filter: blur(50px);
+        &__dialog {
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 100vh;
+            max-width: 50rem;
+            
+        }
+        &__content {
+            border-radius: 0;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 4rem;
+        }
+        &__close {
+            font-size: 1.5rem;
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 0;
+        }
+        &__title, &__subtitle {
+            font-family: $font-primary;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+        &__title {
+            font-size: 3rem;
+        }
+        &__subtitle {
+            font-size: 2rem;
+            margin-top: 3rem;
+        }
+        .seperator {
+            border-color: #707070;
+            margin: 0;
+            opacity: 0.3;
+        }
+        &__card {
+            padding: 1.75rem 2.5rem 1.75rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            border-bottom: 1px solid rgb(112, 112, 112, 0.3);
+            &Body {
+                width: calc(100% - 9.75rem);
+                padding: 0.5rem 1.25rem;
+                font-family: $font-primary;
+                font-weight: 700;
+                * {
+                    font-family: inherit;
+                    font-weight: inherit;
+                }
+            }
+            &Title {
+                font-size: 1.25rem;
+            }
+            &Price {
+                font-size: 1.25rem;
+                span {
+                    font-size: 0.875rem;
+                    vertical-align: top;
+                }
+            }
+        }
+        &__image {
+            width: 8.5rem;
+            border-radius: 0.625rem;
+            overflow: hidden;
+        }
+        &__icon {
+            width: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+
+        }
+
+        &__totalRow {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 1.25rem;
+            font-family: $font-primary;
+            margin-bottom: 5rem;
+            &Title {
+                font-size: 1.5rem;
+                font-family: inherit;
+                font-weight: 500;
+            }
+            &Price {
+                font-weight: 900;
+                font-family: inherit;
+                font-size: 1.5rem;
+                span {
+                    font-size: 0.875rem;
+                    vertical-align: top;
+                }
+            }
+        }
+        .button--outlined {
+            color: #808080;
+            border-color: #808080;
+            margin-bottom: 1.5rem;
+            &:hover {
+                color: #fff;
+            }
+        }
+        .button--contained, .button--outlined {
+            justify-content: center;
+            gap: 2rem;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+    }
+}

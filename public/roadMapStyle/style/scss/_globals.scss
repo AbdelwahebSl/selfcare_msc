@@ -1,0 +1,229 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: $font-secondary;
+    font-family: $font-primary;
+    color: #181818;
+    padding-top: 3.375rem;
+    font-size: 1rem;
+
+    @include breakpoint('xl') {
+        padding-top: 5.25rem;
+    }
+}
+
+img {
+    max-width: 100%;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.tag {
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    color: $color-primary;
+    font-weight: 600;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: $font-primary;
+    line-height: 1;
+
+    &--sm, &--small {
+        font-size: 2rem;
+        line-height: 1.5;
+    }
+
+    &--xs {
+        font-size: 1.375rem;
+
+        @include breakpoint('sm') {
+            font-size: 1.5rem;
+        }
+    }
+
+    &--xl {
+        font-size: 3.5rem;
+    }
+}
+
+.subtitle {
+    font-weight: 700;
+    font-size: 1.125rem;
+    font-family: $font-primary;
+    margin-bottom: 2rem;
+
+    a {
+        color: $color-primary;
+    }
+}
+
+.paragraph {
+    color: #181818;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-family: $font-secondary;
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        color: currentColor;
+    }
+}
+
+.flex-grow-3 {
+    flex-grow: 3;
+}
+
+.alreadyStudent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+
+    >* {
+        flex-grow: 1;
+    }
+
+    &__image {
+        max-width: 11rem;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        font-family: $font-primary;
+        line-height: 1;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    &__subtitle {
+        font-family: $font-primary;
+        font-size: 1.125rem;
+        line-height: 1;
+        font-weight: 400;
+    }
+}
+
+.breadcrumb-item+.breadcrumb-item {
+    padding-left: 0.75rem;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    padding-right: 0.75rem;
+}
+
+.page-contact {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    .contact__form {
+        margin-top: 0;
+    }
+}
+
+.text-md {
+    font-size: 1.125rem;
+}
+
+.categories {
+    padding: 4rem 0 0;
+    text-align: center;
+    background-color: #fff;
+
+    .popular__tabs {
+        justify-content: flex-start;
+    }
+}
+
+.col-xl-recommanded {
+    @include breakpoint('xl') {
+        width: 29%;
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+.table {
+    margin: 0;
+}
+
+.slick-track {
+    display: flex;
+
+    .slick-slide {
+        height: auto;
+        margin-bottom: 2rem;
+    }
+}
+
+.slick-dots {
+    li {
+        button {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #C7C7C7;
+
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    .slick-active button {
+        background-color: $color-primary;
+    }
+}
+
+.recommanded {
+    .slick-list {
+        max-width: 73rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.color-primary {
+    color: $color-primary;
+}
+
+.page-conditions {
+    padding-bottom: 2.75rem;
+    .subtitle {
+        margin-top: 2.75rem;
+        font-size: 2rem;
+        font-family: $font-primary;
+        color: #181818;
+        font-weight: 700;
+        max-width: 80rem;
+    }
+    .paragraph {
+        color: #808080;
+        font-family: $font-secondary;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6875;
+        margin-top: 2.3125rem;
+        max-width: 80rem;
+    }
+}

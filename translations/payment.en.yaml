@@ -1,0 +1,37 @@
+cart:
+  title: Cart
+  home: Home
+  Courses: Courses
+  Price: Price
+  edit: Edit
+  Free: Free
+  add_mor_courses: Add more courses
+  cart_totals: Cart Totals
+  subtotal: Subtotal
+  Total: Total
+  policy:
+    text: "As required by law, Honoris levies transaction taxes applicable to purchases made in certain tax jurisdictions. By validating your purchase, you accept these"
+    link: General Conditions of Use.
+  payment_with: "Payment with"
+  add_to_my_learning: "Add to my learning"
+  proceed_to_checkout: "Proceed to checkout"
+  payment_methods:
+    credit_card: "Credit card"
+    bank_transfer: "Bank transfer"
+  recommanded_for_you: Recommended for you
+
+payment:
+  bank_transfer_payment: "Bank transfer payment"
+  get_bank_details: "Get the bank account details of the selected bank"
+  transfer_money: "Transfer the money from your bank"
+  scan_receipt: "Scan the transfer receipt"
+  attach_receipt: "Attach the transfer receipt in the Payment step"
+  banking_information: "Banking information"
+  currency: Currency
+  proof_of_payment: "Proof of payment"
+  cancel: "Cancel"
+
+
+
+your_shopping_cart: "Your shopping cart"
+view_cart: "View cart"

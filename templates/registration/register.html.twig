@@ -1,0 +1,194 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Signup - Medical Simulation Center{% endblock %}
+{% block style %}
+    <style>
+        .span-required {
+            color: red;
+        }
+
+        .phone-input {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 5px;
+            width: 100%; /* Ajustez selon vos besoins */
+        }
+
+        .phone-input input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 8px;
+        }
+
+        .phone-icon {
+            margin-right: 8px;
+            color: #666;
+        }
+
+        .phone-input:focus-within {
+            border-color: #007bff;
+        }
+
+    </style>
+
+{% endblock %}
+{% block content %}
+
+
+    <section class="signup">
+        <form class="form signup__form" action="{{ path('app_register') }}" method="post" id="myForm">
+            <h2 class="title title--small mb-4">{{ 'register.title'|trans }}</h2>
+            <div class="mb-4 form--required">
+                <label for="name" class="form-label"><span class="span-required">*</span> {{ 'register.name'|trans }}</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="{{ 'register.name'|trans }}" required>
+            </div>
+
+            <div class="mb-4 form--required">
+                <label for="lastname" class="form-label"><span class="span-required">*</span> {{ 'register.last_name'|trans }}</label>
+                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="{{ 'register.last_name'|trans }}" required>
+            </div>
+            <div class="mb-4 form--required">
+                <label for="pays" class="form-label"><span class="span-required">*</span> {{ 'register.country'|trans }}</label>
+                {#                <input type="text" class="form-control" id="pays" name="pays" placeholder="Country" required> #}
+                <select class="form-select" aria-label="Default select example" id="pays" name="{{ 'register.country'|trans }}" required>
+                    <option selected>Select {{ 'register.country'|trans }}</option>
+
+                    {% for item in country %}
+                        <option value="{{ item.id }}">{{ item.nationality }}</option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+            <div class="mb-4 form--required">
+                <label for="tel" class="form-label"><span class="span-required">*</span> {{ 'register.phone_number'|trans }}</label>
+                {#                  <input type="tel" class="form-control" id="tel" name="tel" placeholder="Phone number" #}
+                {#                              required> <br> #}
+
+                <div class="phone-input">
+                    <span class="phone-icon">  <i class="fa fa-phone"></i>+ <span id="spandCountryCode"> </span></span>
+                    <input type="tel" placeholder="{{ 'register.phone_number'|trans }} *" class="form-control" id="tel" name="tel" required>
+                </div>
+            </div>
+
+            <div class="mb-4 form--required">
+                <label for="exampleInputEmail1" class="form-label"><span class="span-required">*</span> {{ 'register.email'|trans }}</label>
+                <input type="email" class="form-control" id="email" name="_email" aria-describedby="emailHelp"
+                       placeholder="{{ 'register.email'|trans }}" required>
+            </div>
+
+            <div class="mb-4 form--required">
+                <label for="etude" class="form-label"><span class="span-required">*</span> {{ 'register.level_of_study'|trans }}</label>
+                <select class="form-select" aria-label="Default select example" id="etude" name="etude" required>
+                    <option selected>{{ 'register.level_of_study'|trans }}</option>
+                    <option value="Bac +1">Bac +1</option>
+                    <option value="Bac +2">Bac +2</option>
+                    <option value="Bac +3">Bac +3</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+
+            <div class="mb-4 form--required">
+                <label for="exampleInputPassword1" class="form-label"><span class="span-required">*</span>
+                    {{ 'register.password'|trans }}</label>
+                <input type="password" class="form-control" id="plainPassword"
+                       name="_plainPassword"
+                       required placeholder="{{ 'register.password'|trans }}">
+                <span id="newPasswordAlert" class="text-danger"
+                      hidden
+                >Password must be at least 6 characters long and include at least one special character.</span>
+
+            </div>
+
+            <div class="mb-4 form--required">
+                <label for="exampleInputPassword2" class="form-label"><span class="span-required">*</span> {{ 'register.confirm_password'|trans }}</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required
+                       placeholder="{{ 'register.confirm_password'|trans }}">
+                <span id="confirmPwdAlert"
+                      hidden
+                      class="text-danger">Password should match with the new password</span>
+                <span id='message' hidden></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                <label class="form-check-label" for="exampleCheck1"><span class="span-required">*</span> {{ 'register.terms_notice'|trans }}</label>
+            </div>
+
+            <button type="submit" id="submit" disabled
+                    class="button--contained button--contained--withArrow w-100  text-center" name="_submit"> {{ 'register.get_started_now'|trans }}
+            </button>
+        </form>
+    </section>
+
+
+{% endblock %}
+
+{% block javaScript %}
+    <script>
+        $(function () {
+
+            $('#myForm').on('submit', function (e) {
+                var newPassword = $('#plainPassword').val();
+                var confirmPassword = $('#confirmPassword').val();
+                var passwordPattern = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+                if (!passwordPattern.test(newPassword)) {
+                    e.preventDefault();
+                    $('#newPasswordAlert').attr('hidden', false);
+                    $('#confirmPwdAlert').attr('hidden', true);
+                } else if (newPassword !== confirmPassword) {
+                    e.preventDefault();
+                    $('#newPasswordAlert').attr('hidden', true);
+                    $('#confirmPwdAlert').attr('hidden', false);
+                }
+            });
+
+
+            var countries = {{ country |json_encode|raw }}
+                $('#name').on('input', function () {
+                    // Remplace tout ce qui n'est pas une lettre par une chaîne vide
+                    $(this).val($(this).val().replace(/[^a-zA-ZÀ-ÖØ-öø-ÿĀ-ž\s]/g, ''));
+                });
+            $('#lastname').on('input', function () {
+                // Remplace tout ce qui n'est pas une lettre par une chaîne vide
+                $(this).val($(this).val().replace(/[^a-zA-ZÀ-ÖØ-öø-ÿĀ-ž\s]/g, ''));
+            });
+            $('#tel').on('input', function () {
+                // Remplace tout ce qui n'est pas une lettre par une chaîne vide
+                $(this).val($(this).val().replace(/[^0-9\s]/g, ''));
+            });
+            $('#pays').on('change', function (e) {
+
+                var country = $('#pays').val();
+
+                countries.forEach((obj) => {
+                    if (obj.id == country) {
+
+                        $('#spandCountryCode').html(obj.countryCode).trigger('change');
+                    }
+                });
+
+
+            });
+        });
+        $('#confirmPassword').on('keyup', function () {
+            if ($('#plainPassword').val() == $('#confirmPassword').val()) {
+                $('#submit').prop('disabled', false);
+                $('#message').prop('hidden', true);
+
+            } else {
+                $('#message').html('Not Matching').css('color', 'red');
+                $('#submit').prop('disabled', true);
+                $('#message').prop('hidden', false);
+            }
+
+        });
+
+
+    </script>
+{% endblock %}
